@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 Instagram Huerto</title>
+    <title>🌿 Huertogram</title>
     <style>
         :root {
             --insta-bg: #fafafa;
@@ -23,21 +23,20 @@
             padding: 0;
         }
 
-        /* --- BARRA DE NAVEGACIÓN ESTILO INSTAGRAM --- */
+        /* --- BARRA DE NAVEGACIÓN --- */
         nav {
             background-color: var(--insta-card);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 10px 20px;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         nav h1 {
-            font-family: 'Segoe UI', sans-serif;
             font-size: 1.6rem;
             font-weight: bold;
             color: var(--primary);
@@ -54,24 +53,17 @@
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            margin-left: 10px;
             transition: background 0.2s;
-        }
-
-        .nav-buttons button:hover {
-            background-color: var(--primary-dark);
         }
 
         .nav-buttons button.logout-btn {
             background-color: transparent;
             color: #ed4956;
             border: 1px solid #ed4956;
-        }
-        .nav-buttons button.logout-btn:hover {
-            background-color: #fdf0f1;
+            margin-left: 10px;
         }
 
-        /* --- CONTENEDOR DE VISTAS (SPA) --- */
+        /* --- CONTROLADOR DE VISTAS --- */
         .view {
             display: none;
             max-width: 600px;
@@ -84,8 +76,8 @@
             display: block;
         }
 
-        /* --- PANTALLA 1: ACCESO (LOGIN Y REGISTRO) --- */
-        .auth-container {
+        /* --- PANTALLA 1: ACCESO (LOGIN / REGISTRO) --- */
+        .auth-box {
             background: var(--insta-card);
             border: 1px solid var(--border);
             padding: 30px;
@@ -94,25 +86,21 @@
             margin-top: 40px;
         }
 
-        .auth-container h2 {
+        .auth-box h2 {
             color: var(--primary);
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 25px;
         }
 
         .auth-input {
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             margin-bottom: 12px;
             border: 1px solid var(--border);
             border-radius: 4px;
             background: #fafafa;
             box-sizing: border-box;
             font-size: 14px;
-        }
-
-        .auth-input:focus {
-            border-color: #a3a3a3;
-            outline: none;
         }
 
         .auth-btn {
@@ -125,84 +113,82 @@
             font-weight: bold;
             font-size: 14px;
             cursor: pointer;
+            margin-top: 5px;
         }
 
-        .auth-btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .switch-text {
-            margin-top: 20px;
-            color: var(--text-secondary);
+        .switch-form {
+            margin-top: 25px;
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .switch-text span {
-            color: var(--primary);
+        .switch-form span {
+            color: #0095f6;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        /* --- FORMULARIO DE SUBIDA (ESTILO INSTAGRAM POST) --- */
-        .upload-card {
+        /* --- PANTALLA 2: SECCIÓN PARA CREAR POST (ARRIBA DEL FEED) --- */
+        .upload-section {
             background: var(--insta-card);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
-        .upload-card h3 {
-            margin-top: 0;
+        .upload-section h3 {
+            margin: 0 0 15px 0;
             color: var(--primary);
-            text-align: center;
+            font-size: 16px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
-        .upload-card label {
+        .upload-section label {
             display: block;
-            margin: 10px 0 5px 0;
+            font-size: 13px;
             font-weight: 600;
-            font-size: 14px;
+            margin-bottom: 4px;
+            color: #444;
         }
 
-        /* --- PANTALLA 2: FEED DE PUBLICACIONES (ESTILO INSTAGRAM) --- */
+        /* --- TARJETAS DEL FEED (ESTILO INSTAGRAM POST) --- */
         .insta-post {
             background-color: var(--insta-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             overflow: hidden;
         }
 
-        /* Encabezado del Post */
         .post-header {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
+            padding: 14px;
         }
 
         .post-avatar {
-            width: 32px;
-            height: 32px;
-            background-color: var(--primary);
-            color: white;
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-light);
+            color: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
             margin-right: 12px;
+            border: 1px solid var(--border);
         }
 
-        .post-user-info {
+        .post-meta {
             display: flex;
             flex-direction: column;
         }
 
-        .post-username {
+        .post-title {
             font-weight: 600;
             font-size: 14px;
         }
@@ -213,40 +199,41 @@
             margin-top: 2px;
         }
 
-        /* Imagen del Post */
         .post-img {
             width: 100%;
             max-height: 500px;
             object-fit: cover;
             display: block;
-            border-top: 1px solid #f0f0f0;
-            border-bottom: 1px solid #f0f0f0;
         }
 
-        /* Cuerpo / Detalles del Post */
-        .post-body {
+        .post-footer {
             padding: 16px;
             font-size: 14px;
-            line-height: 1.5;
         }
 
-        .post-badge {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 12px;
+        .post-badges {
+            margin-bottom: 10px;
+        }
+
+        .badge {
             display: inline-block;
-            margin-bottom: 8px;
+            background: var(--insta-bg);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 6px;
         }
 
         .post-caption {
-            margin: 5px 0 0 0;
+            margin: 8px 0 0 0;
+            line-height: 1.4;
         }
 
         .post-caption strong {
-            margin-right: 8px;
+            color: var(--text-main);
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -254,27 +241,23 @@
 
     <nav>
         <h1 onclick="showView('view-feed')">🌿 Huertogram</h1>
-        <div class="nav-buttons" id="navButtons">
-            <button id="btnNavFeed" onclick="showView('view-feed')" style="display:none;">Feed</button>
-            <button id="btnNavSubir" onclick="showView('view-subir')" style="display:none;">+ Nueva Foto</button>
-            <button id="btnNavLogout" onclick="logout()" class="logout-btn" style="display:none;">Salir</button>
+        <div class="nav-buttons">
+            <button id="btnLogout" onclick="logout()" class="logout-btn" style="display:none;">Salir</button>
         </div>
     </nav>
 
-    <div id="view-login" class="view active">
-        <div class="auth-container">
+    <div id="view-auth" class="view active">
+        <div id="box-login" class="auth-box">
             <h2>Huertogram</h2>
             <form id="loginForm">
                 <input type="email" id="loginCorreo" class="auth-input" required placeholder="Correo electrónico">
                 <input type="password" id="loginPass" class="auth-input" required placeholder="Contraseña">
                 <button type="submit" class="auth-btn">Iniciar Sesión</button>
             </form>
-            <p class="switch-text">¿No tienes una cuenta? <span onclick="showView('view-registro')">Regístrate</span></p>
+            <p class="switch-form">¿No tienes cuenta? <span onclick="toggleAuthForms(false)">Regístrate</span></p>
         </div>
-    </div>
 
-    <div id="view-registro" class="view">
-        <div class="auth-container">
+        <div id="box-registro" class="auth-box" style="display: none;">
             <h2>Crear Cuenta</h2>
             <form id="registroForm">
                 <input type="text" id="regNombre" class="auth-input" required placeholder="Nombre completo">
@@ -282,76 +265,70 @@
                 <input type="password" id="regPass" class="auth-input" required placeholder="Contraseña (mínimo 6 caracteres)">
                 <button type="submit" class="auth-btn" style="background-color: #0095f6;">Registrarse</button>
             </form>
-            <p class="switch-text">¿Ya tienes cuenta? <span onclick="showView('view-login')">Inicia sesión</span></p>
+            <p class="switch-form">¿Ya tienes cuenta? <span onclick="toggleAuthForms(true)">Inicia sesión</span></p>
         </div>
     </div>
 
     <div id="view-feed" class="view">
-        <div id="feedContenedor">Cargando publicaciones...</div>
-    </div>
-
-    <div id="view-subir" class="view">
-        <div class="upload-card">
-            <h3>Crear nueva publicación</h3>
+        
+        <div class="upload-section">
+            <h3>✨ Compartir progreso del Huerto</h3>
             <form id="bitacoraForm">
                 <label>Planta / Cultivo:</label>
-                <input type="text" name="tipoPlanta" class="auth-input" required placeholder="Ej: Lavanda, Tomates Orgánicos">
+                <input type="text" name="tipoPlanta" class="auth-input" required placeholder="Ej: Tomates, Menta, Girasol...">
                 
-                <label>Altura actual (cm):</label>
-                <input type="number" name="altura" class="auth-input" required placeholder="Ej: 24">
+                <label>Altura (cm):</label>
+                <input type="number" name="altura" class="auth-input" required placeholder="Ej: 35">
                 
-                <label>Nutrientes / Abono:</label>
-                <input type="text" name="abono" class="auth-input" placeholder="Ej: Compost de café, ninguno">
+                <label>Abono / Nutrientes:</label>
+                <input type="text" name="abono" class="auth-input" placeholder="Ej: Humus de lombriz, ninguno">
                 
-                <label>Descripción / Observaciones:</label>
-                <textarea name="observaciones" class="auth-input" rows="4" placeholder="Escribe un pie de foto para tu planta..."></textarea>
+                <label>¿Qué hay de nuevo hoy? (Observaciones):</label>
+                <textarea name="observaciones" class="auth-input" rows="3" placeholder="Escribe un pie de foto..."></textarea>
                 
-                <label>Seleccionar Foto (obligatorio):</label>
-                <input type="file" name="imagen" accept="image/*" required style="margin-bottom: 15px;">
+                <label>Subir Foto:</label>
+                <input type="file" name="imagen" accept="image/*" required style="margin-bottom: 12px; font-size: 13px;">
                 
-                <button type="submit" class="auth-btn">Compartir Publicación</button>
+                <button type="submit" class="auth-btn">Publicar Foto</button>
             </form>
         </div>
+
+        <div id="feedContenedor">Cargando la galería...</div>
     </div>
 
     <script>
-        // --- CONTROLADOR DE VISTAS (SPA) ---
+        // --- INTERCAMBIAR ENTRE LOGIN Y REGISTRO ---
+        function toggleAuthForms(showLogin) {
+            document.getElementById('box-login').style.display = showLogin ? 'block' : 'none';
+            document.getElementById('box-registro').style.display = showLogin ? 'none' : 'block';
+        }
+
+        // --- SISTEMA NATIVO DE 2 PÁGINAS ---
         function showView(viewId) {
             const token = localStorage.getItem('token');
 
-            // Si no hay sesión, obligar a quedarse en login o registro
-            if ((viewId === 'view-feed' || viewId === 'view-subir') && !token) {
-                viewId = 'view-login';
+            // Protección: Si no está logueado va directo a Auth
+            if (viewId === 'view-feed' && !token) {
+                viewId = 'view-auth';
             }
 
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
 
             if (viewId === 'view-feed') {
-                cargarFeed();
-            }
-        }
-
-        function ajustarMenu() {
-            const token = localStorage.getItem('token');
-            if (token) {
-                document.getElementById('btnNavFeed').style.display = 'inline-block';
-                document.getElementById('btnNavSubir').style.display = 'inline-block';
-                document.getElementById('btnNavLogout').style.display = 'inline-block';
+                document.getElementById('btnLogout').style.display = 'inline-block';
+                cargarPublicaciones();
             } else {
-                document.getElementById('btnNavFeed').style.display = 'none';
-                document.getElementById('btnNavSubir').style.display = 'none';
-                document.getElementById('btnNavLogout').style.display = 'none';
+                document.getElementById('btnLogout').style.display = 'none';
             }
         }
 
         function logout() {
             localStorage.clear();
-            ajustarMenu();
-            showView('view-login');
+            showView('view-auth');
         }
 
-        // --- ENVIAR REGISTRO NUEVO DE USUARIO ---
+        // --- ACCIÓN: CREAR CUENTA ---
         document.getElementById('registroForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const data = {
@@ -367,15 +344,15 @@
             });
 
             if (res.ok) {
-                alert("¡Cuenta de Huertogram creada! Ya puedes iniciar tu sesión.");
+                alert("¡Registro exitoso! Tu cuenta tiene permisos de Administrador automáticamente.");
                 document.getElementById('registroForm').reset();
-                showView('view-login');
+                toggleAuthForms(true); // Te manda al login
             } else {
-                alert("Error al registrarte. Revisa los datos.");
+                alert("Error al crear la cuenta.");
             }
         });
 
-        // --- INICIAR SESIÓN ---
+        // --- ACCIÓN: INICIAR SESIÓN ---
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const data = {
@@ -392,63 +369,63 @@
             
             if (info.token) {
                 localStorage.setItem('token', info.token);
-                ajustarMenu();
-                showView('view-feed');
+                document.getElementById('loginForm').reset();
+                showView('view-feed'); // Pasa al feed directo
             } else {
-                alert("Credenciales incorrectas.");
+                alert("Correo o contraseña incorrectos.");
             }
         });
 
-        // --- OBTENER EL FEED DE INSTAGRAM (BITÁCORA MONGO) ---
-        async function cargarFeed() {
+        // --- ACCIÓN: RENDERIZAR FEED ESTILO INSTAGRAM ---
+        async function cargarPublicaciones() {
             const contenedor = document.getElementById('feedContenedor');
             try {
                 const res = await fetch('/api/bitacora');
-                const publicaciones = await res.json();
+                const datos = await res.json();
                 
-                if (publicaciones.length === 0) {
-                    contenedor.innerHTML = '<p style="text-align:center; color:#8e8e8e; padding: 40px 0;">No hay fotos publicadas en el feed todavía.</p>';
+                if (datos.length === 0) {
+                    contenedor.innerHTML = '<p style="text-align:center; color:#999; padding:30px;">Aún no hay fotos en el huerto. ¡Sé el primero en subir una!</p>';
                     return;
                 }
 
-                contenedor.innerHTML = publicaciones.map(post => {
-                    const inicial = post.tipoPlanta ? post.tipoPlanta.charAt(0).toUpperCase() : '🌿';
-                    const fechaFormateada = new Date(post.fecha).toLocaleDateString('es-ES', {
-                        day: 'numeric', month: 'long', year: 'numeric'
+                contenedor.innerHTML = datos.map(post => {
+                    const inicial = post.tipoPlanta ? post.tipoPlanta.charAt(0).toUpperCase() : '🌱';
+                    const fecha = new Date(post.fecha).toLocaleDateString('es-MX', {
+                        day: 'numeric', month: 'short', year: 'numeric'
                     });
 
                     return `
                         <div class="insta-post">
                             <div class="post-header">
                                 <div class="post-avatar">${inicial}</div>
-                                <div class="post-user-info">
-                                    <span class="post-username">${post.tipoPlanta}</span>
-                                    <span class="post-date">Publicado el ${fechaFormateada}</span>
+                                <div class="post-meta">
+                                    <span class="post-title">${post.tipoPlanta}</span>
+                                    <span class="post-date">Subido el ${fecha}</span>
                                 </div>
                             </div>
                             
                             ${post.imagenUrl ? `<img src="${post.imagenUrl}" class="post-img" alt="Foto del huerto">` : ''}
                             
-                            <div class="post-body">
-                                <div class="post-badge">📏 Altura: ${post.altura} cm</div>
-                                ${post.abono ? `<div class="post-badge" style="background:#fff3e0; color:#e65100;">🧪 Abono: ${post.abono}</div>` : ''}
+                            <div class="post-footer">
+                                <div class="post-badges">
+                                    <span class="badge">📏 ${post.altura} cm</span>
+                                    ${post.abono ? `<span class="badge" style="background-color:#fff3e0; color:#e65100;">🧪 ${post.abono}</span>` : ''}
+                                </div>
                                 <p class="post-caption">
-                                    <strong>@bitacora_huerto</strong> ${post.observaciones || 'Sin descripción en esta fotografía.'}
+                                    <strong>@huerto_comunidad</strong> ${post.observaciones || 'Sin pie de foto.'}
                                 </p>
                             </div>
                         </div>
                     `;
                 }).join('');
             } catch (error) {
-                contenedor.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el feed de Instagram.</p>';
+                contenedor.innerHTML = '<p style="color:red; text-align:center;">Error de conexión con la base de datos.</p>';
             }
         }
 
-        // --- PUBLICAR NUEVA ENTRADA (CON LA CORRECCIÓN DE CAMPOS NAME) ---
+        // --- ACCIÓN: SUBIR POST (FORM DATA PERFECTO PARA MULTER) ---
         document.getElementById('bitacoraForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Esto atrapa los atributos 'name' del formulario tal como los pide Multer
             const formData = new FormData(e.target);
 
             try {
@@ -458,25 +435,23 @@
                 });
 
                 if (res.ok) {
-                    alert('📸 ¡Tu foto se ha publicado con éxito en el feed!');
+                    alert('📸 ¡Tu publicación fue compartida en el feed con éxito!');
                     document.getElementById('bitacoraForm').reset();
-                    showView('view-feed'); // Te redirige automáticamente a ver el Instagram
+                    cargarPublicaciones(); // Recarga instantáneamente el feed abajo
                 } else {
-                    alert('Error al subir la publicación.');
+                    alert('Error al publicar.');
                 }
             } catch (error) {
-                alert('Error de red al conectar al servidor.');
+                alert('Error de red.');
             }
         });
 
-        // --- AL CARGAR LA PÁGINA ---
+        // Verificación inicial al cargar
         window.onload = () => {
-            ajustarMenu();
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (localStorage.getItem('token')) {
                 showView('view-feed');
             } else {
-                showView('view-login');
+                showView('view-auth');
             }
         };
     </script>
