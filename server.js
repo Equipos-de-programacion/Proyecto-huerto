@@ -41,13 +41,13 @@ const Bitacora = mongoose.model('Bitacora', new mongoose.Schema({
 
 // --- RUTAS API ---
 
-// 1. Registro (Modificado para que todos se registren como ADMIN)
+// 1. Registro (Modificado para que todos se registren con permisos de ADMIN)
 app.post('/api/registro', async (req, res) => {
     try {
         const salt = await bcrypt.genSalt(10);
         const passHash = await bcrypt.hash(req.body.password, salt);
         
-        // Forzamos el rol 'admin' al guardar en la base de datos
+        // Al desestructurar e inyectar rol: 'admin', MongoDB guardará a todos con ese rol
         const nuevo = new User({
             ...req.body, 
             password: passHash,
@@ -55,7 +55,7 @@ app.post('/api/registro', async (req, res) => {
         });
         
         await nuevo.save();
-        res.json({ mensaje: "Usuario creado como administrador con éxito" });
+        res.json({ mensaje: "Usuario registrado con permisos de publicación" });
     } catch (e) { res.status(500).json({error: e.message}); }
 });
 
