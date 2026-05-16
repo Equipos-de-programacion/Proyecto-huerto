@@ -11,8 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'publico')));
 
 // ==============================================
-// NUEVA CONFIGURACIÓN DE IMÁGENES (Memoria RAM)
-// En lugar de guardarlas en una carpeta, las atrapamos en memoria
+// CONFIGURACIÓN DE IMÁGENES (Memoria RAM)
 // ==============================================
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -27,7 +26,7 @@ const User = mongoose.model('User', new mongoose.Schema({
     nombre: String, 
     correo: { type: String, unique: true }, 
     password: String, 
-    rol: { type: String, default: 'usuario' }
+    rol: { type: String, default: 'admin' } // 🔥 CAMBIO 1: El rol por defecto en la base de datos ahora es admin
 }));
 
 const Bitacora = mongoose.model('Bitacora', new mongoose.Schema({
@@ -35,53 +34,52 @@ const Bitacora = mongoose.model('Bitacora', new mongoose.Schema({
     altura: Number, 
     abono: String, 
     observaciones: String, 
-    imagenUrl: String, // Aquí ahora se guardará la imagen convertida a texto
+    imagenUrl: String, 
     fecha: { type: Date, default: Date.now }
 }));
 
 // --- RUTAS API ---
 
-// 1. Registro (Modificado para que todos se registren con permisos de ADMIN)
+// 1. Registro (Modificado para forzar que TODOS sean admin)
 app.post('/api/registro', async (req, res) => {
     try {
         const salt = await bcrypt.genSalt(10);
         const passHash = await bcrypt.hash(req.body.password, salt);
         
-        // Al desestructurar e inyectar rol: 'admin', MongoDB guardará a todos con ese rol
+        // 🔥 CAMBIO 2: Forzamos de forma estricta que al guardarse se inyecte el rol 'admin'
         const nuevo = new User({
-            ...req.body, 
+            ...req.body,
             password: passHash,
             rol: 'admin' 
         });
         
         await nuevo.save();
-        res.json({ mensaje: "Usuario registrado con permisos de publicación" });
+        res.json({ mensaje: "Usuario creado como admin con éxito" });
     } catch (e) { res.status(500).json({error: e.message}); }
 });
 
 // 2. Login
 app.post('/api/login', async (req, res) => {
     const user = await User.findOne({ correo: req.body.correo });
-    if (!user) return res.status(400).json({ error: 'No existe' });
+    if (!user) return res.status(400).json({ error: 'No existe el usuario' });
     const ok = await bcrypt.compare(req.body.password, user.password);
-    if (!ok) return res.status(400).json({ error: 'Password mal' });
+    if (!ok) return res.status(400).json({ error: 'Contraseña incorrecta' });
 
     const token = jwt.sign({ id: user._id, rol: user.rol }, 'secreto_super_seguro');
     res.json({ token, rol: user.rol });
 });
 
-// 3. Ver Bitácora (Público/Maestros)
+// 3. Ver Bitácora
 app.get('/api/bitacora', async (req, res) => {
     const lista = await Bitacora.find().sort({ fecha: -1 });
     res.json(lista);
 });
 
-// 4. Guardar Bitácora (Admin) - ¡MAGIA BASE64 AQUÍ!
+// 4. Guardar Bitácora
 app.post('/api/bitacora', upload.single('imagen'), async (req, res) => {
     try {
         let imagenBase64 = '';
         
-        // Si subieron una imagen, la convertimos a formato de texto (Base64)
         if (req.file) {
             imagenBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
         }
@@ -91,7 +89,7 @@ app.post('/api/bitacora', upload.single('imagen'), async (req, res) => {
             altura: req.body.altura,
             abono: req.body.abono,
             observaciones: req.body.observaciones,
-            imagenUrl: imagenBase64 // La imagen ahora se guarda directo en MongoDB
+            imagenUrl: imagenBase64 
         };
         
         await Bitacora.create(nuevaEntrada);
@@ -102,7 +100,7 @@ app.post('/api/bitacora', upload.single('imagen'), async (req, res) => {
     }
 });
 
-// 5. Ruta para admin (Subida individual a galería)
+// 5. Subida individual a galería
 app.post('/api/upload', upload.single('imagen'), (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'No se subió imagen' });
     const imagenBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
