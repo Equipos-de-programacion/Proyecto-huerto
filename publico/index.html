@@ -14,7 +14,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
@@ -51,29 +51,29 @@
             color: var(--primary);
         }
 
-        /* Contenedor de Vistas */
+        /* Sistema de secciones (SPA) */
         .view {
-            display: none; /* Ocultas por defecto */
+            display: none;
             max-width: 800px;
             margin: 30px auto;
             padding: 0 20px;
             animation: fadeIn 0.4s ease;
         }
 
-        .view.active { display: block; } /* Solo la vista activa se muestra */
+        .view.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Formularios Estilizados */
+        /* Tarjetas de Formularios */
         .form-card {
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            max-width: 450px;
+            max-width: 420px;
             margin: 0 auto;
         }
 
@@ -114,10 +114,9 @@
             color: var(--primary);
             cursor: pointer;
             text-decoration: underline;
-            font-weight: 500;
         }
 
-        /* Publicaciones del Historial (Estilo de tarjetas de tu dashboard) */
+        /* Estilo de publicaciones */
         .entrada {
             background: white;
             border: 1px solid #eee;
@@ -125,10 +124,7 @@
             margin-bottom: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            transition: 0.2s;
         }
-
-        .entrada:hover { transform: translateY(-2px); }
 
         .entrada h3 { margin: 10px 0 5px 0; color: var(--primary); font-size: 1.4rem; }
 
@@ -143,12 +139,8 @@
             margin-bottom: 10px;
         }
 
-        .entrada p { margin: 8px 0; color: #444; line-height: 1.5; }
-
         .entrada img {
-            max-width: 100%;
             width: 100%;
-            height: auto;
             max-height: 450px;
             object-fit: cover;
             border-radius: 10px;
@@ -163,25 +155,19 @@
     <nav>
         <h1 onclick="showView('view-historial')">🌿 Huerto Escolar</h1>
         <div class="nav-links" id="navLinks">
-            <button onclick="showView('view-historial')">Historial</button>
-            <button id="btnNavPublicar" onclick="showView('view-publicar')" style="display:none;">Publicar Progreso</button>
-            <button id="btnNavAuth" onclick="showView('view-login')">Iniciar Sesión</button>
-            <button id="btnNavLogout" onclick="logout()" style="display:none;">Cerrar Sesión</button>
+            <button id="btnNavHistorial" onclick="showView('view-historial')" style="display:none;">Historial</button>
+            <button id="btnNavPublicar" onclick="showView('view-publicar')" style="display:none;">+ Publicar Progreso</button>
+            <button id="btnNavLogout" onclick="logout()" style="display:none; background: #dc3545; border-color: #dc3545;">Salir</button>
         </div>
     </nav>
 
-    <div id="view-historial" class="view active">
-        <h2 style="text-align: center; color: var(--dark); margin-bottom: 25px;">🌱 Historial del Huerto</h2>
-        <div id="contenedorBitacora">Cargando registros...</div>
-    </div>
-
-    <div id="view-login" class="view">
+    <div id="view-login" class="view active">
         <div class="form-card">
             <h2>Iniciar Sesión</h2>
             <form id="loginForm">
                 <div class="campo">
                     <label>Correo Electrónico:</label>
-                    <input type="email" id="loginCorreo" required placeholder="tu-correo@gmail.com">
+                    <input type="email" id="loginCorreo" required placeholder="ejemplo@correo.com">
                 </div>
                 <div class="campo">
                     <label>Contraseña:</label>
@@ -203,7 +189,7 @@
                 </div>
                 <div class="campo">
                     <label>Correo Electrónico:</label>
-                    <input type="email" id="regCorreo" required placeholder="ejemplo@correo.com">
+                    <input type="email" id="regCorreo" required placeholder="usuario@correo.com">
                 </div>
                 <div class="campo">
                     <label>Contraseña:</label>
@@ -215,29 +201,34 @@
         </div>
     </div>
 
+    <div id="view-historial" class="view">
+        <h2 style="text-align: center; color: var(--dark); margin-bottom: 25px;">🌱 Historial de la Bitácora</h2>
+        <div id="contenedorBitacora">Cargando registros...</div>
+    </div>
+
     <div id="view-publicar" class="view">
-        <div class="form-card" style="max-width: 550px;">
-            <h2>🌱 Nueva Entrada en la Bitácora</h2>
+        <div class="form-card" style="max-width: 500px;">
+            <h2>🌱 Nueva Entrada</h2>
             <form id="bitacoraForm">
                 <div class="campo">
                     <label>Tipo de Planta:</label>
-                    <input type="text" id="tipoPlanta" required placeholder="Ej: Tomate, Lavanda, Albahaca...">
+                    <input type="text" name="tipoPlanta" required placeholder="Ej: Lavanda, Tomate...">
                 </div>
                 <div class="campo">
                     <label>Altura (cm):</label>
-                    <input type="number" id="altura" required placeholder="Ej: 45">
+                    <input type="number" name="altura" required placeholder="Ej: 45">
                 </div>
                 <div class="campo">
                     <label>Abono Utilizado:</label>
-                    <input type="text" id="abono" placeholder="Ej: Compost orgánico, humus">
+                    <input type="text" name="abono" placeholder="Ej: Orgánico, Compost">
                 </div>
                 <div class="campo">
-                    <label>Observaciones / Progreso:</label>
-                    <textarea id="obs" rows="4" placeholder="¿Qué cambios notas en la planta el día de hoy?"></textarea>
+                    <label>Observaciones:</label>
+                    <textarea name="observaciones" rows="4" placeholder="¿Cómo progresa la planta hoy?"></textarea>
                 </div>
                 <div class="campo">
                     <label>Foto del Progreso:</label>
-                    <input type="file" id="imagenHuerto" accept="image/*" required>
+                    <input type="file" name="imagen" accept="image/*" required>
                 </div>
                 <button type="submit" class="btn-submit">Publicar en Bitácora</button>
             </form>
@@ -245,78 +236,41 @@
     </div>
 
     <script>
-        // --- NAVEGACIÓN ENTRE VISTAS ---
+        // --- CONTROLADOR DE VISTAS (SPA) ---
         function showView(viewId) {
             const token = localStorage.getItem('token');
 
-            // Control de acceso: Si intentan ir a publicar o ver historial sin token, los mandamos a login
-            if ((viewId === 'view-publicar' || viewId === 'view-historial') && !token) {
-                alert('Por favor, inicia sesión para acceder a esta sección.');
-                showView('view-login');
-                return;
+            if ((viewId === 'view-historial' || viewId === 'view-publicar') && !token) {
+                viewId = 'view-login';
             }
 
-            // Ocultar todas las secciones y activar la elegida
-            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
 
-            // Refrescar el historial cada vez que se visualice la sección
-            if (viewId === 'view-historial' && token) {
+            if (viewId === 'view-historial') {
                 cargarDatos();
             }
         }
 
-        // --- AJUSTAR BARRA DE MENÚ SEGÚN LA SESIÓN ---
         function ajustarNavegacion() {
             const token = localStorage.getItem('token');
 
             if (token) {
-                document.getElementById('btnNavAuth').style.display = 'none';
-                document.getElementById('btnNavLogout').style.display = 'inline-block';
-                // CUALQUIERA registrado puede ver ahora el botón de publicar
+                document.getElementById('btnNavHistorial').style.display = 'inline-block';
                 document.getElementById('btnNavPublicar').style.display = 'inline-block';
+                document.getElementById('btnNavLogout').style.display = 'inline-block';
             } else {
-                document.getElementById('btnNavAuth').style.display = 'inline-block';
-                document.getElementById('btnNavLogout').style.display = 'none';
+                document.getElementById('btnNavHistorial').style.display = 'none';
                 document.getElementById('btnNavPublicar').style.display = 'none';
+                document.getElementById('btnNavLogout').style.display = 'none';
             }
         }
 
-        // --- CERRAR SESIÓN ---
         function logout() {
             localStorage.clear();
             ajustarNavegacion();
             alert('Sesión cerrada.');
             showView('view-login');
-        }
-
-        // --- CARGAR DATOS DE MONGODB ---
-        async function cargarDatos() {
-            const contenedor = document.getElementById('contenedorBitacora');
-            try {
-                const res = await fetch('/api/bitacora');
-                const registros = await res.json();
-                
-                if (registros.length === 0) {
-                    contenedor.innerHTML = '<p style="text-align:center; color:#666;">Aún no hay registros en la bitácora. ¡Sé el primero en publicar!</p>';
-                    return;
-                }
-
-                contenedor.innerHTML = registros.map(reg => `
-                    <div class="entrada">
-                        <small style="color: #777; font-weight: 500;">📅 ${new Date(reg.fecha).toLocaleString()}</small>
-                        <h3>🌿 ${reg.tipoPlanta}</h3>
-                        <span class="tag-altura">📏 Altura: ${reg.altura} cm</span>
-                        <p><strong>Abono:</strong> ${reg.abono || 'No especificado'}</p>
-                        <p><strong>Notas de progreso:</strong> ${reg.observaciones || 'Sin comentarios adicionales.'}</p>
-                        ${reg.imagenUrl ? `<img src="${reg.imagenUrl}" alt="Foto del progreso">` : ''}
-                    </div>
-                `).join('');
-
-            } catch (error) {
-                console.error("Error al cargar datos:", error);
-                contenedor.innerHTML = '<p style="color:red; text-align:center;">Error al conectar con la base de datos.</p>';
-            }
         }
 
         // --- ACCIÓN: REGISTRARSE ---
@@ -335,12 +289,11 @@
             });
 
             if (res.ok) {
-                alert("¡Cuenta creada con éxito! Ahora puedes iniciar sesión.");
+                alert("¡Cuenta creada con éxito! Ya puedes iniciar sesión.");
                 document.getElementById('registroForm').reset();
                 showView('view-login');
             } else {
-                const err = await res.json();
-                alert("Error al registrar: " + (err.error || "Verifica los datos"));
+                alert("Error al registrar el usuario.");
             }
         });
 
@@ -363,50 +316,69 @@
                 localStorage.setItem('token', info.token);
                 localStorage.setItem('rol', info.rol); 
                 ajustarNavegacion();
-                alert("¡Bienvenido/a al Huerto Escolar!");
+                alert("¡Bienvenido/a al Huerto!");
                 document.getElementById('loginForm').reset();
-                showView('view-historial'); // Lleva directamente a ver las plantas
+                showView('view-historial');
             } else {
                 alert("Correo o contraseña incorrectos.");
             }
         });
 
-        // --- ACCIÓN: GUARDAR EN BITÁCORA ---
+        // --- ACCIÓN: CARGAR REGISTROS DESDE MONGO ---
+        async function cargarDatos() {
+            const contenedor = document.getElementById('contenedorBitacora');
+            try {
+                const res = await fetch('/api/bitacora');
+                const registros = await res.json();
+                
+                if (registros.length === 0) {
+                    contenedor.innerHTML = '<p style="text-align:center; color:#666;">No hay registros aún en el huerto.</p>';
+                    return;
+                }
+
+                contenedor.innerHTML = registros.map(reg => `
+                    <div class="entrada">
+                        <small style="color: #777;">📅 ${new Date(reg.fecha).toLocaleString()}</small>
+                        <h3>🌿 ${reg.tipoPlanta}</h3>
+                        <span class="tag-altura">📏 Altura: ${reg.altura} cm</span>
+                        <p><strong>Abono:</strong> ${reg.abono || 'No especificado'}</p>
+                        <p><strong>Observaciones:</strong> ${reg.observaciones || 'Sin notas adicionales.'}</p>
+                        ${reg.imagenUrl ? `<img src="${reg.imagenUrl}" alt="Foto del progreso">` : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                contenedor.innerHTML = '<p style="color:red; text-align:center;">Error al conectar con la base de datos.</p>';
+            }
+        }
+
+        // --- ACCIÓN: GUARDAR EN BITÁCORA (CORREGIDA AL 100%) ---
         document.getElementById('bitacoraForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData();
-            formData.append('tipoPlanta', document.getElementById('tipoPlanta').value);
-            formData.append('altura', document.getElementById('altura').value);
-            formData.append('abono', document.getElementById('abono').value);
-            formData.append('observaciones', document.getElementById('obs').value); 
-
-            const archivo = document.getElementById('imagenHuerto').files[0];
-            if (archivo) {
-                formData.append('imagen', archivo); 
-            }
+            // Usamos de forma directa el objeto FormData con la referencia del formulario (e.target)
+            // Esto mete de manera automática todos los inputs con sus respectivos campos "name" y el archivo adjunto
+            const formData = new FormData(e.target);
 
             try {
                 const res = await fetch('/api/bitacora', {
                     method: 'POST',
                     body: formData 
+                    // No enviamos Content-Type manual, FormData genera el boundary correcto
                 });
 
                 if (res.ok) {
-                    alert('¡Excelente! Tu registro y foto han sido guardados en el historial comunal.');
+                    alert('✅ ¡Excelente! Entrada guardada de forma comunitaria.');
                     document.getElementById('bitacoraForm').reset();
-                    showView('view-historial'); // Redirige al historial para ver la nueva publicación
+                    showView('view-historial'); 
                 } else {
-                    const errorData = await res.json();
-                    alert('Error al publicar: ' + (errorData.error || 'Intenta de nuevo'));
+                    alert('Error al publicar la entrada.');
                 }
             } catch (error) {
-                console.error("Error en la petición:", error);
                 alert('Error de conexión con el servidor.');
             }
         });
 
-        // --- EJECUCIÓN INICIAL AL CARGAR LA PÁGINA ---
+        // --- INICIO AUTOMÁTICO ---
         window.onload = () => {
             ajustarNavegacion();
             const token = localStorage.getItem('token');
