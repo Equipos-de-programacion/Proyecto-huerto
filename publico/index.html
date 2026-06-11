@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUSU - Proyecto PAEC Huertito</title>
     <style>
-        /* 🎨 PALETA ROSITA & VERDE ORGÁNICO */
+        /* 🎨 PALETA ROSITA & VERDE ORGÁNICO ORIGINAL */
         :root {
             --rosa-principal: #fcd7de;  
             --rosa-intenso: #e58fa2;    
@@ -29,7 +29,7 @@
             min-height: 100vh;
         }
 
-        /* 🌿 ENCABEZADO */
+        /* 🌿 ENCABEZADO ORIGINAL */
         .header-top {
             background: linear-gradient(135deg, var(--rosa-oscuro), var(--rosa-intenso));
             color: var(--blanco);
@@ -54,7 +54,7 @@
             font-weight: 500;
         }
 
-        /* 📋 BARRA DE PESTAÑAS NAVEGABLES (4 OPCIONES) */
+        /* 📋 BARRA DE PESTAÑAS NAVEGABLES ORIGINAL (4 OPCIONES) */
         .tabs-nav-bar {
             background-color: var(--blanco);
             display: flex;
@@ -120,7 +120,7 @@
             display: block;
         }
 
-        /* 💋 TARJETAS SEPARADAS ESTILO EDITORIAL */
+        /* 💋 TARJETAS SEPARADAS ORIGINALES ESTILO EDITORIAL */
         .bloque-seccion {
             background-color: var(--blanco);
             border-radius: 24px;
@@ -241,7 +241,7 @@
             line-height: 1.5;
         }
 
-        /* ⏳ LÍNEA DEL TIEMPO INTERACTIVA OPTIMIZADA */
+        /* ⏳ LÍNEA DEL TIEMPO INTERACTIVA ORIGINAL */
         .timeline-container {
             position: relative;
             max-width: 100%;
@@ -382,7 +382,7 @@
             object-fit: cover;
         }
 
-        /* 🐢 PESTAÑA 4: ACCESO AL HUERTO */
+        /* 🐢 PESTAÑA 4 ORIGINAL */
         .grid-huerto-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -518,7 +518,6 @@
             background-color: #d47a8e;
         }
 
-        /* 📊 ESTILOS ADICIONALES PARA LA TABLA DEL CRONOGRAMA INTERACTIVO */
         .buscador-crono {
             width: 100%;
             max-width: 450px;
@@ -539,93 +538,109 @@
             box-shadow: 0 4px 12px rgba(229, 143, 162, 0.2);
         }
 
-        .tabla-contenedor {
-            overflow-x: auto;
-            border-radius: 16px;
-            border: 1px solid #f2cbd2;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.02);
-            background: white;
-            margin-bottom: 30px;
-        }
-
-        .tabla-interactiva {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        .tabla-interactiva th {
-            background-color: var(--rosa-oscuro);
-            color: var(--blanco);
-            padding: 16px 18px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .tabla-interactiva td {
-            padding: 15px 18px;
-            border-bottom: 1px solid #fae3e7;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .tabla-interactiva tr:last-child td {
-            border-bottom: none;
-        }
-
-        .tabla-interactiva tr:nth-child(even) {
-            background-color: var(--rosa-tarjeta);
-        }
-
-        .tabla-interactiva tr:hover {
-            background-color: #ffeef1;
-            transition: background 0.15s ease;
-        }
-
-        /* Estados (Badges) */
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        .badge.completado {
-            background-color: #def7ec;
-            color: #03543f;
-        }
-
-        .badge.proceso {
-            background-color: #fef08a;
-            color: #713f12;
-        }
-
-        .badge.revision {
-            background-color: #e0f2fe;
-            color: #0369a1;
-        }
-
         .hidden { display: none !important; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* 📊 👑 NUEVOS ESTILOS EXCLUSIVOS: DIAGRAMA DE GANTT ESTRUCTURA INTERACTIVA 👑 */
+        .gantt-contenedor-scroll {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #f2cbd2;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+            background: #ffffff;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .tabla-gantt-interactive {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.88rem;
+            text-align: left;
+            min-width: 1600px; /* Asegura espacio suficiente para simular los días en horizontal */
+        }
+
+        /* Congelado de la columna Actividades a la izquierda */
+        .tabla-gantt-interactive th.col-sticky-actividad,
+        .tabla-gantt-interactive td.col-sticky-actividad {
+            position: sticky;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 5;
+            width: 320px;
+            min-width: 320px;
+            max-width: 320px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.06);
+            border-right: 2px solid #e58fa2;
+            padding: 14px 16px;
+            font-weight: 500;
+            color: #2c3528;
+        }
+
+        .tabla-gantt-interactive th.col-sticky-actividad {
+            background-color: var(--rosa-oscuro) !important;
+            color: var(--blanco) !important;
+            z-index: 6;
+            font-weight: bold;
+        }
+
+        /* Encabezados generales del Gantt */
+        .tabla-gantt-interactive th {
+            background-color: #a36271;
+            color: var(--blanco);
+            padding: 12px 8px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+        }
+
+        .tabla-gantt-interactive td {
+            padding: 10px 6px;
+            border: 1px solid #fae3e7;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Estructura de fila alternativa */
+        .tabla-gantt-interactive tr:nth-child(even) td:not(.col-sticky-actividad) {
+            background-color: #fff9fa;
+        }
+
+        .tabla-gantt-interactive tr:hover td.col-sticky-actividad {
+            background-color: #ffeef1 !important;
+        }
+
+        /* 🎨 PALETA DE COLORES EXACTA PARA CADA BARRA DE DÍAS DEL EXCEL */
+        .bloque-azul-claro { background-color: #92cddc !important; color: #1f497d !important; font-weight: bold; border-radius: 4px; }
+        .bloque-azul-marino { background-color: #002060 !important; color: #ffffff !important; font-weight: bold; border-radius: 4px; }
+        .bloque-verde { background-color: #c4d79b !important; color: #2b540a !important; font-weight: bold; border-radius: 4px; }
+        .bloque-morado { background-color: #b1a0c7 !important; color: #3b2354 !important; font-weight: bold; border-radius: 4px; }
+        .bloque-rosa { background-color: #f2dcdb !important; color: #7f2624 !important; font-weight: bold; border-radius: 4px; }
+        .bloque-rojo { background-color: #da9694 !important; color: #5c0d0c !important; font-weight: bold; border-radius: 4px; }
+        .bloque-gris { background-color: #d9d9d9 !important; color: #404040 !important; font-weight: bold; border-radius: 4px; }
+        .bloque-amarillo { background-color: #ffffcc !important; color: #5c5c00 !important; font-weight: bold; border-radius: 4px; }
+
+        /* Estilo sutil para los días vacíos */
+        .dia-vacio {
+            color: #ccc;
+            font-size: 0.75rem;
+            opacity: 0.4;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🌳 ENCABEZADO -->
     <div class="header-top">
         <h1>PROYECTO PAEC</h1>
         <p>"Dale besos a tu cora 💋"</p>
     </div>
 
-    <!-- 📋 BARRA DE PESTAÑAS NAVEGABLES (4 SECCIONES) -->
     <div class="tabs-nav-bar">
         <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
             ✨ Presentación MUSU
@@ -643,7 +658,6 @@
 
     <div class="container">
         
-        <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
             
             <div class="bloque-seccion">
@@ -709,120 +723,246 @@
 
         </div>
 
-        <!-- 📅 PESTAÑA 2: NUEVA SECCIÓN EXCLUSIVA PARA EL CRONOGRAMA INTERACTIVO -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma General de Actividades</h2>
-                <p>Navega a través de las tareas oficiales extraídas de la planeación general. Puedes escribir en el buscador palabras clave como el nombre de un integrante, el estado de la tarea o una fase para filtrarlas al instante.</p>
+                <p>Navega a través de las tareas extraídas directamente de la planeación general. Esta tabla simula la hoja de cálculo completa con congelamiento de la columna izquierda y un scroll horizontal suave para ver el Diagrama de Gantt por bloques de colores.</p>
                 
-                <!-- 🔍 Buscador Dinámico -->
-                <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad, responsable o estado...">
+                <div class="contenedor-boton-drive" style="text-align: left; margin-bottom: 20px;">
+                    <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive" style="padding: 10px 20px; font-size: 0.95rem;">
+                        📁 Descargar Archivo Excel Original Directo ↗
+                    </a>
+                </div>
 
-                <!-- 📊 Tabla Limpia y Altamente Nítida -->
-                <div class="tabla-contenedor">
-                    <table class="tabla-interactiva" id="tablaProyectosPAEC">
+                <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad o palabra clave...">
+
+                <div class="gantt-contenedor-scroll">
+                    <table class="tabla-gantt-interactive" id="tablaProyectosPAEC">
                         <thead>
                             <tr>
-                                <th style="width: 80px;">Código</th>
-                                <th>Bloque / Descripción de Actividad</th>
-                                <th>Responsable(s) Asignados</th>
-                                <th style="width: 140px;">Fase Asignada</th>
-                                <th style="width: 130px; text-align: center;">Estado actual</th>
+                                <th class="col-sticky-actividad">Bloque / Descripción de Actividad</th>
+                                <th>Bloque 1</th>
+                                <th>Bloque 2</th>
+                                <th>Bloque 3</th>
+                                <th>Bloque 4</th>
+                                <th>Bloque 5</th>
+                                <th>Bloque 6</th>
+                                <th>Bloque 7</th>
+                                <th>Bloque 8</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>ACT-01</strong></td>
-                                <td>Remoción de suelos, eliminación de maleza pesada y nivelación inicial del terreno.</td>
-                                <td>Todo el Equipo PAEC</td>
-                                <td>Fase 1: Suelo</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se seleccionó una planta considerando el objetivo del proyecto "PAEC POLINIZADOR", investigando sobre sus cuidados, crecimiento, riego, plantación, suelo, tipo de abono, etc.</td>
+                                <td class="bloque-azul-claro">Planificación</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-02</strong></td>
-                                <td>Cavado y diseño geométrico de surcos alineados para el flujo hídrico.</td>
-                                <td>Todo el Equipo PAEC</td>
-                                <td>Fase 1: Suelo</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se realizaron los surcos, sin embargo, tuvimos confusiones con los espacios designados de diferentes grupos, por lo que se terminó por realizar nuevos surcos en otra zona y trabajar en ellos.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-azul-marino">Suelo</td>
+                                <td class="bloque-azul-marino">Ajuste</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-03</strong></td>
-                                <td>Plantación sistemática de plántulas de lavanda en los surcos listos.</td>
-                                <td>Arely, Mbalia, Fatima</td>
-                                <td>Fase 2: Siembra</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">En la semana posterior por equipos se estuvieron plantando nuestra planta asignada: la "Lavanda".</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-verde">Siembra</td>
+                                <td class="bloque-verde">Siembra</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-04</strong></td>
-                                <td>Investigación técnica de ingeniería hidráulica y simulación de goteo eficiente.</td>
-                                <td>José Luis, Juan, Angel</td>
-                                <td>Fase 3: Riego</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Después de plantar la lavanda se le va a aplicar la primera aplicación del abono.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-morado">Nutrición</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-05</strong></td>
-                                <td>Ensamblaje, colocación de mangueras y pruebas de presión del sistema de irrigación.</td>
-                                <td>José Luis, Juan, Angel</td>
-                                <td>Fase 3: Riego</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se le da cuidados más seguidos para que pueda agarrar la raíz de la lavanda.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-morado">Cuidado</td>
+                                <td class="bloque-morado">Cuidado</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-06</strong></td>
-                                <td>Monitoreo biológico regular de crecimiento y colocación focalizada de abono orgánico.</td>
-                                <td>Equipo Completo</td>
-                                <td>Fase 4: Nutrición</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se registró el crecimiento de la lavanda para después ver su avance.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-rosa">Monitoreo</td>
+                                <td class="bloque-rosa">Métricas</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-07</strong></td>
-                                <td>Desarrollo de identidad gráfica de marca MUSU (Eslogan, Logotipo y Cartel promocional).</td>
-                                <td>Ana Rincón, Arely, Mbalia</td>
-                                <td>Fase 5: Branding</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se investigó varias formas de sistema de riego para las lavandas.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-rojo">Riego Info</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-08</strong></td>
-                                <td>Adquisición organizada y sanitización de envases y frascos de laboratorio.</td>
-                                <td>Ana Rincón, Fatima</td>
-                                <td>Fase 6: Insumos</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Se seleccionó un sistema de riego y se aplicó a su lavanda en específico.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-rojo">Instalación</td>
+                                <td class="bloque-rojo">Aplicación</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-09</strong></td>
-                                <td>Producción controlada del bálsamo, exfoliante y aceite corporal en laboratorio.</td>
-                                <td>Arely, Mbalia, Ana, Fatima</td>
-                                <td>Fase 7: Producción</td>
-                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                                <td class="col-sticky-actividad">Para el regreso de vacaciones se le aplicó la segunda aplicación del abono orgánico.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-gris">Nutrición 2</td>
+                                <td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td><strong>ACT-10</strong></td>
-                                <td>Montaje del stand expositivo y defensa oficial del proyecto ante el sínodo docente.</td>
-                                <td>Equipo Completo</td>
-                                <td>Fase 8: Evaluación</td>
-                                <td style="text-align: center;"><span class="badge revision">🚀 Entregado</span></td>
+                                <td class="col-sticky-actividad">Se siguió el registro de la medición de la lavanda.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-gris">Seguimiento</td>
+                                <td class="bloque-gris">Métricas</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Regar la planta diario y llenar el sistema de riego para cuando falte agua.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-amarillo">Mantenimiento</td>
+                                <td class="bloque-amarillo">Diario</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Tomar evidencia del riego y los cuidados de la lavanda.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-amarillo">Evidencias</td>
+                                <td class="bloque-amarillo">Fotos</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Revisar las características de la lavanda como color de las hojas, tallo y botón.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-amarillo">Inspección</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Discutir las herramientas digitales que vamos a utilizar para el desarrollo.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-azul-claro">Branding</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Empezar a hacer el código para el archivo html.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-azul-marino">Web Dev</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Empezar a conectar la base de datos con el API y el html.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-azul-marino">Backend</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Hacer el cronograma de las actividades oficiales.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-verde">Cronograma</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Hubo ideas para integrar en la página web final de MUSU.</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="dia-vacio">-</td>
+                                <td class="bloque-verde">Diseño UX</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- 🖼️ Sección Visual Expandible debajo de la tabla -->
                 <h3 style="color: var(--rosa-oscuro); margin-top: 10px;">📸 Capturas de Respaldos de Planificación</h3>
                 <p style="font-size: 0.95rem;">Si deseas inspeccionar el diseño de celdas gráficas originales del Excel, puedes revisar las capturas nítidas aquí abajo o expandirlas pasando el ratón:</p>
                 <div class="cronograma-grid">
                     <img src="cronograma1.png" alt="Cronograma de Actividades Parte 1" class="cronograma-img">
                     <img src="cronograma2.png" alt="Cronograma de Actividades Parte 2" class="cronograma-img">
                 </div>
-
-                <div class="contenedor-boton-drive">
-                    <!-- Mantenemos el link de drive que pasaste por si ocupan descargar la hoja editable de cálculo -->
-                    <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive">
-                        📁 Descargar Archivo Excel Original Directo ↗
-                    </a>
-                </div>
             </div>
         </div>
 
-        <!-- 🌿 PESTAÑA 3: APARTADO PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
             
             <div class="bloque-seccion">
@@ -951,7 +1091,6 @@
 
         </div>
 
-        <!-- 🐢 PESTAÑA 4: ACCESO AL HUERTO -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
                 
@@ -996,7 +1135,7 @@
     </div>
 
     <script>
-        // 🔍 FUNCIÓN INTERACTIVA NUEVA: FILTRADO EN TIEMPO REAL DEL CRONOGRAMA
+        // 🔍 FUNCIÓN INTERACTIVA NUEVA: FILTRADO EN TIEMPO REAL DEL CRONOGRAMA ORIGINAL
         function filtrarTablaCronograma() {
             const input = document.getElementById("inputBuscarCrono");
             const filtro = input.value.toLowerCase();
@@ -1005,21 +1144,13 @@
 
             // Recorremos todas las filas de la tabla (excepto los encabezados de th)
             for (let i = 1; i < filas.length; i++) {
-                let celdaActividad = filas[i].getElementsByTagName("td")[1];
-                let celdaResponsable = filas[i].getElementsByTagName("td")[2];
-                let celdaEstado = filas[i].getElementsByTagName("td")[4];
+                let celdaActividad = filas[i].getElementsByTagName("td")[0];
                 
-                if (celdaActividad || celdaResponsable || celdaEstado) {
+                if (celdaActividad) {
                     const textoActividad = celdaActividad.textContent || celdaActividad.innerText;
-                    const textoResponsable = celdaResponsable.textContent || celdaResponsable.innerText;
-                    const textoEstado = celdaEstado.textContent || celdaEstado.innerText;
                     
-                    // Si el filtro coincide con la actividad, los nombres o el estado del badge, se muestra
-                    if (
-                        textoActividad.toLowerCase().indexOf(filtro) > -1 || 
-                        textoResponsable.toLowerCase().indexOf(filtro) > -1 ||
-                        textoEstado.toLowerCase().indexOf(filtro) > -1
-                    ) {
+                    // Si el filtro coincide con el bloque de la actividad, se muestra
+                    if (textoActividad.toLowerCase().indexOf(filtro) > -1) {
                         filas[i].style.display = "";
                     } else {
                         filas[i].style.display = "none";
