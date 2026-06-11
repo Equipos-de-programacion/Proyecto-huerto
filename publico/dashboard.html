@@ -160,7 +160,6 @@
             background-color: #f1ebf2; color: #785880; padding: 3px 8px; border-radius: 5px; font-size: 0.82rem; font-weight: 600; display: inline-block; border: 1px solid rgba(120, 88, 128, 0.1);
         }
 
-        /* 📸 CONTENEDOR MULTIMEDIA MEJORADO PARA TODO TIPO DE IMAGEN */
         .contenedor-imagen-post {
             width: 100%;
             margin-top: 12px;
@@ -174,7 +173,7 @@
             width: 100%; 
             height: auto;
             max-height: 450px;
-            object-fit: contain; /* Evita que las imágenes verticales o raras se recorten defectuosamente */
+            object-fit: contain; 
             display: block; 
         }
 
@@ -246,7 +245,6 @@
                     <label class="label-campo">Foto del progreso:</label>
                     <div class="contenedor-file">
                         <label for="imagenHuerto" class="btn-file-custom">Seleccionar imagen</label>
-                        <!-- Acepta cualquier formato multimedia catalogado como imagen -->
                         <input type="file" id="imagenHuerto" class="input-file-oculto" accept="image/*" onchange="actualizarNombreArchivo(this)">
                         <span id="textoArchivo" class="nombre-archivo">Ningún archivo seleccionado</span>
                         <span id="btnLimpiarArchivo" style="color: #d9534f; cursor: pointer; font-weight: bold; display: none; margin-left: 5px;" onclick="limpiarArchivoSeleccionado()" title="Quitar imagen">✖️</span>
@@ -261,6 +259,9 @@
     </div>
 
     <script>
+        // 🚀 DIRECCIÓN DEL SERVIDOR LOCAL COMPLETA PARA EVITAR ERRORES DE CONEXIÓN
+        const API_URL = 'http://localhost:3000';
+
         const token = localStorage.getItem('token');
         const rol = localStorage.getItem('rol');
 
@@ -312,7 +313,7 @@
 
         async function cargarDatos() {
             try {
-                const res = await fetch('/api/bitacora');
+                const res = await fetch(`${API_URL}/api/bitacora`);
                 const registros = await res.json();
                 const contenedor = document.getElementById('contenedorBitacora');
                 
@@ -420,7 +421,7 @@
                 observaciones: document.getElementById(`edit-obs-${idPost}`).value
             };
 
-            const res = await fetch(`/api/bitacora/${idPost}`, {
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(datosModificados)
@@ -431,7 +432,7 @@
         }
 
         async function darLike(idPost) {
-            const res = await fetch(`/api/bitacora/${idPost}/like`, { method: 'POST' });
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}/like`, { method: 'POST' });
             if(res.ok) {
                 const data = await res.json();
                 document.getElementById(`like-count-${idPost}`).textContent = data.likes;
@@ -447,7 +448,7 @@
             if (!texto) return alert("Escribe un comentario.");
 
             const nombreUsuario = rol === 'admin' ? 'Admin 🌿' : 'Usuario 🧑‍🌾';
-            const res = await fetch(`/api/bitacora/${idPost}/comentarios`, {
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}/comentarios`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ usuario: nombreUsuario, texto: texto })
@@ -458,13 +459,13 @@
 
         async function eliminarComentario(idPost, idComentario) {
             if (!confirm("¿Borrar comentario?")) return;
-            const res = await fetch(`/api/bitacora/${idPost}/comentarios/${idComentario}/borrar`, { method: 'POST' });
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}/comentarios/${idComentario}/borrar`, { method: 'POST' });
             if (res.ok) cargarDatos();
         }
 
         async function eliminarEntrada(idPost) {
             if (!confirm("¿Eliminar publicación?")) return;
-            const res = await fetch(`/api/bitacora/${idPost}`, {
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -482,7 +483,7 @@
             const archivo = document.getElementById('imagenHuerto').files[0];
             if (archivo) formData.append('imagen', archivo); 
 
-            const res = await fetch('/api/bitacora', {
+            const res = await fetch(`${API_URL}/api/bitacora`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData 
