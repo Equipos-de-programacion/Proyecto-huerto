@@ -945,7 +945,7 @@
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
-                            <h3>3. Investigación del sistema de riego</h3>
+                            <h3>3. Investigation del sistema de riego</h3>
                             <p>Análisis de métodos eficientes y sustentables para suministrar agua controlada al cultivo.</p>
                             <img src="3.jpg" alt="Investigación del sistema de riego" class="timeline-img">
                         </div>
@@ -1018,7 +1018,6 @@
             const tabla = document.getElementById("tablaProyectosPAEC");
             const filas = tabla.getElementsByTagName("tr");
 
-            // Empieza en 2 para omitir los dos encabezados tr de Bloques y Fechas
             for (let i = 2; i < filas.length; i++) {
                 let celdaActividad = filas[i].getElementsByTagName("td")[0];
                 if (celdaActividad) {
@@ -1050,7 +1049,7 @@
 
             document.getElementById(`seccion-${objetivo}`).classList.add('active');
 
-            if(objetivo === 'producto') btnProd.add ? null : btnProd.classList.add('active-producto');
+            if(objetivo === 'producto') btnProd.classList.add('active-producto');
             if(objetivo === 'cronograma') btnCrono.classList.add('active-cronograma');
             if(objetivo === 'paec') btnPaec.classList.add('active-paec');
             if(objetivo === 'huerto') btnHuer.classList.add('active-huerto');
@@ -1077,7 +1076,7 @@
             localStorage.removeItem('rol');
         });
 
-        // 🟢 SCRIPT MODIFICADO EXCLUSIVAMENTE PARA QUE REGISTRO E INICIO DE SESIÓN FUNCIONEN
+        // 🟢 REGISTRO LOCAL MEDIANTE LOCALSTORAGE
         async function ejecutarRegistro() {
             const nombre = document.getElementById('nombreReg').value.trim();
             const correo = document.getElementById('correoReg').value.trim().toLowerCase();
@@ -1088,29 +1087,26 @@
                 return;
             }
 
-            // Obtener usuarios existentes o crear arreglo vacío
             let usuarios = JSON.parse(localStorage.getItem('usuarios_huerto')) || [];
 
-            // Validar que el correo no esté registrado
             const existe = usuarios.find(u => u.correo === correo);
             if (existe) {
                 alert('Este correo electrónico ya está registrado.');
                 return;
             }
 
-            // Guardar el nuevo usuario
             usuarios.push({ nombre, correo, password });
             localStorage.setItem('usuarios_huerto', JSON.stringify(usuarios));
 
             alert('¡Usuario registrado con éxito! Ahora puedes iniciar sesión.');
             
-            // Limpiar formulario y cambiar a vista login
             document.getElementById('nombreReg').value = '';
             document.getElementById('correoReg').value = '';
             document.getElementById('passReg').value = '';
             cambiarModeloFormulario('login');
         }
 
+        // 🟢 ACCESO CORREGIDO CON REDIRECCIÓN INCORPORADA A DASHBOARD.HTML
         async function ejecutarAcceso() {
             const correo = document.getElementById('correoLogin').value.trim().toLowerCase();
             const password = document.getElementById('passLogin').value;
@@ -1120,13 +1116,9 @@
                 return;
             }
 
-            // Obtener usuarios del localStorage
             let usuarios = JSON.parse(localStorage.getItem('usuarios_huerto')) || [];
-
-            // Buscar coincidencia exacta de correo y contraseña
             const usuarioValido = usuarios.find(u => u.correo === correo && u.password === password);
 
-            // Mantener también tus accesos por defecto que ya tenías programados
             if (usuarioValido || correo.includes('admin') || correo.includes('ana24563')) {
                 localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
                 
@@ -1138,9 +1130,13 @@
                     alert(`¡Bienvenido al Huertito, ${usuarioValido.nombre}!`);
                 }
                 
-                // Limpiar formulario de login
+                // Limpiar formulario
                 document.getElementById('correoLogin').value = '';
                 document.getElementById('passLogin').value = '';
+
+                // 🚀 ESTA ES LA LÍNEA QUE HACÍA FALTA: Envía al usuario a la bitácora
+                window.location.href = 'dashboard.html';
+                
             } else {
                 alert('Correo electrónico o contraseña incorrectos.');
             }
