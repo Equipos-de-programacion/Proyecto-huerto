@@ -82,7 +82,7 @@
 
         .tab-btn.active-producto { background-color: #fff0f2; color: var(--rosa-oscuro); }
         .tab-btn.active-cronograma { background-color: #f7e6e9; color: var(--rosa-oscuro); border: 1px solid #f2cbd2; }
-        .tab-btn.active-paec { background-color: #eaf2e6; color: var(--verde-huerto); border: 1px solid #d0dacb; }
+        .tab-btn.active-paec { background-color: #eaf2e6; color: var(--verde-huerto); border: 1px solid #d0dacb; border: 1px solid #d0dacb; }
         .tab-btn.active-huerto { background-color: var(--verde-huerto); color: var(--blanco); }
 
         .container {
@@ -123,7 +123,7 @@
         .bloque-seccion p { line-height: 1.7; font-size: 1.05rem; text-align: justify; color: #3d4a37; margin-bottom: 0; }
         .columnas-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; align-items: center; }
 
-        /* 📊 CONTENEDOR TIPO EXCEL CON CONGELAMIENTO Y SCROLL TRIPLE AESTHETIC */
+        /* 📊 CONTENEDOR TIPO EXCEL CON CONGELAMIENTO Y SCROLL */
         .contenedor-gantt-excel {
             width: 100%;
             overflow-x: auto;
@@ -194,18 +194,18 @@
             background-color: #fff2f4 !important;
         }
 
-        /* Enlace de descarga de Excel */
+        /* Enlace de visualización externa */
         .btn-descarga-excel {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #107c41; /* Verde característico de Excel */
+            background-color: #107c41; /* Verde de Excel */
             color: white;
             text-decoration: none;
-            padding: 10px 18px;
+            padding: 12px 22px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             margin-top: 15px;
             margin-bottom: 5px;
             transition: background-color 0.2s, transform 0.2s;
@@ -217,9 +217,9 @@
             transform: translateY(-1px);
         }
 
-        /* Clases de Fondos Neutrales extraídos de cronogramaa.xlsx */
+        /* Clases de Fondos Neutrales extraídos del cronograma */
         .bg-gris-excel {
-            background-color: #d9d9d9 !important; /* Días no hábiles / Fines de semana */
+            background-color: #d9d9d9 !important; /* Días no hábiles */
         }
         .bg-blanco-excel {
             background-color: #ffffff;
@@ -318,13 +318,11 @@
 </head>
 <body>
 
-    <!-- 🌳 ENCABEZADO -->
     <div class="header-top">
         <h1>PROYECTO PAEC</h1>
         <p>"Dale besos a tu cora 💋"</p>
     </div>
 
-    <!-- 📋 BARRA DE PESTAÑAS -->
     <div class="tabs-nav-bar">
         <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
             ✨ Presentación MUSU
@@ -342,7 +340,6 @@
 
     <div class="container">
         
-        <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
@@ -400,16 +397,16 @@
             </div>
         </div>
 
-        <!-- 📅 PESTAÑA 2: CRONOGRAMA -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma</h2>
-                <p>Desplaza la tabla hacia la derecha para revisar la planeación por días, o haz clic en el siguiente enlace si deseas abrir el archivo de origen:</p>
+                <p>Desplaza la tabla hacia la derecha para revisar la planeación detallada por días. También puedes consultar el documento de origen en internet presionando el siguiente botón:</p>
                 
-                <!-- Enlace dinámico al archivo original -->
-                <a href="cronogramaa.xlsx" class="btn-descarga-excel" target="_blank" download>
-                    📊 Ver/Descargar Cronograma Original (Excel)
-                </a>
+                <div style="margin: 15px 0;">
+                    <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=sharing" class="btn-descarga-excel" target="_blank">
+                        📊 Ver Cronograma Original (Google Drive)
+                    </a>
+                </div>
 
                 <div class="contenedor-leyenda-excel">
                     <div class="item-leyenda"><div class="cuadro-color" style="background-color: #00b0f0;"></div><span>Fase de Planeación / Ajustes Iniciales</span></div>
@@ -463,7 +460,6 @@
             </div>
         </div>
 
-        <!-- 🌿 PESTAÑA 3: PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
@@ -553,7 +549,6 @@
             </div>
         </div>
 
-        <!-- 🐢 PESTAÑA 4: ACCESO AL HUERTO -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
                 <div class="contenedor-ilustracion-tortuga">
@@ -588,7 +583,6 @@
 
     </div>
 
-    <!-- 🔲 MODAL VISOR PARA FOTOS -->
     <div id="miVisorModal" class="visor-modal" onclick="cerrarVisorModal()">
         <span class="visor-cerrar" onclick="cerrarVisorModal()">&times;</span>
         <img id="imgModalDestino" class="visor-imagen-grande" src="" alt="Ampliación" onclick="event.stopPropagation()">
