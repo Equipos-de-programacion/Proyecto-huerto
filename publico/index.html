@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUSU - Proyecto PAEC Huertito</title>
     <style>
-        /* 🎨 PALETA ROSITA & VERDE ORGÁNICO ORIGINAL */
+        /* 🎨 PALETA DE COLORES: ROSA ESTÉTICO & VERDE ORGÁNICO */
         :root {
             --rosa-principal: #fcd7de;  
             --rosa-intenso: #e58fa2;    
@@ -18,18 +18,16 @@
         }
 
         body {
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--rosa-principal);
             color: var(--texto-oscuro);
-            -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* 🌿 ENCABEZADO ORIGINAL */
         .header-top {
             background: linear-gradient(135deg, var(--rosa-oscuro), var(--rosa-intenso));
             color: var(--blanco);
@@ -40,53 +38,51 @@
 
         .header-top h1 {
             margin: 0;
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 800;
             letter-spacing: 2px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         .header-top p {
             margin: 10px 0 0 0;
-            font-size: 1.3rem;
-            opacity: 0.95;
+            font-size: 1.2rem;
             font-style: italic;
-            font-weight: 500;
         }
 
-        /* 📋 BARRA DE PESTAÑAS NAVEGABLES ORIGINAL */
+        /* 📋 NAVEGACIÓN ENTRE PESTAÑAS */
         .tabs-nav-bar {
             background-color: var(--blanco);
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
             padding: 12px 0;
-            gap: 10px;
+            gap: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .tab-btn {
             background-color: transparent;
             border: none;
-            padding: 10px 22px;
+            padding: 10px 24px;
             border-radius: 20px;
             font-size: 1rem;
             font-weight: bold;
             color: var(--texto-oscuro);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             transition: all 0.2s;
         }
 
-        .tab-btn.active-producto { background-color: #fff0f2; color: var(--rosa-oscuro); }
-        .tab-btn.active-cronograma { background-color: #f7e6e9; color: var(--rosa-oscuro); border: 1px solid #f2cbd2; }
-        .tab-btn.active-paec { background-color: #eaf2e6; color: var(--verde-huerto); border: 1px solid #d0dacb; }
-        .tab-btn.active-huerto { background-color: var(--verde-huerto); color: var(--blanco); }
+        .tab-btn.active-tab {
+            background-color: var(--rosa-oscuro);
+            color: var(--blanco);
+        }
+
+        .tab-btn.active-huerto {
+            background-color: var(--verde-huerto);
+            color: var(--blanco);
+        }
 
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
             margin: 25px auto;
             padding: 0 20px;
@@ -94,8 +90,14 @@
             flex: 1;
         }
 
-        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .tab-content.active { display: block; }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         .bloque-seccion {
             background-color: var(--blanco);
@@ -105,237 +107,245 @@
             margin-bottom: 25px;
         }
 
-        .contenedor-logo-musu {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .logo-musu-presentacion {
-            width: 100%;
-            max-width: 240px; 
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(140, 67, 84, 0.1);
-        }
-
         .bloque-seccion h2 {
             color: var(--rosa-oscuro);
             font-size: 1.8rem;
             margin-top: 0;
             border-bottom: 2px solid var(--rosa-principal);
             padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
+        .columnas-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .caja-foto-integrada {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            border: 4px solid var(--blanco);
+        }
+
+        .caja-foto-integrada img {
+            width: 100%;
+            display: block;
+        }
+
+        /* 🔐 SECCIÓN ACCESO AL HUERTO */
         .grid-huerto-layout {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1fr 1fr;
             gap: 25px;
             background-color: var(--blanco);
-            padding: 25px;
+            padding: 30px;
             border-radius: 24px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.05);
             align-items: center;
         }
 
         .panel-login-derecho {
-            background-color: #ffffff;
-            border: 1px solid #f0f0f0;
-            border-radius: 20px;
-            padding: 35px 25px;
             text-align: center;
-            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .huerto-title {
+            color: var(--verde-huerto);
+            font-size: 2.3rem;
+            font-weight: bold;
+            margin: 0 0 10px 0;
         }
 
         input {
             width: 100%;
             margin-bottom: 14px;
             padding: 12px 15px;
-            border: 1px solid #dcdcdc;
-            border-radius: 12px;
+            border: 1px solid #d0dacb;
+            border-radius: 10px;
             box-sizing: border-box;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
-        .btn-verde-acceso {
-            background-color: var(--verde-huerto);
-            color: white;
-            border: none;
+        button.btn-enviar-huerto {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
+            padding: 13px;
+            background-color: var(--verde-huerto);
+            color: var(--blanco);
+            border: none;
+            border-radius: 10px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
         }
-        .btn-verde-acceso:hover { background-color: var(--verde-hover); }
+
+        button.btn-enviar-huerto:hover {
+            background-color: var(--verde-hover);
+        }
+
+        .opciones-alternas {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #60705a;
+        }
+
+        .link-cambio {
+            color: var(--verde-huerto);
+            font-weight: bold;
+            cursor: pointer;
+        }
 
         .hidden { display: none !important; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .columnas-layout, .grid-huerto-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <div class="header-top">
-        <h1>MUSU</h1>
-        <p>Proyecto PAEC - Huerto Urbano</p>
+        <h1>PROYECTO PAEC</h1>
+        <p>"Dale besos a tu cora 💋"</p>
     </div>
 
     <div class="tabs-nav-bar">
-        <button class="tab-btn active-producto" onclick="cambiarPestana('presentacion')">Presentación</button>
-        <button class="tab-btn active-cronograma" onclick="cambiarPestana('cronograma')">📅 Cronograma</button>
-        <button class="tab-btn active-paec" onclick="cambiarPestana('paec')">🌱 Proyecto PAEC</button>
-        <button class="tab-btn active-huerto" onclick="cambiarPestana('huerto')">Acceso Huerto</button>
+        <button id="btn-tab-prod" class="tab-btn active-tab" onclick="alternarPestana('producto')">✨ Presentación MUSU</button>
+        <button id="btn-tab-huer" class="tab-btn" onclick="alternarPestana('huerto')">🌱 Acceso Huertito</button>
     </div>
 
     <div class="container">
-        <div id="presentacion" class="tab-content active">
+        
+        <!-- PESTAÑA: PRESENTACIÓN -->
+        <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
-                <div class="contenedor-logo-musu">
-                    <img src="logo.png" alt="Logo MUSU" class="logo-musu-presentacion">
+                <h2>📝 Presentación de MUSU</h2>
+                <div class="columnas-layout">
+                    <div>
+                        <p>Musu es un proyecto de cuidado personal creado con el propósito de ofrecer productos naturales para la hidratación y el bienestar de la piel y los labios. Nuestro proyecto está compuesto por un bálsamo labial hidratante, un exfoliante labial y un aceite para manos, codos y rodillas, elaborados con ingredientes naturales como miel, aceite de coco, aceite de almendras, aceite de oliva y vitamina E.</p>
+                        <p>El objetivo de Musu es brindar una alternativa accesible y práctica para el cuidado personal, ayudando a mantener la piel suave e hidratada y los labios saludables.</p>
+                    </div>
+                    <div class="caja-foto-integrada">
+                        <img src="ev1.jpeg" alt="Presentación Musu">
+                    </div>
                 </div>
-                <h2>🌿 Sobre el Proyecto MUSU</h2>
-                <p>Bienvenido a la presentación de nuestro proyecto del huerto escolar urbano...</p>
             </div>
         </div>
 
-        <div id="cronograma" class="tab-content">
-            <div class="bloque-seccion">
-                <h2>📅 Cronograma de Actividades</h2>
-                <p>Aquí se detallan las fechas y tareas planificadas para el huerto escolar urbano...</p>
-            </div>
-        </div>
-
-        <div id="paec" class="tab-content">
-            <div class="bloque-seccion">
-                <h2>🌱 Proyecto PAEC</h2>
-                <p>Información detallada sobre el Programa de Acción Escolar Comunitaria aplicado al Huerto Urbano...</p>
-            </div>
-        </div>
-
-        <div id="huerto" class="tab-content">
+        <!-- PESTAÑA: ACCESO AL HUERTO -->
+        <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
-                <div class="izq-info">
-                    <h2 style="color: var(--verde-huerto);">Seguimiento de la Bitácora</h2>
-                    <p>Inicia sesión o regístrate para publicar fotos, medidas, abonos y revisar el estado general del huerto.</p>
+                <div class="caja-foto-integrada">
+                    <img src="sorpresa.png" alt="Ilustración Huerto">
                 </div>
 
                 <div class="panel-login-derecho">
-                    <h3 id="tituloFormulario">Iniciar Sesión</h3>
-                    <p id="instruccionSub" style="font-size:0.9rem; color:#666;">Ingresa para gestionar y monitorear tus plantas.</p>
-                    
-                    <div id="formularioLogin">
-                        <input type="text" id="correoLogin" placeholder="Correo electrónico">
-                        <input type="password" id="passLogin" placeholder="Contraseña">
-                        <button class="btn-verde-acceso" onclick="ejecutarAcceso()">Ingresar al Huerto</button>
-                        <p style="font-size:0.85rem; margin-top:15px;">¿No tienes cuenta? <a href="#" onclick="cambiarModeloFormulario('registro')">Regístrate aquí</a></p>
-                    </div>
+                    <div class="huerto-title">🌱 Huertito</div>
+                    <p id="instruccionSub" style="color: #60705a; margin-bottom: 20px;">Ingresa para gestionar y monitorear tus plantas.</p>
 
-                    <div id="formularioRegistro" class="hidden">
-                        <input type="text" id="nombreReg" placeholder="Nombre completo">
-                        <input type="text" id="correoReg" placeholder="Correo institucional">
-                        <input type="password" id="passReg" placeholder="Crea una contraseña">
-                        <button class="btn-verde-acceso" onclick="ejecutarRegistro()">Registrarse e Ir al Huerto</button>
-                        <p style="font-size:0.85rem; margin-top:15px;">¿Ya tienes cuenta? <a href="#" onclick="cambiarModeloFormulario('login')">Inicia sesión</a></p>
-                    </div>
+                    <!-- Formulario de Login -->
+                    <form id="formLogin" onsubmit="event.preventDefault(); ejecutarAcceso();">
+                        <input type="email" id="correoLogin" placeholder="Correo electrónico" required>
+                        <input type="password" id="passLogin" placeholder="Contraseña" required>
+                        <button type="submit" class="btn-enviar-huerto">Entrar</button>
+                        <div class="opciones-alternas">
+                            ¿No tienes una cuenta? <span class="link-cambio" onclick="cambiarFormulario('registro')">Regístrate</span>
+                        </div>
+                    </form>
+
+                    <!-- Formulario de Registro -->
+                    <form id="formRegistro" class="hidden" onsubmit="event.preventDefault(); ejecutarRegistro();">
+                        <input type="text" id="nombreReg" placeholder="Nombre completo" required>
+                        <input type="email" id="correoReg" placeholder="Correo electrónico" required>
+                        <input type="password" id="passReg" placeholder="Contraseña" required>
+                        <button type="submit" class="btn-enviar-huerto">Registrarme</button>
+                        <div class="opciones-alternas">
+                            ¿Ya tienes una cuenta? <span class="link-cambio" onclick="cambiarFormulario('login')">Iniciar sesión</span>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        function cambiarPestana(idPestana) {
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById(idPestana).classList.add('active');
-        }
+        // Cambia esto por tu URL real de Codespaces si trabajas en la nube
+        const API_URL = 'http://localhost:3000';
 
-        function cambiarModeloFormulario(modo) {
-            const fLogin = document.getElementById('formularioLogin');
-            const fRegistro = document.getElementById('formularioRegistro');
-            const titulo = document.getElementById('tituloFormulario');
-            const sub = document.getElementById('instruccionSub');
+        function alternarPestana(objetivo) {
+            document.getElementById('seccion-producto').classList.remove('active');
+            document.getElementById('seccion-huerto').classList.remove('active');
+            document.getElementById('btn-tab-prod').classList.remove('active-tab');
+            document.getElementById('btn-tab-huer').classList.remove('active-huerto');
 
-            if(modo === 'login') {
-                fRegistro.classList.add('hidden');
-                fLogin.classList.remove('hidden');
-                titulo.innerText = 'Iniciar Sesión';
-                sub.innerText = 'Ingresa para gestionar y monitorear tus plantas.';
+            if(objetivo === 'producto') {
+                document.getElementById('seccion-producto').classList.add('active');
+                document.getElementById('btn-tab-prod').classList.add('active-tab');
             } else {
-                fLogin.classList.add('hidden');
-                fRegistro.classList.remove('hidden');
-                titulo.innerText = 'Crear Cuenta';
-                sub.innerText = 'Regístrate para ver las fotos y avances del huerto urbano.';
+                document.getElementById('seccion-huerto').classList.add('active');
+                document.getElementById('btn-tab-huer').classList.add('active-huerto');
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('rol');
-        });
+        function cambiarFormulario(modo) {
+            if(modo === 'login') {
+                document.getElementById('formRegistro').classList.add('hidden');
+                document.getElementById('formLogin').classList.remove('hidden');
+                document.getElementById('instruccionSub').innerText = 'Ingresa para gestionar y monitorear tus plantas.';
+            } else {
+                document.getElementById('formLogin').classList.add('hidden');
+                document.getElementById('formRegistro').classList.remove('hidden');
+                document.getElementById('instruccionSub').innerText = 'Crea una cuenta para acceder a la bitácora.';
+            }
+        }
 
-        // 🔧 CORRECCIÓN: Al registrarse guarda la sesión temporal y te manda al dashboard inmediatamente sin trabarse
         async function ejecutarRegistro() {
-            const correo = document.getElementById('correoReg').value.trim();
-            if(!correo) {
-                alert('Por favor ingresa un correo para registrarte.');
-                return;
+            const nombre = document.getElementById('nombreReg').value;
+            const correo = document.getElementById('correoReg').value;
+            const password = document.getElementById('passReg').value;
+
+            const res = await fetch(`${API_URL}/api/registro`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, correo, password })
+            });
+
+            const data = await res.json();
+            if(res.ok) {
+                alert('¡Registro exitoso! Ya puedes iniciar sesión.');
+                cambiarFormulario('login');
+            } else {
+                alert(data.error || 'Error en el registro');
             }
-            alert('¡Usuario registrado localmente! Redireccionando al panel del huerto...');
-            
-            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
-            localStorage.setItem('rol', 'usuario');
-            
-            window.location.href = 'dashboard.html';
         }
 
-        // 🔧 CORRECCIÓN: Al iniciar sesión activa la redirección y elimina el congelamiento
         async function ejecutarAcceso() {
-            const correo = document.getElementById('correoLogin').value.trim();
+            const correo = document.getElementById('correoLogin').value;
             const password = document.getElementById('passLogin').value;
 
-            if(!correo || !password) {
-                alert('Por favor, completa todos los campos.');
-                return;
-            }
+            const res = await fetch(`${API_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, password })
+            });
 
-            try {
-                const res = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo, password })
-                });
-                
-                if (res.ok) {
-                    const data = await res.json();
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('rol', data.rol || 'usuario'); 
-                    window.location.href = 'dashboard.html';
-                } else {
-                    evaluarAccesoSimulado(correo);
-                }
-            } catch (err) {
-                evaluarAccesoSimulado(correo);
-            }
-        }
-
-        function evaluarAccesoSimulado(correo) {
-            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
-            if(correo.includes('admin') || correo.includes('ana24563') || correo.includes('arely24526')) {
-                localStorage.setItem('rol', 'admin');
-                alert('¡Bienvenido Administrador!');
+            const data = await res.json();
+            if(res.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('rol', data.rol);
+                alert('¡Bienvenido al sistema!');
+                window.location.href = 'dashboard.html';
             } else {
-                localStorage.setItem('rol', 'usuario');
-                alert('¡Bienvenido Colaborador!');
+                alert(data.error || 'Credenciales incorrectas');
             }
-            // Forzar redirección al apartado de los cambios del huerto
-            window.location.href = 'dashboard.html';
         }
     </script>
 </body>

@@ -1,33 +1,48 @@
-<script>
-    if(!localStorage.getItem('rol')) {
-        localStorage.setItem('rol', 'admin');
-    }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración Multimedia</title>
+    <style>
+        body { font-family: sans-serif; background-color: #fbd7de; padding: 40px; text-align: center; }
+        .box { background: white; padding: 30px; border-radius: 16px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        button { background-color: #4d693f; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;}
+    </style>
+</head>
+<body>
 
-    const token = localStorage.getItem('token');
-    const rol = localStorage.getItem('rol');
+    <div class="box">
+        <h2>Subida de Fotos al Servidor</h2>
+        <input type="file" id="archivoFoto" accept="image/*"><br><br>
+        <button onclick="subirAlServidor()">Enviar Imagen</button>
+    </div>
 
-    // Cambia esto por la URL larga de tu Codespaces actual
-    const API_URL = 'https://special-acorn-wrqr9vrw494v2544x-3000.app.github.dev';
+    <script>
+        const API_URL = 'http://localhost:3000';
+        const token = localStorage.getItem('token');
 
-    async function subirImagen() {
-        const input = document.getElementById('imagenInput');
-        if(input.files.length === 0) return alert("Elige una foto.");
+        async function subirAlServidor() {
+            const input = document.getElementById('archivoFoto');
+            if(input.files.length === 0) return alert("Por favor selecciona un archivo primero.");
 
-        const formData = new FormData();
-        formData.append('imagen', input.files[0]);
+            const formData = new FormData();
+            formData.append('imagen', input.files[0]);
+            formData.append('tipoPlanta', 'Subida Directa Admin');
+            formData.append('dueno', 'Administrador');
 
-        const res = await fetch(`${API_URL}/api/bitacora`, { 
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token || 'TOKEN_DEMO_HUERTITO'}` },
-            body: formData
-        });
-        
-        if(res.ok) {
-            const data = await res.json();
-            alert('¡Imagen subida con éxito!');
-            window.location.href = '/dashboard.html'; 
-        } else {
-            alert('Error al subir la imagen.');
+            const res = await fetch(`${API_URL}/api/bitacora`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+
+            if(res.ok) {
+                alert('¡Imagen cargada de forma exitosa!');
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Ocurrió un error al procesar el archivo o token caducado.');
+            }
         }
-    }
-</script>
+    </script>
+</body>
+</html>
