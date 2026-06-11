@@ -86,7 +86,7 @@
         .tab-btn.active-huerto { background-color: var(--verde-huerto); color: var(--blanco); }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             width: 100%;
             margin: 25px auto;
             padding: 0 20px;
@@ -123,55 +123,116 @@
         .bloque-seccion p { line-height: 1.7; font-size: 1.05rem; text-align: justify; color: #3d4a37; margin-bottom: 0; }
         .columnas-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; align-items: center; }
 
-        /* 📊 NUEVA TABLA NATIVA DE CRONOGRAMA (EXTRAÍDA DE CRONOGRAMAA.XLSX) */
-        .contenedor-tabla-scroll {
+        /* 📊 CONTENEDOR TIPO EXCEL CON CONGELAMIENTO Y SCROLL TRIPLE AESTHETIC */
+        .contenedor-gantt-excel {
             width: 100%;
             overflow-x: auto;
-            margin-top: 20px;
-            border-radius: 12px;
-            border: 1px solid #f2cbd2;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-        }
-
-        .tabla-cronograma-real {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+            margin-top: 25px;
+            border: 1px solid #e2cbd2;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(140, 67, 84, 0.05);
             background-color: #ffffff;
-            font-size: 0.95rem;
         }
 
-        .tabla-cronograma-real th {
-            background-color: #8c4354;
+        .tabla-gantt-real {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            font-size: 0.88rem;
+        }
+
+        /* Congelar la primera columna (Actividades) igual que en Excel */
+        .tabla-gantt-real th.col-actividad-fija,
+        .tabla-gantt-real td.col-actividad-fija {
+            position: sticky;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 10;
+            width: 320px;
+            min-width: 320px;
+            max-width: 320px;
+            border-right: 2px solid #e2cbd2;
+            box-shadow: 4px 0 8px rgba(0,0,0,0.04);
+        }
+
+        .tabla-gantt-real th {
+            background-color: var(--rosa-oscuro);
             color: #ffffff;
-            padding: 14px;
+            padding: 12px 8px;
             font-weight: 600;
+            text-align: center;
+            border-bottom: 2px solid #723442;
+            border-top: 1px solid #f2cbd2;
+            min-width: 45px;
         }
 
-        .tabla-cronograma-real td {
-            padding: 14px;
-            border-bottom: 1px solid #f9e1e5;
-            color: #4a3b3d;
-            line-height: 1.5;
+        .tabla-gantt-real th.col-actividad-fija {
+            background-color: var(--rosa-oscuro);
+            text-align: left;
+            padding-left: 18px;
+            z-index: 11;
         }
 
-        .tabla-cronograma-real tr:nth-child(even) {
-            background-color: #fffafb;
+        .tabla-gantt-real td {
+            padding: 10px 6px;
+            border-bottom: 1px solid #f7e3e6;
+            border-right: 1px solid #f7e3e6;
+            vertical-align: middle;
+            text-align: center;
         }
 
-        .tabla-cronograma-real tr:hover {
-            background-color: #fff0f2;
+        .tabla-gantt-real td.col-actividad-fija {
+            text-align: left;
+            padding-left: 18px;
+            padding-right: 12px;
+            font-weight: 500;
+            color: #3a2a2d;
+            line-height: 1.4;
         }
 
-        .badge-num {
-            background-color: var(--rosa-intenso);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-right: 6px;
+        .tabla-gantt-real tr:hover td {
+            background-color: #fff2f4 !important;
         }
+
+        /* Clases de Fondos Neutrales extraídos de cronogramaa.xlsx */
+        .bg-gris-excel {
+            background-color: #d9d9d9 !important; /* Días no hábiles / Fines de semana */
+        }
+        .bg-blanco-excel {
+            background-color: #ffffff;
+        }
+
+        /* Estilos base para las celdas pintadas del Gantt */
+        .celda-activa-gantt {
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .celda-activa-gantt::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            width: 90%;
+            height: 70%;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 1px;
+        }
+
+        /* Leyenda explicativa */
+        .contenedor-leyenda-excel {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #fff9fa;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            border: 1px dashed #f2cbd2;
+        }
+        .item-leyenda { display: flex; align-items: center; gap: 6px; }
+        .cuadro-color { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
 
         @media (max-width: 768px) {
             .columnas-layout { grid-template-columns: 1fr; }
@@ -220,9 +281,6 @@
         .opciones-alternas { margin-top: 15px; font-size: 0.85rem; color: #60705a; }
         .link-cambio { color: var(--verde-huerto); font-weight: bold; cursor: pointer; text-decoration: none; }
         .link-cambio:hover { text-decoration: underline; }
-        .caja-balsamo-promocional { margin-top: 25px; border: 1px dashed var(--rosa-intenso); background-color: var(--rosa-tarjeta); border-radius: 14px; padding: 15px; font-size: 0.85rem; color: var(--rosa-oscuro); line-height: 1.4; text-align: center; }
-        .btn-enlace-balsamo { display: inline-block; margin-top: 10px; background-color: var(--rosa-intenso); color: white; padding: 8px 18px; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 0.82rem; transition: background 0.2s; }
-        .btn-enlace-balsamo:hover { background-color: #d47a8e; }
 
         .hidden { display: none !important; }
 
@@ -249,7 +307,7 @@
             ✨ Presentación MUSU
         </button>
         <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">
-            📅 Cronograma
+            📅 Cronograma Original
         </button>
         <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">
             🌿 Proyecto PAEC
@@ -273,12 +331,6 @@
                         <p>Musu es un proyecto de cuidado personal creado con el propósito de ofrecer productos naturales para la hidratación y el bienestar de la piel y los labios. Nuestro proyecto está compuesto por un bálsamo labial hidratante, un exfoliante labial y un aceite para manos, codos y rodillas, elaborados con ingredientes naturales como miel, aceite de coco, aceite de almendras, aceite de oliva y vitamina E.</p>
                         <br>
                         <p>El objetivo de Musu es brindar una alternativa accesible y práctica para el cuidado personal, ayudando a mantener la piel suave e hidratada y los labios saludables. A través de la elaboración de estos productos, buscamos promover el uso de ingredientes naturales y demostrar que es posible crear productos de calidad de forma sencilla y económica.</p>
-                        
-                        <div class="caja-balsamo-promocional">
-                            Conoce la línea de <strong>Bálsamos Labiales Naturales MUSU</strong> de nuestro huerto.
-                            <br>
-                            <a href="https://www.instagram.com/p/DZI-aLJoxfY/" target="_blank" class="btn-enlace-balsamo">💋 Ver Nuestro Bálsamo</a>
-                        </div>
                     </div>
                     <div class="caja-foto-integrada">
                         <img src="ev2.jpeg" alt="Presentación de Integrantes" onclick="abrirVisorModal(this.src)" style="cursor:pointer; width:100%;">
@@ -325,49 +377,58 @@
             </div>
         </div>
 
-        <!-- 📅 PESTAÑA 2: CRONOGRAMA NATIVO DESDE EL EXCEL (CERO ENLACES EXTERNOS / CERO LOGINS) -->
+        <!-- 📅 PESTAÑA 2: CRONOGRAMA EXACTO MAPEADO DESDE EL EXCEL ORIGINAL -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
-                <h2>📅 Cronograma de Actividades del Proyecto</h2>
-                <p>Lista oficial de las tareas y avances planificados para el desarrollo integral del Huertito y los productos cosméticos:</p>
+                <h2>📅 Diagrama de Gantt (Desde cronogramaa.xlsx)</h2>
+                <p>Desplaza la tabla hacia la derecha para ver los días programados y los bloques de colores correspondientes a cada tarea realizada:</p>
                 
-                <div class="contenedor-tabla-scroll">
-                    <table class="tabla-cronograma-real">
+                <div class="contenedor-leyenda-excel">
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #00b0f0;"></div><span>Fase de Planeación / Ajustes Iniciales</span></div>
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #0070c0;"></div><span>Plantación y Riego Primario</span></div>
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #92d050;"></div><span>Monitoreo y Abonos</span></div>
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #7030a0;"></div><span>Fase Digital / Código Web</span></div>
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #ff66cc;"></div><span>Elaboración de Productos Cosméticos</span></div>
+                    <div class="item-leyenda"><div class="cuadro-color" style="background-color: #d9d9d9;"></div><span>Fines de Semana</span></div>
+                </div>
+
+                <div class="contenedor-gantt-excel">
+                    <table class="tabla-gantt-real">
                         <thead>
                             <tr>
-                                <th style="width: 8%;">Fase</th>
-                                <th>Actividades Desarrolladas</th>
+                                <th class="col-actividad-fija">Actividades</th>
+                                <th>25/02</th><th>26/02</th><th>27/02</th><th>28/02</th><th>01/03</th><th>02/03</th><th>03/03</th><th>04/03</th><th>05/03</th><th>06/03</th><th>07/03</th><th>08/03</th><th>09/03</th><th>10/03</th><th>11/03</th><th>12/03</th><th>13/03</th><th>14/03</th><th>15/03</th><th>16/03</th><th>17/03</th><th>18/03</th><th>19/03</th><th>20/03</th><th>21/03</th><th>22/03</th><th>23/03</th><th>24/03</th><th>25/03</th><th>26/03</th><th>27/03</th><th>28/03</th><th>29/03</th><th>30/03</th><th>31/03</th><th>01/04</th><th>02/04</th><th>03/04</th><th>04/04</th><th>05/04</th><th>06/04</th><th>07/04</th><th>08/04</th><th>09/04</th><th>10/04</th><th>11/04</th><th>12/04</th><th>13/04</th><th>14/04</th><th>15/04</th><th>16/04</th><th>17/04</th><th>18/04</th><th>19/04</th><th>20/04</th><th>21/04</th><th>22/04</th><th>23/04</th><th>24/04</th><th>25/04</th><th>26/04</th><th>27/04</th><th>28/04</th><th>29/04</th><th>30/04</th><th>01/05</th><th>02/05</th><th>03/05</th><th>04/05</th><th>05/05</th><th>06/05</th><th>07/05</th><th>08/05</th><th>09/05</th><th>10/05</th><th>11/05</th><th>12/05</th><th>13/05</th><th>14/05</th><th>15/05</th><th>16/05</th><th>17/05</th><th>18/05</th><th>19/05</th><th>20/05</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><span class="badge-num">01</span></td><td>Se seleccionó una planta considerando el objetivo del proyecto "PAEC POLINIZADOR", investigando sobre sus cuidados, crecimiento, riego, plantación, suelo, tipo de abono, etc.</td></tr>
-                            <tr><td><span class="badge-num">02</span></td><td>Se realizaron los surcos, sin embargo, tuvimos confusiones con los espacios designados de diferentes grupos, por lo que se terminó por realizar nuevos surcos en otra zona y trabajar en ellos.</td></tr>
-                            <tr><td><span class="badge-num">03</span></td><td>En la semana posterior por equipos se estuvo plantando nuestra planta asignada la "Lavanda".</td></tr>
-                            <tr><td><span class="badge-num">04</span></td><td>Después de plantar la lavanda se le va a aplicar la primera aplicación del abono.</td></tr>
-                            <tr><td><span class="badge-num">05</span></td><td>Se le da cuidados más seguidos para que pueda agarrar la raíz de la lavanda.</td></tr>
-                            <tr><td><span class="badge-num">06</span></td><td>Se registró el crecimiento de la lavanda para después ver su evolución.</td></tr>
-                            <tr><td><span class="badge-num">07</span></td><td>Se investigó varias formas de sistema de riego para las lavandas, para que se regaran antes en vacaciones.</td></tr>
-                            <tr><td><span class="badge-num">08</span></td><td>Se seleccionó un sistema de riego y se aplicó a su lavanda específica para vacaciones.</td></tr>
-                            <tr><td><span class="badge-num">09</span></td><td>Para el regreso de vacaciones se le aplicó la segunda aplicación de abono.</td></tr>
-                            <tr><td><span class="badge-num">10</span></td><td>Se siguió el registro de la medición de la lavanda.</td></tr>
-                            <tr><td><span class="badge-num">11</span></td><td>Regar la planta diario y llenar el sistema de riego para cuando haya puentes o sea fin de semana.</td></tr>
-                            <tr><td><span class="badge-num">12</span></td><td>Tomar evidencia del riego y los cuidados de la lavanda.</td></tr>
-                            <tr><td><span class="badge-num">13</span></td><td>Revisar las características de la lavanda como color de las hojas, tamaño de estas, la humedad de la planta, si tiene hojas secas u otra cosa, etc.</td></tr>
-                            <tr><td><span class="badge-num">14</span></td><td>Discutir las herramientas digitales que vamos a utilizar para la creación de la página web como: render, mongo, github, visual studio code, python, etc.</td></tr>
-                            <tr><td><span class="badge-num">15</span></td><td>Empezar a hacer el código para el archivo html.</td></tr>
-                            <tr><td><span class="badge-num">16</span></td><td>Revisar que el código esté bien estructurado y que no tenga errores.</td></tr>
-                            <tr><td><span class="badge-num">17</span></td><td>Empezar a diseñar las secciones que se van a ocupar como inicio de sesión, registro, etc.</td></tr>
-                            <tr><td><span class="badge-num">18</span></td><td>Investigar qué ingredientes naturales o caseros son buenos para la piel y los labios.</td></tr>
-                            <tr><td><span class="badge-num">19</span></td><td>Seleccionar los productos que se van a realizar considerando el presupuesto, tiempo y facilidad de elaboración.</td></tr>
-                            <tr><td><span class="badge-num">20</span></td><td>Hacer un listado de los ingredientes y materiales que se van a ocupar para la elaboración de los productos.</td></tr>
-                            <tr><td><span class="badge-num">21</span></td><td>Investigar la función y beneficios de cada ingrediente seleccionado para tener un mayor conocimiento de lo que se está haciendo.</td></tr>
-                            <tr><td><span class="badge-num">22</span></td><td>Elaborar el primer prototipo del producto para ver cómo queda la consistencia, olor, color, etc. y hacer modificaciones si es necesario.</td></tr>
-                            <tr><td><span class="badge-num">23</span></td><td>Hacer la receta final de los productos anotando bien las cantidades que se ocuparon para que todos queden iguales.</td></tr>
-                            <tr><td><span class="badge-num">24</span></td><td>Comprar los materiales e ingredientes finales para la elaboración de los productos que se van a presentar.</td></tr>
-                            <tr><td><span class="badge-num">25</span></td><td>Elaborar los productos finales con limpieza y cuidado.</td></tr>
-                            <tr><td><span class="badge-num">26</span></td><td>Diseñar la etiqueta de los productos con el logotipo, nombre del producto, ingredientes, etc.</td></tr>
-                            <tr><td><span class="badge-num">27</span></td><td>Envasar y etiquetar los productos finales para que tengan una buena presentación al momento de entregarlos.</td></tr>
-                            <tr><td><span class="badge-num">28</span></td><td>Presentar los productos finales explicando su proceso de elaboración, beneficios y costos.</td></tr>
+                            <tr><td class="col-actividad-fija">se selecciono una planta considerando el objetivo del proyecto "PAEC POLINIZADOR", investigando sobre sus cuidados, crecimiento, riego, plantación, suelo, tipo de abono, etc.</td><td style="background-color: #00b0f0;" class="celda-activa-gantt"></td><td style="background-color: #00b0f0;" class="celda-activa-gantt"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td class="bg-blanco-excel"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se realizaron los surcos, sin embargo, tuvimos confusiones con los espacios designados de diferentes grupos, por lo que se termino por realizar nuevos surcos en otro zona y trabajar en ellos.</td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td style="background-color: #00b0f0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td class="bg-blanco-excel"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">en la semana posterior por equipos se estuvieron plantando nuestra planta asignada la "Lavanda"</td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">después de plantar la lavanda se le va a aplicar la primera aplicación del abono</td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se le da cuidados mas seguidos para que pueda agarrar la raiz de la lavanda</td><td colspan="5" class="bg-blanco-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td style="background-color: #0070c0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td colspan="65" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se registro el crecimiento de la lavanda para después ver su crecimiento</td><td colspan="13" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td colspan="58" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se investigo varias formas de sistema de riego para las lavandas, para que se regaran antes en vacaciones</td><td colspan="20" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="57" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se selecciono un sistema de riego y se aplico a su lavanda especifica para vacaciones</td><td colspan="27" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="51" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">para el regreso de vaciones se le aplico la segunda aplicación de abono</td><td colspan="34" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="44" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">se siguio el registro de la medición de la lavanda</td><td colspan="40" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="37" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">regar la planta diario y llenar el sistema de riego para cuando aya puentes o sea fin de semana</td><td colspan="47" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="30" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">tomar evidencia del riego y los cuidados de la lavanda</td><td colspan="54" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="23" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">revisar las caracteristicas de la lavanda como color de las hojas, tamaño de estas, la humedad de la planta, si tiene hojas secas u otra cosa, etc.</td><td colspan="61" class="bg-blanco-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #92d050;" class="celda-activa-gantt"></td><td colspan="16" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">discutir las herramientas digitales que vamos a utilizar para la creacion de la pagina web como: render, mongo, github, visual studio code, python, etc.</td><td colspan="68" class="bg-blanco-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td colspan="9" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">empezar a hacer el codigo para el archivo html</td><td colspan="75" class="bg-blanco-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td></tr>
+                            <tr><td class="col-actividad-fija">revisar que el codigo este bien estructurado y que no tenga errores</td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td class="bg-blanco-excel"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td colspan="80" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">empezar a diseñar las secciones que se van a ocupar como inicio de sesion, registro, etc.</td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td colspan="80" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">investigar que ingredientes naturales o caseros son buenos para la piel y los labios</td><td colspan="5" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">seleccionar los productos que se van a realizar considerando el presupuesto, tiempo y facilidad de elaboracion</td><td colspan="12" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="65" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">hacer un listado de los ingredientes y materiales que se van a ocupar para la elaboracion de los productos</td><td colspan="19" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="58" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">investigar la funcion y beneficios de cada ingrediente seleccionado para tener un mayor conocimiento de lo que se esta haciendo</td><td colspan="26" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="51" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">elaborar el primer prototipo del producto para ver como queda la consistencia, olor, color, etc. y hacer modificaciones si es necesario</td><td colspan="33" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="44" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">hacer la receta final de los productos anotando bien las cantidades que se ocuparon para que todos queden iguales</td><td colspan="40" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="37" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">comprar los materiales e ingredientes finales para la elaboracion de los productos que se van a presentar</td><td colspan="47" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="30" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">elaborar los productos finales con limpieza y cuidado</td><td colspan="54" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="23" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">diseñar la etiqueta de los productos con el logotipo, nombre del producto, ingredientes, etc.</td><td colspan="61" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="16" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">envasar y etiquetar los productos finales para que tengan una buena presentacion al momento de entregarlos</td><td colspan="68" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="9" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">presentar los productos finales explicando su proceso de elaboracion, beneficios y costos</td><td colspan="75" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td></tr>
                         </tbody>
                     </table>
                 </div>
