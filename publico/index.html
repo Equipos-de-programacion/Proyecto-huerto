@@ -180,21 +180,6 @@
             margin-bottom: 25px;
         }
 
-        .cronograma-img {
-            width: 100%;
-            height: auto;
-            border-radius: 16px;
-            border: 1px solid #f7d5dc;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: zoom-in;
-        }
-
-        .cronograma-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 25px rgba(229, 143, 162, 0.25);
-        }
-
         .contenedor-boton-drive {
             text-align: center;
             margin-top: 20px;
@@ -524,7 +509,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 📊 👑 DISEÑO DEL DIAGRAMA DE GANTT EXCEL */
+        /* =========================================================================
+           📊 👑 DISEÑO EXCLUSIVO DEL DIAGRAMA DE GANTT (IGUAL AL EXCEL) 👑
+           ========================================================================= */
         .gantt-contenedor-scroll {
             width: 100%;
             overflow-x: auto;
@@ -541,7 +528,7 @@
             width: 100%;
             font-size: 0.85rem;
             text-align: left;
-            min-width: 3400px;
+            min-width: 3200px;
         }
 
         .tabla-gantt-interactive th.col-sticky-actividad,
@@ -610,7 +597,10 @@
         .bloque-gris { background-color: #d9d9d9 !important; color: #404040 !important; font-weight: bold; }
         .bloque-amarillo { background-color: #ffffcc !important; color: #5c5c00 !important; font-weight: bold; }
 
-        .dia-vacio { color: #b0b0b0; font-size: 0.8rem; }
+        .dia-vacio {
+            color: #d0d0d0;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -621,47 +611,208 @@
     </div>
 
     <div class="tabs-nav-bar">
-        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">✨ Presentación MUSU</button>
-        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">📅 Cronograma</button>
-        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">🌿 Proyecto PAEC</button>
-        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestañas('huerto')">🌱 Acceso Huertito</button>
+        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
+            ✨ Presentación MUSU
+        </button>
+        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">
+            📅 Cronograma
+        </button>
+        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">
+            🌿 Proyecto PAEC
+        </button>
+        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestañas('huerto')">
+            🌱 Acceso Huertito
+        </button>
     </div>
 
     <div class="container">
         
+        <!-- PESTAÑA 1: PRESENTACIÓN MUSU -->
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
-                <div class="contenedor-logo-musu"><img src="logo.jpeg" alt="Logo" class="logo-musu-presentacion"></div>
+                <div class="contenedor-logo-musu">
+                    <img src="logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
+                </div>
                 <h2>📝 Presentación del Proyecto</h2>
                 <div class="columnas-layout">
                     <div>
-                        <p>Musu es un proyecto de cuidado personal creado con el propósito de ofrecer productos naturales para la hidratación y el bienestar de la piel y los labios...</p>
+                        <p>Musu es un proyecto de cuidado personal creado con el propósito de ofrecer productos naturales para la hidratación y el bienestar de la piel y los labios. Nuestro proyecto está compuesto por un bálsamo labial hidratante, un exfoliante labial y un aceite para manos, codos y rodillas, elaborados con ingredientes naturales como miel, aceite de coco, aceite de almendras, aceite de oliva y vitamina E.</p>
+                        <br>
+                        <p>El objetivo de Musu es brindar una alternativa accesible y práctica para el cuidado personal, ayudando a mantener la piel suave e hidratada y los labios saludables. A través de la elaboración de estos productos, buscamos promover el uso de ingredientes naturales y demostrar que es posible crear productos de calidad de forma sencilla y económica.</p>
+                        
                         <div class="caja-balsamo-promocional">
-                            Conoce la línea de <strong>Bálsamos Labiales Naturales MUSU</strong>.<br>
+                            Conoce la línea de <strong>Bálsamos Labiales Naturales MUSU</strong> de nuestro huerto.
+                            <br>
                             <a href="https://www.instagram.com/p/DZI-aLJoxfY/" target="_blank" class="btn-enlace-balsamo">💋 Ver Nuestro Bálsamo</a>
                         </div>
                     </div>
-                    <div class="caja-foto-integrada"><img src="ev2.jpeg" alt="Integrantes"></div>
+                    <div class="caja-foto-integrada">
+                        <img src="ev2.jpeg" alt="Presentación de Integrantes del Equipo Musu">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bloque-seccion">
+                <h2>📊 Resultados del Proyecto</h2>
+                <div class="columnas-layout">
+                    <div>
+                        <p>Cuando presentamos nuestro proyecto, nos dimos cuenta de que algunas personas no entendían completamente la finalidad de nuestros productos al verlos por primera vez. Por eso, decidimos explicar más a fondo en qué consistían, cuáles eran sus ingredientes y los beneficios que aportaban para el cuidado de la piel y los labios.</p>
+                        <br>
+                        <p>Conforme fuimos explicando el proceso de elaboración y las ventajas de utilizar ingredientes naturales, las personas comenzaron a mostrar más interés en el proyecto. Al final de la presentación, la mayoría comprendió mejor nuestra propuesta y expresó comentarios positivos sobre los productos.</p>
+                    </div>
+                    <div class="caja-foto-integrada">
+                        <img src="ev1.jpeg" alt="Evidencia de Presentación de Cartel Musu">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bloque-seccion">
+                <h2>👩‍🍳 Procesos de Elaboración</h2>
+                <div class="grid-elaboracion">
+                    <div class="tarjeta-receta">
+                        <h4>Elaboración del aceite para manos, codos y rodillas</h4>
+                        <p>Primero mezclamos las 12 cucharadas de aceite de almendras con las 6½ cucharadas de aceite de oliva. Después agregamos el contenido de las 10 cápsulas de vitamina E y revolvimos bien hasta obtener una mezcla uniforme.</p>
+                    </div>
+                    <div class="tarjeta-receta">
+                        <h4>Elaboración del bálsamo hidratante</h4>
+                        <p>Comenzamos colocando la cera de abeja, el aceite de coco y el aceite de oliva en un recipiente resistente al calor. Después derretimos los ingredientes a baño María mientras mezclábamos suavemente. Agregamos la vitamina E, la miel y la esencia.</p>
+                    </div>
+                    <div class="tarjeta-receta">
+                        <h4>Elaboración del exfoliante labial</h4>
+                        <p>Mezclamos la miel, el aceite de coco y el azúcar en un recipiente pequeño. Revolvimos todos los ingredientes hasta obtener una pasta uniforme. Finalmente, el exfoliante quedó listo.</p>
+                    </div>
+                </div>
+                
+                <div class="galeria-fotos-grid">
+                    <div class="caja-foto-integrada"><img src="ev4.jpeg" alt="Paso de preparación Musu 1"></div>
+                    <div class="caja-foto-integrada"><img src="ev3.jpeg" alt="Paso de preparación Musu 2"></div>
+                    <div class="caja-foto-integrada"><img src="ev5.jpeg" alt="Paso de preparación Musu 3"></div>
                 </div>
             </div>
         </div>
 
+        <!-- PESTAÑA 2: CRONOGRAMA INTERACTIVO COMPLETO -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma General de Actividades</h2>
-                <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad...">
+                <p>Estructura oficial del Diagrama de Gantt organizada por los 18 bloques cronológicos y sus rangos de fechas extraídos del archivo de planeación.</p>
+                
+                <div class="contenedor-boton-drive" style="text-align: left; margin-bottom: 20px;">
+                    <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive" style="padding: 10px 20px; font-size: 0.95rem;">
+                        📁 Descargar Archivo Excel Original Directo ↗
+                    </a>
+                </div>
+
+                <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad o palabra clave...">
+
                 <div class="gantt-contenedor-scroll">
                     <table class="tabla-gantt-interactive" id="tablaProyectosPAEC">
                         <thead>
                             <tr>
                                 <th class="col-sticky-actividad">Bloque / Descripción de Actividad</th>
-                                <th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th>
+                                <th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th><th>Bloque 4</th><th>Bloque 5</th>
+                                <th>Bloque 6</th><th>Bloque 7</th><th>Bloque 8</th><th>Bloque 9</th><th>Bloque 10</th>
+                                <th>Bloque 11</th><th>Bloque 12</th><th>Bloque 13</th><th>Bloque 14</th><th>Bloque 15</th>
+                                <th>Bloque 16</th><th>Bloque 17</th><th>Bloque 18</th>
+                            </tr>
+                            <tr class="fila-fechas-excel">
+                                <th class="col-sticky-actividad">Semanas / Duración Real</th>
+                                <th>25/02 a 26/02</th><th>27/02</th><th>02/03 a 13/03</th><th>02/03 a 13/03</th><th>16/03 a 20/03</th>
+                                <th>19/03</th><th>23/03 a 26/03</th><th>23/03 a 26/03</th><th>13/04 a 17/04</th><th>16/04 a 17/04</th>
+                                <th>20/04 a 24/04</th><th>23/04 a 24/04</th><th>27/04 a 30/04</th><th>27/04 a 30/04</th><th>04/05 a 08/05</th>
+                                <th>07/05 a 08/05</th><th>11/05 a 15/05</th><th>14/05 a 15/05</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="col-sticky-actividad">Se seleccionó una planta considerando el objetivo del proyecto...</td>
-                                <td class="bloque-azul-claro">Planificación</td><td>-</td><td>-</td>
+                                <td class="col-sticky-actividad">Selección de planta considerando el objetivo del proyecto "PAEC POLINIZADOR" e investigación de cuidados.</td>
+                                <td class="bloque-azul-claro">Planificación</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Trazado y excavación de surcos en zona asignada definitiva del huerto.</td>
+                                <td class="dia-vacio">-</td><td class="bloque-azul-marino">Suelo</td><td class="bloque-azul-marino">Ajuste</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Plantación oficial por equipos de nuestra planta designada: La Lavanda.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-verde">Siembra</td><td class="bloque-verde">Siembra</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Aplicación de la primera dosis de abono orgánico para nutrición del suelo.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-morado">Nutrición</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Riego intensivo diario y monitoreo para el enraizamiento inicial de la lavanda.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-rosa">Monitoreo</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Evaluación intermedia: Reporte del estado de adaptación de las plantas de lavanda.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-rojo">Reporte</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Primera poda de mantenimiento y retiro preventivo de malezas competitivas.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-gris">Limpieza</td><td class="bloque-gris">Limpieza</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Recolección de las primeras muestras florales para pruebas de destilación.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="bloque-amarillo">Muestreo</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Segunda aplicación programada de nutrientes y abono de descomposición lenta.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-morado">Nutrición</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Medición antropométrica de las plantas (altura, cobertura y densidad de hojas).</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-rosa">Medición</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Inspección fitosanitaria integral para la detección temprana de plagas.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-azul-claro">Sanidad</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Diseño del plan de contingencia de riego ante el incremento estacional de temperatura.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-azul-marino">Diseño</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Cosecha principal selectiva de sumidades florales para producción cosmética.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-verde">Cosecha</td><td class="bloque-verde">Cosecha</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Transporte y secado controlado de la materia prima en el laboratorio.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-amarillo">Secado</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Elaboración física en laboratorio de los lotes comerciales de bálsamos y aceites MUSU.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-rosa">Producción</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Control de calidad final, envasado hermético y etiquetado con diseño sustentable.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-rojo">Empaque</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Montaje del stand promocional y presentación del proyecto final ante la comunidad.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-azul-claro">Exposición</td><td class="bloque-azul-claro">Exposición</td>
+                            </tr>
+                            <tr>
+                                <td class="col-sticky-actividad">Cierre del ciclo agrícola, preparación del suelo para descanso y balance final PAEC.</td>
+                                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                                <td class="bloque-gris">Cierre</td>
                             </tr>
                         </tbody>
                     </table>
@@ -669,81 +820,127 @@
             </div>
         </div>
 
+        <!-- PESTAÑA 3: PROYECTO PAEC EXPLICATIVO -->
         <div id="seccion-paec" class="tab-content">
             <div class="bloque-seccion">
-                <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
-                <ul class="lista-estilizada">
-                    <li><strong>ARELY DENISSE BARAJAS RODRÍGUEZ</strong></li>
-                    <li><strong>MBALIA DESIREE ORTEGA OLAEZ</strong></li>
-                    <li><strong>ANA MARICELA RINCÓN TOVAR</strong></li>
-                </ul>
+                <h2 class="verde-titulo">🌿 Proyecto PAEC Polinizador</h2>
+                <p>El Programa de Ambientalización Escolar y Comunitaria (PAEC) vincula el desarrollo técnico sustentable con la preservación ecológica. Nuestra aportación directa al huerto escolar es el cultivo estratégico de <strong>Lavándula angustifolia (Lavanda)</strong>, seleccionada minuciosamente para cumplir el rol fundamental de agente atractor de especies polinizadoras (abejas, mariposas y colibríes), mejorando así la biodiversidad vegetal de toda la institución.</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>Fase 1: Diagnóstico de Suelo</h3>
+                            <p>Análisis del pH y remoción de maleza densa para asegurar la viabilidad de la raíz.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>Fase 2: Trazado Técnico</h3>
+                            <p>Corrección geométrica de surcos tras resolver interferencias de espacios entre grupos.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>Fase 3: Siembra Colectiva</h3>
+                            <p>Establecimiento de las plántulas de lavanda con distanciamiento óptimo para su radiación solar.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>Fase 4: Consolidación</h3>
+                            <p>Riegos controlados y nutrición orgánica para acelerar el desarrollo floral del polinizador.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- PESTAÑA 4: ACCESO AL HUERTITO INTERFAZ COMPLETA -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
-                <div class="contenedor-ilustracion-tortuga"><img src="sorpresa.png" alt="Tortuga"></div>
+                <div class="contenedor-ilustracion-tortuga">
+                    <img src="tortuga.jpeg" alt="Ilustración Orgánica del Huerto Escolar">
+                </div>
+                
                 <div class="panel-login-derecho">
-                    <img src="kike.png" alt="PAEC" class="logo-paec-original">
-                    <div class="huerto-title">🌱 Huertito</div>
-                    <div id="instruccionSub" class="huerto-subtitle">Ingresa para gestionar tu planta.</div>
-
-                    <form id="formLogin" onsubmit="event.preventDefault(); ejecutarAcceso();">
-                        <input type="email" id="correoLogin" placeholder="Correo electrónico" required autocomplete="username">
-                        <input type="password" id="passLogin" placeholder="Contraseña" required autocomplete="current-password">
-                        <button type="submit" class="btn-enviar-huerto">Entrar</button>
+                    <img src="paec_logo.png" alt="Logo PAEC Oficial" class="logo-paec-original">
+                    <h3 class="huerto-title">El Huertito</h3>
+                    <p class="huerto-subtitle">Bitácora de Monitoreo Agrícola Interno</p>
+                    
+                    <form id="formAccesoHuertito" onsubmit="validarAccesoHuerto(event)">
+                        <input type="text" id="usuarioHuerto" placeholder="Usuario Institucional" required>
+                        <input type="password" id="passHuerto" placeholder="Código de Acceso PAEC" required>
+                        <button type="submit" class="btn-enviar-huerto">Ingresar al Panel 🌱</button>
                     </form>
+                    
+                    <div class="opciones-alternas">
+                        ¿Olvidaste las credenciales de tu equipo? <br>
+                        <span class="link-cambio" onclick="alert('Contacta al Administrador General del proyecto PAEC o a tu jefe de laboratorio para restablecer el código.')">Solicitar asistencia técnica</span>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- 💡 CONTROLADORES LÓGICOS JAVASCRIPT EXCLUSIVOS -->
     <script>
-        // Cambia esto por la URL larga de tu Codespaces actual (Mantén el puerto 3000)
-        const API_URL = 'https://special-acorn-wrqr9vrw494v2544x-3000.app.github.dev';
+        // Manejador del Sistema de Pestañas Navegables Original
+        function alternarSeccionPestañas(nombrePestaña) {
+            const contenidos = document.querySelectorAll('.tab-content');
+            contenidos.forEach(c => c.classList.remove('active'));
 
-        function alternarSeccionPestañas(objetivo) {
-            const vistas = ['producto', 'cronograma', 'paec', 'huerto'];
-            vistas.forEach(v => document.getElementById(`seccion-${v}`).classList.remove('active'));
-            document.getElementById(`seccion-${objetivo}`).classList.add('active');
+            const botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(b => {
+                b.classList.remove('active-producto', 'active-cronograma', 'active-paec', 'active-huerto');
+            });
+
+            const contenidoActivo = document.getElementById('seccion-' + nombrePestaña);
+            if (contenidoActivo) contenidoActivo.classList.add('active');
+
+            const botonActivo = document.getElementById('btn-tab-' + nombrePestaña.substring(0, 4));
+            if (botonActivo) {
+                if (nombrePestaña === 'producto') botonActivo.classList.add('active-producto');
+                if (nombrePestaña === 'cronograma') botonActivo.classList.add('active-cronograma');
+                if (nombrePestaña === 'paec') botonActivo.classList.add('active-paec');
+                if (nombrePestaña === 'huerto') botonActivo.classList.add('active-huerto');
+            }
         }
 
-        async function ejecutarAcceso() {
-            const correo = document.getElementById('correoLogin').value.trim();
-            const password = document.getElementById('passLogin').value;
+        // Buscador Predictivo del Diagrama de Gantt
+        function filtrarTablaCronograma() {
+            const input = document.getElementById('inputBuscarCrono');
+            const filtro = input.value.toLowerCase().trim();
+            const tabla = document.getElementById('tablaProyectosPAEC');
+            const filas = tabla.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-            try {
-                const res = await fetch(`${API_URL}/api/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo, password })
-                });
-                const data = await res.json();
-
-                if (res.ok) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('rol', data.rol || 'usuario'); 
-                    window.location.href = 'dashboard.html';
-                } else {
-                    evaluarAccesoSimulado(correo);
+            for (let i = 0; i < filas.length; i++) {
+                const celdaActividad = filas[i].getElementsByClassName('col-sticky-actividad')[0];
+                if (celdaActividad) {
+                    const textoCelda = celdaActividad.textContent || celdaActividad.innerText;
+                    if (textoCelda.toLowerCase().indexOf(filtro) > -1) {
+                        filas[i].classList.remove('hidden');
+                    } else {
+                        filas[i].classList.add('hidden');
+                    }
                 }
-            } catch (err) {
-                // Si falla la red o está apagado, entra en modo simulación para que no se congele
-                evaluarAccesoSimulado(correo);
             }
         }
 
-        function evaluarAccesoSimulado(correo) {
-            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
-            if(correo.includes('admin') || correo.includes('arely24526')) {
-                localStorage.setItem('rol', 'admin');
-                alert('¡Modo Admin Simulado!');
+        /* 🔒 MODIFICACIÓN SOLICITADA: DIRECCIÓN REAL AL HUERTO PROTEGIDO */
+        function validarAccesoHuerto(event) {
+            event.preventDefault(); // Evita recargar la página entera
+            const user = document.getElementById('usuarioHuerto').value;
+            const pass = document.getElementById('passHuerto').value;
+            
+            // Validación de credenciales locales fijas
+            if (user.toLowerCase() === 'musu' && pass === 'paec2026') {
+                alert('¡Acceso autorizado! Cargando base de datos del Huertito...');
+                // Redirección directa al archivo del dashboard manejado en tu servidor
+                window.location.href = '/dashboard'; 
             } else {
-                localStorage.setItem('rol', 'usuario');
-                alert('¡Modo Colaborador Simulado!');
+                alert('Credenciales incorrectas. Verifique el usuario de equipo PAEC asignado.');
             }
-            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
