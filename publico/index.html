@@ -110,7 +110,6 @@
             margin-bottom: 25px;
         }
 
-        /* Tamaño original de tu Logo en Index 7 */
         .logo-musu-presentacion {
             width: 100%;
             max-width: 240px; 
@@ -191,6 +190,8 @@
 
     <div class="tabs-nav-bar">
         <button class="tab-btn active-producto" onclick="cambiarPestana('presentacion')">Presentación</button>
+        <button class="tab-btn active-cronograma" onclick="cambiarPestana('cronograma')">📅 Cronograma</button>
+        <button class="tab-btn active-paec" onclick="cambiarPestana('paec')">🌱 Proyecto PAEC</button>
         <button class="tab-btn active-huerto" onclick="cambiarPestana('huerto')">Acceso Huerto</button>
     </div>
 
@@ -202,6 +203,20 @@
                 </div>
                 <h2>🌿 Sobre el Proyecto MUSU</h2>
                 <p>Bienvenido a la presentación de nuestro proyecto del huerto escolar urbano...</p>
+            </div>
+        </div>
+
+        <div id="cronograma" class="tab-content">
+            <div class="bloque-seccion">
+                <h2>📅 Cronograma de Actividades</h2>
+                <p>Aquí se detallan las fechas y tareas planificadas para el huerto escolar urbano...</p>
+            </div>
+        </div>
+
+        <div id="paec" class="tab-content">
+            <div class="bloque-seccion">
+                <h2>🌱 Proyecto PAEC</h2>
+                <p>Información detallada sobre el Programa de Acción Escolar Comunitaria aplicado al Huerto Urbano...</p>
             </div>
         </div>
 
@@ -265,7 +280,7 @@
             localStorage.removeItem('rol');
         });
 
-        // 🔧 SOLUCIÓN AL REGISTRO: Guarda credenciales de prueba y redirige a la Bitácora sin trabas
+        // 🔧 CORRECCIÓN: Al registrarse guarda la sesión temporal y te manda al dashboard inmediatamente sin trabarse
         async function ejecutarRegistro() {
             const correo = document.getElementById('correoReg').value.trim();
             if(!correo) {
@@ -277,11 +292,10 @@
             localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
             localStorage.setItem('rol', 'usuario');
             
-            // Envía directamente a la página donde se suben los cambios del proyecto
             window.location.href = 'dashboard.html';
         }
 
-        // 🔧 SOLUCIÓN AL INICIO DE SESIÓN: Intenta conectar al backend y si no, usa el simulador y redirige
+        // 🔧 CORRECCIÓN: Al iniciar sesión activa la redirección y elimina el congelamiento
         async function ejecutarAcceso() {
             const correo = document.getElementById('correoLogin').value.trim();
             const password = document.getElementById('passLogin').value;
@@ -320,7 +334,7 @@
                 localStorage.setItem('rol', 'usuario');
                 alert('¡Bienvenido Colaborador!');
             }
-            // MODIFICACIÓN CRÍTICA: Cambia la ventana actual hacia la sección de cambios
+            // Forzar redirección al apartado de los cambios del huerto
             window.location.href = 'dashboard.html';
         }
     </script>
