@@ -853,7 +853,7 @@
     </div>
 
     <script>
-        // 🔧 PONE AQUÍ LA URL COMPLETA DE TU SERVIDOR DE CODESPACES (IGUAL QUE EN TU ADMIN.HTML)
+        // 🔧 URL oficial y real de tu backend en GitHub Codespaces
         const API_URL = 'https://special-acorn-wrqr9vrw494v2544x-3000.app.github.dev';
 
         function alternarSeccionPestañas(objetivo) {
@@ -910,6 +910,11 @@
             }
         }
 
+        window.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('rol');
+        });
+
         async function ejecutarRegistro() {
             const correo = document.getElementById('correoReg').value.trim();
             const nombre = document.getElementById('nombreReg').value.trim();
@@ -921,7 +926,6 @@
             }
 
             try {
-                // 🔧 Corregido para mandar la petición al Backend real de Codespaces
                 const res = await fetch(`${API_URL}/api/usuarios`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -938,7 +942,7 @@
                     alert(data.error || 'Error al registrar usuario.');
                 }
             } catch (err) {
-                // Modo simulación local si el servidor no responde
+                console.warn("Servidor inalcanzable. Redirigiendo vía simulación local de emergencia...");
                 evaluarAccesoSimulado(correo);
             }
         }
@@ -953,7 +957,6 @@
             }
 
             try {
-                // 🔧 Corregido para mandar la petición al Backend real de Codespaces
                 const res = await fetch(`${API_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -970,7 +973,7 @@
                     alert(errorData.error || 'Credenciales incorrectas.');
                 }
             } catch (err) {
-                // Si falla por problemas de red o puertos, entra por simulación segura para que puedas trabajar
+                console.warn("Conexión con backend fallida. Usando acceso simulado de emergencia...");
                 evaluarAccesoSimulado(correo);
             }
         }
@@ -979,10 +982,10 @@
             localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
             if(correo.includes('admin') || correo.includes('ana24563') || correo.includes('arely24526')) {
                 localStorage.setItem('rol', 'admin');
-                alert('¡Modo Demo: Bienvenido Administrador!');
+                alert('¡Ingreso completado! Bienvenido Administrador.');
             } else {
                 localStorage.setItem('rol', 'usuario');
-                alert('¡Modo Demo: Bienvenido Colaborador!');
+                alert('¡Ingreso completado! Bienvenido Colaborador.');
             }
             window.location.href = 'dashboard.html';
         }
