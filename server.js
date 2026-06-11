@@ -42,20 +42,33 @@ const bitacoraBD = [];
     console.log("👤 Cuenta de Administrador (Arely) cargada exitosamente.");
 })();
 
+// Middleware para verificar autenticación y roles
+const verificarToken = (req, res, next) => {
+    const headerAuth = req.headers['authorization'];
+    if (!headerAuth) return res.status(403).json({ error: "Token requerido." });
+    
+    const token = headerAuth.split(' ')[1];
+    try {
+        const verificado = jwt.verify(token, JWT_SECRET);
+        req.usuario = verificado;
+        next();
+    } catch (err) {
+        res.status(401).json({ error: "Token inválido o expirado." });
+    }
+};
+
 // ==========================================
 // 🛠️ RUTAS DEL SISTEMA DE USUARIOS (API)
 // ==========================================
 
-// 1. Registro de nuevos colaboradores
+// 1. Registro de nuevos colaboradores (Rol de usuario estándar)
 app.post('/api/registro', async (req, res) => {
     try {
         const { nombre, correo, password } = req.body;
         
-        // Validar si el usuario ya existe
         const existe = usuariosBD.find(u => u.correo === correo);
         if (existe) return res.status(400).json({ error: "Este correo ya está registrado." });
 
-        // Encriptar contraseña por seguridad
         const passwordEncriptada = await bcrypt.hash(password, 10);
         
         const nuevoUsuario = {
@@ -63,7 +76,7 @@ app.post('/api/registro', async (req, res) => {
             nombre,
             correo,
             password: passwordEncriptada,
-            rol: "usuario" // Rol por defecto para el equipo
+            rol: "usuario"
         };
 
         usuariosBD.push(nuevoUsuario);
@@ -73,20 +86,47 @@ app.post('/api/registro', async (req, res) => {
     }
 });
 
+// 👑 1.5 Ruta especial para que un administrador registre a más administradores
+app.post('/api/admin/registrar', verificarToken, async (req, res) => {
+    try {
+        // Validar si quien hace la petición es un administrador real
+        if (req.usuario.rol !== 'admin') {
+            return res.status(403).json({ error: "Acceso denegado. Se requieren permisos de Administrador." });
+        }
+
+        const { nombre, correo, password } = req.body;
+
+        const existe = usuariosBD.find(u => u.correo === correo);
+        if (existe) return res.status(400).json({ error: "Este correo ya está registrado en el sistema." });
+
+        const passwordEncriptada = await bcrypt.hash(password, 10);
+
+        const nuevoAdmin = {
+            id: String(Date.now()),
+            nombre,
+            correo,
+            password: passwordEncriptada,
+            rol: "admin" // Forzamos el rol como administrador
+        };
+
+        usuariosBD.push(nuevoAdmin);
+        res.status(201).json({ mensaje: "Administrador registrado exitosamente." });
+    } catch (err) {
+        res.status(500).json({ error: "Error interno en el servidor." });
+    }
+});
+
 // 2. Inicio de sesión (Login)
 app.post('/api/login', async (req, res) => {
     try {
         const { correo, password } = req.body;
         
-        // Buscar usuario por correo
         const usuario = usuariosBD.find(u => u.correo === correo);
         if (!usuario) return res.status(400).json({ error: "El correo electrónico no está registrado." });
 
-        // Verificar si la contraseña coincide
         const passwordCorrecta = await bcrypt.compare(password, usuario.password);
         if (!passwordCorrecta) return res.status(400).json({ error: "La contraseña es incorrecta." });
 
-        // Generar pase de acceso (Token JWT)
         const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, JWT_SECRET, { expiresIn: '24h' });
         
         res.json({ 
@@ -104,12 +144,10 @@ app.post('/api/login', async (req, res) => {
 // 🪻 RUTAS DE LA BITÁCORA DEL HUERTO
 // ==========================================
 
-// 3. Obtener todas las publicaciones del huerto
 app.get('/api/bitacora', (req, res) => {
     res.json(bitacoraBD);
 });
 
-// 4. Publicar un nuevo avance en la bitácora
 app.post('/api/bitacora', upload.single('imagen'), (req, res) => {
     try {
         const { dueno, tipoPlanta, altura, abono, observaciones } = req.body;
@@ -133,7 +171,6 @@ app.post('/api/bitacora', upload.single('imagen'), (req, res) => {
     }
 });
 
-// 5. Sistema de Likes para las plantas
 app.post('/api/bitacora/:id/like', (req, res) => {
     const { id } = req.params;
     const publicacion = bitacoraBD.find(p => p._id === id);

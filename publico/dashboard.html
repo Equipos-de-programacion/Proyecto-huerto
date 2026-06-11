@@ -69,16 +69,41 @@
             border-radius: 16px; padding: 20px; margin-bottom: 20px;
         }
         .tarjeta-bitacora h3 { margin-top: 0; color: var(--rosa-oscuro); }
+
+        /* Estilo sutil para diferenciar la sección del admin */
+        .bloque-admin {
+            border: 2px dashed var(--rosa-intenso);
+            background-color: #fffbfa;
+        }
+        .bloque-admin h2 { color: var(--rosa-oscuro); border-bottom: 2px solid #f7d5dc; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div class="header-dash">
-        <h1>🌿 Panel de Control - Huertito MUSU</h1>
+        <h1 id="saludoDashboard">🌿 Panel de Control - Huertito MUSU</h1>
         <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
     </div>
 
     <div class="container">
+        
+        <!-- 👑 MÓDULO EXCLUSIVO PARA ADMINISTRADORES (Agregar nuevos admins) -->
+        <div class="bloque-panel bloque-admin hidden" id="moduloAdministrador">
+            <h2>👑 Panel de Gestión: Registrar Nuevo Administrador</h2>
+            <form id="formNuevoAdmin" onsubmit="event.preventDefault(); registrarAdministrador();">
+                <label>Nombre del Nuevo Administrador:</label>
+                <input type="text" id="nombreAdminReg" placeholder="Ej. Ana Maricela Admin" required>
+
+                <label>Correo electrónico institucional/personal:</label>
+                <input type="email" id="correoAdminReg" placeholder="Ej. ana24563@cbtis75.edu.mx" required>
+
+                <label>Contraseña temporal:</label>
+                <input type="password" id="passAdminReg" placeholder="Establece una contraseña segura" required>
+
+                <button type="submit" class="btn-guardar" style="background-color: var(--rosa-oscuro);">Dar Alta como Administrador</button>
+            </form>
+        </div>
         
         <!-- FORMULARIO PARA AGREGAR PUBLICACIONES -->
         <div class="bloque-panel" id="moduloFormulario">
@@ -117,13 +142,22 @@
     </div>
 
     <script>
-        // URL Sincronizada con tu Codespaces activo
         const API_URL = 'https://special-acorn-wrqr9vrw494v2544x-3000.app.github.dev';
         const token = localStorage.getItem('token');
+        const rol = localStorage.getItem('rol');
+        const nombreAdmin = localStorage.getItem('nombreAdmin');
 
-        // Seguridad básica: Si no hay token, lo regresa al login
+        // Seguridad estricta: si no hay token válido regresamos al index
         if (!token) {
             window.location.href = 'index.html';
+        }
+
+        // Mostrar u ocultar herramientas de Administrador basándonos en el rol devuelto por el backend
+        if (rol === 'admin') {
+            document.getElementById('moduloAdministrador').classList.remove('hidden');
+            if(nombreAdmin) {
+                document.getElementById('saludoDashboard').innerText = `🌿 Panel Admin - ${nombreAdmin}`;
+            }
         }
 
         async function cargarBitacora() {
@@ -144,7 +178,7 @@
                     contenedor.innerHTML += `
                         <div class="tarjeta-bitacora">
                             <h3>${p.tipoPlanta}</h3>
-                            <p><strong>Responsable:</strong> ${p.dueno}</p>
+                            <p><strong>Responsable:</strong> ${p.dueno} | <strong>Fecha:</strong> ${p.fecha || ''}</p>
                             <p><strong>Medida:</strong> ${p.altura} cm | <strong>Cuidado:</strong> ${p.abono}</p>
                             <p style="background: white; padding: 10px; border-radius: 8px; border: 1px solid #f2cbd2;">
                                 ${p.observaciones}
@@ -182,9 +216,37 @@
                     alert('Error al guardar en el servidor.');
                 }
             } catch (err) {
-                // Modo simulación por si el internet de Codespaces falla temporalmente
                 alert('¡Guardado en modo simulación local! 🌸');
                 insertarRegistroSimulado(dueno, tipoPlanta, altura, abono, observaciones);
+            }
+        }
+
+        // 👑 FUNCIÓN PARA QUE EL ADMINISTRADOR AGREGUE OTROS ADMINS
+        async function registrarAdministrador() {
+            const nombre = document.getElementById('nombreAdminReg').value.trim();
+            const correo = document.getElementById('correoAdminReg').value.trim().toLowerCase();
+            const password = document.getElementById('passAdminReg').value;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/registrar`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ nombre, correo, password })
+                });
+
+                const data = await res.json();
+
+                if(res.ok) {
+                    alert(`¡Éxito! El usuario ${nombre} ha sido añadido al equipo como Administrador.`);
+                    document.getElementById('formNuevoAdmin').reset();
+                } else {
+                    alert(data.error || 'Error creando el administrador.');
+                }
+            } catch (err) {
+                alert('No se pudo conectar al servidor para guardar el Administrador.');
             }
         }
 
@@ -207,7 +269,6 @@
             window.location.href = 'index.html';
         }
 
-        // Ejecutar carga automática al abrir la página
         cargarBitacora();
     </script>
 </body>
