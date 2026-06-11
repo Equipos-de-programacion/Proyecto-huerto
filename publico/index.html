@@ -869,7 +869,7 @@
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td class="col-sticky-actividad">Empezar a conectar la base de datos con el API y el html.</td>
+                                <td class="col-sticky-actividad">Empezar a conectar la base de datos con el API and el html.</td>
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
                                 <td class="bloque-azul-marino">Backend</td>
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
@@ -1031,7 +1031,7 @@
             }
         }
 
-        // 📋 MANEJO DE PESTAÑAS (CORREGIDO SIN ERRORES DE SINTAXIS)
+        // 📋 MANEJO DE PESTAÑAS
         function alternarSeccionPestañas(objetivo) {
             const vistas = ['producto', 'cronograma', 'paec', 'huerto'];
             vistas.forEach(v => {
@@ -1077,22 +1077,62 @@
             localStorage.removeItem('rol');
         });
 
+        // 🚀 REGISTRO CONEXIÓN REAL CON BACKEND EN RENDER
         function ejecutarRegistro() {
-            alert('Usuario registrado localmente (Modo Demostración).');
-            cambiarModeloFormulario('login');
+            const nombre = document.getElementById('nombreReg').value;
+            const correo = document.getElementById('correoReg').value;
+            const password = document.getElementById('passReg').value;
+
+            fetch('https://proyecto-huerto-jr89.onrender.com/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, correo, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error en registro: ' + data.error);
+                } else {
+                    alert('¡Registro exitoso! Ya puedes iniciar sesión.');
+                    cambiarModeloFormulario('login');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Ocurrió un problema de red al intentar registrar al usuario.');
+            });
         }
 
+        // 🔑 ACCESO INTEGRADO CON REDIRECCIÓN AL DASHBOARD REAL
         function ejecutarAcceso() {
             const correo = document.getElementById('correoLogin').value.trim();
-            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
-            
-            if(correo.includes('admin') || correo.includes('ana24563')) {
-                localStorage.setItem('rol', 'admin');
-                alert('¡Bienvenido Administrador!');
-            } else {
-                localStorage.setItem('rol', 'usuario');
-                alert('¡Bienvenido Colaborador!');
-            }
+            const password = document.getElementById('passLogin').value;
+
+            fetch('https://proyecto-huerto-jr89.onrender.com/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo, password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.token) {
+                    // Guardamos las credenciales reales devueltas por el servidor de Render
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('rol', data.rol || 'usuario');
+                    
+                    // Alerta de confirmación y REDIRECCIÓN INMEDIATA
+                    alert('¡Acceso concedido! Entrando al dashboard...');
+                    
+                    // Redirige al archivo de dashboard que tengas en tu proyecto
+                    window.location.href = 'dashboard.html'; 
+                } else {
+                    alert(data.error || 'Correo o contraseña incorrectos.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('No se pudo conectar con el servidor de Render. Revisa tu conexión.');
+            });
         }
     </script>
 </body>
