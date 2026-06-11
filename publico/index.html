@@ -545,7 +545,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 <style>
-    /* 👑 ESTILOS GENERALES DE LA TABLA GANTT 👑 */
+    /* Regresamos al contenedor con scroll exacto que tenías al principio ,, CRONOGRAMA*/ 
     .gantt-contenedor-scroll {
         width: 100%;
         overflow-x: auto;
@@ -561,7 +561,7 @@
         width: 100%;
         font-size: 0.88rem;
         text-align: left;
-        min-width: 3200px; /* Ancho ajustado para que quepan las fechas largas de los 18 bloques */
+        min-width: 2400px; /* Mantiene el tamaño para que funcione la barra de scroll */
     }
 
     .tabla-gantt-interactive th, 
@@ -571,7 +571,7 @@
         text-align: center;
     }
 
-    /* Columna de actividades fija a la izquierda */
+    /* Columna izquierda fija para las descripciones */
     .tabla-gantt-interactive th:first-child,
     .tabla-gantt-interactive td:first-child {
         position: sticky;
@@ -587,7 +587,6 @@
         box-shadow: 4px 0 10px rgba(0, 0, 0, 0.03);
     }
 
-    /* Enclavar encabezado arriba */
     .tabla-gantt-interactive thead tr th {
         position: sticky;
         top: 0;
@@ -596,7 +595,7 @@
         font-weight: bold;
     }
 
-    /* Colores personalizados para cada bloque (Tus colores originales) */
+    /* Tus estilos de colores originales intactos */
     .bloque-planificacion { background-color: #a0c4df !important; color: #2a4d6c !important; font-weight: bold; }
     .bloque-suelo { background-color: #112255 !important; color: #ffffff !important; font-weight: bold; }
     .bloque-siembra { background-color: #bcd49c !important; color: #435e25 !important; font-weight: bold; }
@@ -608,7 +607,7 @@
 <div class="gantt-contenedor-scroll">
     <table class="tabla-gantt-interactive">
         <thead>
-            <!-- FILA 1: Encabezados de los 18 Bloques -->
+            <!-- Bloques del 1 al 18 -->
             <tr>
                 <th>Bloque / Descripción de Actividad</th>
                 <th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th><th>Bloque 4</th><th>Bloque 5</th>
@@ -616,7 +615,7 @@
                 <th>Bloque 11</th><th>Bloque 12</th><th>Bloque 13</th><th>Bloque 14</th><th>Bloque 15</th>
                 <th>Bloque 16</th><th>Bloque 17</th><th>Bloque 18</th>
             </tr>
-            <!-- FILA 2: ¡Tus fechas exactas tal cual me las pasaste! -->
+            <!-- Fila de fechas exactas integrada -->
             <tr style="background-color: #fff5cc; font-size: 0.8rem; color: #665533;">
                 <th style="text-align: left;">Semanas / Duración Real</th>
                 <th>25/02 a 26/02</th>
@@ -640,11 +639,13 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Actividad 1 -->
             <tr>
                 <td>Se seleccionó una planta considerando el objetivo del proyecto "PAEC POLINIZADOR", investigando sobre sus cuidados, crecimiento, riego, plantación, suelo, tipo de abono, etc.</td>
                 <td class="bloque-planificacion">Planificación</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 2 -->
             <tr>
                 <td>Se realizaron los surcos, sin embargo, tuvimos confusiones con los espacios designados de diferentes grupos, por lo que se terminó por realizar nuevos surcos en otra zona y trabajar en ellos.</td>
                 <td></td>
@@ -652,6 +653,7 @@
                 <td class="bloque-suelo">Ajuste</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 3 -->
             <tr>
                 <td>En la semana posterior por equipos se estuvieron plantando nuestra planta asignada: la "Lavanda".</td>
                 <td></td><td></td>
@@ -659,12 +661,14 @@
                 <td class="bloque-siembra">Siembra</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 4 -->
             <tr>
                 <td>Después de plantar la lavanda se le va a aplicar la primera aplicación del abono.</td>
                 <td></td><td></td><td></td>
                 <td class="bloque-nutricion">Nutrición</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 5 -->
             <tr>
                 <td>Se le da cuidados más seguidos para que pueda agarrar la raíz de la lavanda.</td>
                 <td></td><td></td><td></td>
@@ -672,26 +676,41 @@
                 <td class="bloque-cuidado">Cuidado</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 6 -->
             <tr>
                 <td>Se registró el crecimiento de la lavanda para después ver su avance.</td>
                 <td></td><td></td><td></td><td></td>
                 <td class="bloque-monitoreo">Monitoreo</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 7 -->
             <tr>
                 <td>Se investigó varias formas de sistema de riego para las lavandas.</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 8 -->
             <tr>
                 <td>Se seleccionó un sistema de riego y se aplicó a su lavanda en específico.</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 9 -->
             <tr>
                 <td>Para el regreso de vacaciones se le aplicó la segunda aplicación del abono orgánico.</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
+            <!-- Actividad 10 -->
             <tr>
                 <td>Se siguió el registro de la medición de la lavanda.</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <!-- Actividad 11 -->
+            <tr>
+                <td>Regar la planta diario y llenar el sistema de riego para cuando falte agua.</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <!-- Actividad 12 -->
+            <tr>
+                <td>Tomar evidencia del riego y los cuidados de la lavanda.</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
         </tbody>
