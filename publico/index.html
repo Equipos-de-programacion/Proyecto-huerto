@@ -172,7 +172,7 @@
             align-items: center;
         }
 
-        /* Diseño de rejilla del cronograma */
+        /* 🖼️ DISEÑO DE LAS VISTAS PREVIAS DEL CRONOGRAMA */
         .cronograma-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -181,26 +181,47 @@
             margin-bottom: 25px;
         }
 
-        .wrapper-imagen-zoom {
+        .wrapper-imagen-preview {
             position: relative;
             overflow: hidden;
             border-radius: 16px;
-            border: 1px solid #f7d5dc;
+            border: 2px solid #f2cbd2;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             background: #fff;
-            cursor: zoom-in;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .cronograma-img {
+        .wrapper-imagen-preview:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(229, 143, 162, 0.3);
+            border-color: var(--rosa-intenso);
+        }
+
+        .cronograma-img-thumb {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s ease;
         }
 
-        /* Efecto de Zoom dinámico interactivo */
-        .wrapper-imagen-zoom:hover .cronograma-img {
-            transform: scale(2); /* Duplica el tamaño al pasar el mouse */
+        /* Indicador visual de que se puede hacer clic */
+        .wrapper-imagen-preview::after {
+            content: '🔍 Clic para ampliar nitido';
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(140, 67, 84, 0.85);
+            color: white;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .wrapper-imagen-preview:hover::after {
+            opacity: 1;
         }
 
         .contenedor-boton-drive {
@@ -322,13 +343,7 @@
             border: 1px solid #e1ebe0;
             background-color: #f4f9f3;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: transform 0.3s ease;
-            cursor: zoom-in;
-        }
-
-        .timeline-img:hover {
-            transform: scale(1.04);
-            box-shadow: 0 8px 25px rgba(77, 105, 63, 0.2);
+            cursor: pointer;
         }
 
         @media screen and (max-width: 768px) {
@@ -585,6 +600,112 @@
 
         .hidden { display: none !important; }
 
+        /* 🔍 🔲 MODAL VISOR DE IMÁGENES A PANTALLA COMPLETA AVANZADO */
+        .visor-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 10, 12, 0.95);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .visor-modal.abierto {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Contenedor del área de la imagen */
+        .visor-contenedor-interno {
+            position: relative;
+            width: 85%;
+            height: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .visor-imagen-grande {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            transform: scale(1);
+            transition: transform 0.15s ease;
+            cursor: grab;
+            position: relative;
+        }
+
+        .visor-imagen-grande:active {
+            cursor: grabbing;
+        }
+
+        /* Botón de Cerrar (X) */
+        .visor-cerrar {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+            user-select: none;
+            z-index: 10001;
+        }
+
+        .visor-cerrar:hover {
+            color: var(--rosa-intenso);
+            transform: scale(1.1);
+        }
+
+        /* 🎛️ CONTROLES DE ZOOM FLOTANTES */
+        .visor-controles-zoom {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10001;
+        }
+
+        .btn-control-zoom {
+            background: var(--blanco);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--rosa-oscuro);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-control-zoom:hover {
+            background: var(--rosa-principal);
+            transform: scale(1.1);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
@@ -593,13 +714,11 @@
 </head>
 <body>
 
-    <!-- 🌳 ENCABEZADO -->
     <div class="header-top">
         <h1>PROYECTO PAEC</h1>
         <p>"Dale besos a tu cora 💋"</p>
     </div>
 
-    <!-- 📋 BARRA DE PESTAÑAS -->
     <div class="tabs-nav-bar">
         <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
             ✨ Presentación MUSU
@@ -617,11 +736,9 @@
 
     <div class="container">
         
-        <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
-                    <!-- 🛠️ RUTA CORREGIDA: Apunta exactamente al archivo local "logo.jpeg" -->
                     <img src="./logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
                 </div>
                 <h2>📝 Presentación del Proyecto</h2>
@@ -638,7 +755,7 @@
                         </div>
                     </div>
                     <div class="caja-foto-integrada">
-                        <img src="./ev2.jpeg" alt="Presentación de Integrantes">
+                        <img src="./ev2.jpeg" alt="Presentación de Integrantes" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;">
                     </div>
                 </div>
             </div>
@@ -652,7 +769,7 @@
                         <p>Conforme fuimos explicando el proceso de elaboración y las ventajas de utilizar ingredientes naturales, las personas comenzaron a mostrar más interés en el proyecto. Al final de la presentación, la mayoría comprendió mejor nuestra propuesta y expresó comentarios positivos sobre los productos.</p>
                     </div>
                     <div class="caja-foto-integrada">
-                        <img src="./ev1.jpeg" alt="Evidencia de Presentación">
+                        <img src="./ev1.jpeg" alt="Evidencia de Presentación" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;">
                     </div>
                 </div>
             </div>
@@ -675,14 +792,13 @@
                 </div>
                 
                 <div class="galeria-fotos-grid">
-                    <div class="caja-foto-integrada"><img src="./ev4.jpeg" alt="Paso 1"></div>
-                    <div class="caja-foto-integrada"><img src="./ev3.jpeg" alt="Paso 2"></div>
-                    <div class="caja-foto-integrada"><img src="./ev5.jpeg" alt="Paso 3"></div>
+                    <div class="caja-foto-integrada"><img src="./ev4.jpeg" alt="Paso 1" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
+                    <div class="caja-foto-integrada"><img src="./ev3.jpeg" alt="Paso 2" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
+                    <div class="caja-foto-integrada"><img src="./ev5.jpeg" alt="Paso 3" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 📅 PESTAÑA 2: CRONOGRAMA CON LECTOR INTERACTIVO Y ZOOM -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma General de Actividades</h2>
@@ -776,18 +892,15 @@
                     </table>
                 </div>
 
-                <!-- 🔍 NUEVO VISOR CON LECTOR DE SEGUIMIENTO Y ZOOM INTEGRADO -->
-                <h3 style="color: var(--rosa-oscuro); margin-top: 30px;">📸 Visor Gráfico del Excel (Pasa el cursor encima para hacer Zoom)</h3>
-                <p style="font-size: 0.95rem; color: #555;">No hace falta descargar nada ni salir del sitio. Pasa el cursor por encima de las hojas de cálculo para maximizar los textos al instante:</p>
+                <h3 style="color: var(--rosa-oscuro); margin-top: 30px;">📸 Respaldos de Planificación Gráfica (Haz clic en una imagen para abrirla en grande)</h3>
+                <p style="font-size: 0.95rem; color: #555;">Haz clic sobre cualquiera de las capturas del Excel para expandirlas a pantalla completa, leer de forma súper nítida y aplicar controles de lupa:</p>
                 
                 <div class="cronograma-grid">
-                    <!-- Contenedor Inteligente de Zoom 1 -->
-                    <div class="wrapper-imagen-zoom" onmousemove="hacerZoomDinamico(event)" onmouseleave="resetearZoomDinamico(event)">
-                        <img src="./cronograma1.png" alt="Cronograma Hoja 1" class="cronograma-img">
+                    <div class="wrapper-imagen-preview" onclick="abrirVisorModalGrande('./cronograma1.png')">
+                        <img src="./cronograma1.png" alt="Cronograma Hoja 1" class="cronograma-img-thumb">
                     </div>
-                    <!-- Contenedor Inteligente de Zoom 2 -->
-                    <div class="wrapper-imagen-zoom" onmousemove="hacerZoomDinamico(event)" onmouseleave="resetearZoomDinamico(event)">
-                        <img src="./cronograma2.png" alt="Cronograma Hoja 2" class="cronograma-img">
+                    <div class="wrapper-imagen-preview" onclick="abrirVisorModalGrande('./cronograma2.png')">
+                        <img src="./cronograma2.png" alt="Cronograma Hoja 2" class="cronograma-img-thumb">
                     </div>
                 </div>
 
@@ -799,7 +912,6 @@
             </div>
         </div>
 
-        <!-- 🌿 PESTAÑA 3: PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
@@ -824,72 +936,72 @@
 
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">⏳ Línea del Tiempo: Proceso del Huerto</h2>
+                <p style="font-size: 0.95rem;">También puedes pulsar sobre cualquiera de estas fotos de los avances para verlas completas:</p>
                 <div class="timeline-container">
                     <div class="timeline-item left">
                         <div class="timeline-content">
                             <h3>1. Realización de surcos</h3>
-                            <img src="./1.jpg" alt="Surcos" class="timeline-img">
+                            <img src="./1.jpg" alt="Surcos" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
                             <h3>2. Plantación de la planta de lavanda</h3>
-                            <img src="./2.jpg" alt="Plantación" class="timeline-img">
+                            <img src="./2.jpg" alt="Plantación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
                             <h3>3. Investigación del sistema de riego</h3>
-                            <img src="./3.jpg" alt="Investigación" class="timeline-img">
+                            <img src="./3.jpg" alt="Investigación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
                             <h3>4. Realización del sistema de riego</h3>
-                            <img src="./4.jpg" alt="Sistema" class="timeline-img">
+                            <img src="./4.jpg" alt="Sistema" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
                             <h3>5. Aplicación del sistema de riego</h3>
-                            <img src="./5.jpg" alt="Aplicación" class="timeline-img">
+                            <img src="./5.jpg" alt="Aplicación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
                             <h3>6. Medición de lavandas y aplicación de abono</h3>
-                            <img src="./6.jpg" alt="Medición" class="timeline-img">
+                            <img src="./6.jpg" alt="Medición" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
                             <h3>7. Investigación de producto innovador y creación de identidad</h3>
-                            <img src="./7.jpg" alt="Identidad" class="timeline-img">
+                            <img src="./7.jpg" alt="Identidad" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
                             <h3>8. Adquisición de materiales</h3>
-                            <img src="./8.jpg" alt="Materiales" class="timeline-img">
+                            <img src="./8.jpg" alt="Materiales" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
                             <h3>9. Realización del producto</h3>
-                            <img src="./9.jpg" alt="Producción" class="timeline-img">
+                            <img src="./9.jpg" alt="Producción" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
                             <h3>10. Presentación del producto</h3>
-                            <img src="./10.jpg" alt="Presentación Final" class="timeline-img">
+                            <img src="./10.jpg" alt="Presentación Final" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 🐢 PESTAÑA 4: ACCESO AL HUERTO -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
                 <div class="contenedor-ilustracion-tortuga">
@@ -924,27 +1036,83 @@
 
     </div>
 
+    <div id="miVisorModal" class="visor-modal" onclick="cerrarVisorModalGrande(event)">
+        <span class="visor-cerrar" onclick="cerrarVisorModalGrande(event)">&times;</span>
+        
+        <div class="visor-contenedor-interno">
+            <img id="imgModalDestino" class="visor-imagen-grande" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+        </div>
+
+        <div class="visor-controles-zoom" onclick="event.stopPropagation()">
+            <button class="btn-control-zoom" onclick="ajustarZoomModal(0.25)" title="Acercar">+</button>
+            <button class="btn-control-zoom" onclick="ajustarZoomModal(-0.25)" title="Alejar">-</button>
+            <button class="btn-control-zoom" onclick="reestablecerZoomModal()" title="Tamaño original">🔄</button>
+        </div>
+    </div>
+
     <script>
-        // 🔬 SCRIPT INTELEGENTE PARA ZOOM SEGUIDOR DEL RATÓN
-        function hacerZoomDinamico(e) {
-            const contenedor = e.currentTarget;
-            const imagen = contenedor.querySelector('.cronograma-img');
-            
-            // Calculamos la posición del puntero relativa a la tarjeta
-            const rect = contenedor.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Movemos el origen de transformación para que el zoom siga al ojo del profesor
-            imagen.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
+        // 🔬 VARIABLES PARA CONTROL DE ZOOM Y ARRASTRE
+        let escalaActual = 1;
+        let estaArrastrando = false;
+        let inicioX, inicioY, despliegueX = 0, despliegueY = 0;
+        
+        const modal = document.getElementById("miVisorModal");
+        const imgModal = document.getElementById("imgModalDestino");
+
+        // 🚀 ABRE EL MODAL FLOTANTE
+        function abrirVisorModalGrande(rutaSrc) {
+            imgModal.src = rutaSrc;
+            modal.classList.add("abierto");
+            reestablecerZoomModal();
+            document.body.style.overflow = "hidden"; // Evita que se mueva el fondo
         }
 
-        function resetearZoomDinamico(e) {
-            const imagen = e.currentTarget.querySelector('.cronograma-img');
-            imagen.style.transformOrigin = 'center center';
+        // ❌ CIERRA EL MODAL
+        function cerrarVisorModalGrande(e) {
+            modal.classList.remove("abierto");
+            document.body.style.overflow = ""; // Restablece el scroll general
         }
 
-        // 🔍 FILTRADO EN TIEMPO REAL
+        // ➕ ➖ AJUSTA EL ZOOM MULTIPLICADOR
+        function ajustarZoomModal(factor) {
+            escalaActual += factor;
+            if (escalaActual < 0.5) escalaActual = 0.5;
+            if (escalaActual > 4) escalaActual = 4;
+            actualizarTransformacionImagen();
+        }
+
+        // 🔄 RESETEA LA POSICIÓN Y LUPA
+        function reestablecerZoomModal() {
+            escalaActual = 1;
+            despliegueX = 0;
+            despliegueY = 0;
+            actualizarTransformacionImagen();
+        }
+
+        function actualizarTransformacionImagen() {
+            imgModal.style.transform = `translate(${despliegueX}px, ${despliegueY}px) scale(${escalaActual})`;
+        }
+
+        // 🖱️ CÓDIGO INTERACTIVO PARA MOVER LA IMAGEN CON EL RATÓN CUANDO TIENE ZOOM
+        imgModal.addEventListener('mousedown', (e) => {
+            estaArrastrando = true;
+            inicioX = e.clientX - despliegueX;
+            inicioY = e.clientY - despliegueY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!estaArrastrando) return;
+            e.preventDefault();
+            despliegueX = e.clientX - inicioX;
+            despliegueY = e.clientY - inicioY;
+            actualizarTransformacionImagen();
+        });
+
+        window.addEventListener('mouseup', () => {
+            estaArrastrando = false;
+        });
+
+        // 🔍 FILTRADO EN TIEMPO REAL DEL BUSCADOR
         function filtrarTablaCronograma() {
             const input = document.getElementById("inputBuscarCrono");
             const filtro = input.value.toLowerCase();
@@ -963,6 +1131,7 @@
             }
         }
 
+        // CAMBIO DE PESTAÑAS
         function alternarSeccionPestañas(objetivo) {
             const secciones = ['producto', 'cronograma', 'paec', 'huerto'];
             const botones = ['prod', 'crono', 'paec', 'huer'];
