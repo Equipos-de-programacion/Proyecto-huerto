@@ -544,92 +544,194 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* 📊 👑 NUEVOS ESTILOS EXCLUSIVOS: DIAGRAMA DE GANTT ESTRUCTURA INTERACTIVA 👑 */
-        .gantt-contenedor-scroll {
-            width: 100%;
-            overflow-x: auto;
-            border: 1px solid #f2cbd2;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-            background: #ffffff;
-            margin-bottom: 30px;
-            position: relative;
-        }
+<style>
+    /* 📊 👑 NUEVOS ESTILOS EXCLUSIVOS: DIAGRAMA DE GANTT ESTRUCTURA INTERACTIVA 👑 */
+    .gantt-contenedor-scroll {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid #f2cbd2;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+        background: #ffffff;
+        margin-bottom: 30px;
+        position: relative;
+    }
 
-        .tabla-gantt-interactive {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 0.88rem;
-            text-align: left;
-            min-width: 1600px; /* Asegura espacio suficiente para simular los días en horizontal */
-        }
+    .tabla-gantt-interactive {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.88rem;
+        text-align: left;
+        min-width: 2600px; /* Mantiene el tamaño para que funcione la barra de scroll y puedas recorrerlo */
+    }
 
-        /* Congelado de la columna Actividades a la izquierda */
-        .tabla-gantt-interactive th.col-sticky-actividad,
-        .tabla-gantt-interactive td.col-sticky-actividad {
-            position: sticky;
-            left: 0;
-            background-color: #ffffff;
-            z-index: 5;
-            width: 320px;
-            min-width: 320px;
-            max-width: 320px;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.06);
-            border-right: 2px solid #e58fa2;
-            padding: 14px 16px;
-            font-weight: 500;
-            color: #2c3528;
-        }
+    /* Congelado de la columna Actividades a la izquierda */
+    .tabla-gantt-interactive th.col-sticky-actividad,
+    .tabla-gantt-interactive td.col-sticky-actividad {
+        position: sticky;
+        left: 0;
+        background-color: #ffffff;
+        z-index: 5;
+        width: 320px;
+        min-width: 320px;
+        max-width: 320px;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.06);
+        border-right: 2px solid #e58fa2;
+        padding: 14px 16px;
+        font-weight: 500;
+        color: #2c3528;
+    }
 
-        .tabla-gantt-interactive th.col-sticky-actividad {
-            background-color: var(--rosa-oscuro) !important;
-            color: var(--blanco) !important;
-            z-index: 6;
-            font-weight: bold;
-        }
+    .tabla-gantt-interactive th.col-sticky-actividad {
+        background-color: #a36271 !important;
+        color: #ffffff !important;
+        z-index: 6;
+        font-weight: bold;
+    }
 
-        /* Encabezados generales del Gantt */
-        .tabla-gantt-interactive th {
-            background-color: #a36271;
-            color: var(--blanco);
-            padding: 12px 8px;
-            font-weight: 600;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.8rem;
-        }
+    /* Encabezados generales del Gantt */
+    .tabla-gantt-interactive th {
+        background-color: #a36271;
+        color: #ffffff;
+        padding: 12px 8px;
+        font-weight: 600;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 0.8rem;
+    }
 
-        .tabla-gantt-interactive td {
-            padding: 10px 6px;
-            border: 1px solid #fae3e7;
-            text-align: center;
-            vertical-align: middle;
-        }
+    .tabla-gantt-interactive td {
+        padding: 10px 6px;
+        border: 1px solid #fae3e7;
+        text-align: center;
+        vertical-align: middle;
+    }
 
-        /* Estructura de fila alternativa */
-        .tabla-gantt-interactive tr:nth-child(even) td:not(.col-sticky-actividad) {
-            background-color: #fff9fa;
-        }
+    /* Estructura de fila alternativa */
+    .tabla-gantt-interactive tr:nth-child(even) td:not(.col-sticky-actividad) {
+        background-color: #fff9fa;
+    }
 
-        .tabla-gantt-interactive tr:hover td.col-sticky-actividad {
-            background-color: #ffeef1 !important;
-        }
+    .tabla-gantt-interactive tr:hover td.col-sticky-actividad {
+        background-color: #ffeef1 !important;
+    }
 
-        /* 🎨 PALETA DE COLORES EXACTA PARA CADA BARRA DE DÍAS DEL EXCEL */
-        .bloque-azul-claro { background-color: #92cddc !important; color: #1f497d !important; font-weight: bold; border-radius: 4px; }
-        .bloque-azul-marino { background-color: #002060 !important; color: #ffffff !important; font-weight: bold; border-radius: 4px; }
-        .bloque-verde { background-color: #c4d79b !important; color: #2b540a !important; font-weight: bold; border-radius: 4px; }
-        .bloque-morado { background-color: #b1a0c7 !important; color: #3b2354 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-rosa { background-color: #f2dcdb !important; color: #7f2624 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-rojo { background-color: #da9694 !important; color: #5c0d0c !important; font-weight: bold; border-radius: 4px; }
-        .bloque-gris { background-color: #d9d9d9 !important; color: #404040 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-amarillo { background-color: #ffffcc !important; color: #5c5c00 !important; font-weight: bold; border-radius: 4px; }
+    /* 🎨 PALETA DE COLORES EXACTA PARA CADA BARRA DE DÍAS DEL EXCEL */
+    .bloque-azul-claro { background-color: #92cddc !important; color: #1f497d !important; font-weight: bold; border-radius: 4px; }
+    .bloque-azul-marino { background-color: #002060 !important; color: #ffffff !important; font-weight: bold; border-radius: 4px; }
+    .bloque-verde { background-color: #c4d79b !important; color: #2b540a !important; font-weight: bold; border-radius: 4px; }
+    .bloque-morado { background-color: #b1a0c7 !important; color: #3b2354 !important; font-weight: bold; border-radius: 4px; }
+    .bloque-rosa { background-color: #f2dcdb !important; color: #7f2624 !important; font-weight: bold; border-radius: 4px; }
+    .bloque-rojo { background-color: #da9694 !important; color: #5c0d0c !important; font-weight: bold; border-radius: 4px; }
+    .bloque-gris { background-color: #d9d9d9 !important; color: #404040 !important; font-weight: bold; border-radius: 4px; }
+    .bloque-amarillo { background-color: #ffffcc !important; color: #5c5c00 !important; font-weight: bold; border-radius: 4px; }
 
-        /* Estilo sutil para los días vacíos */
-        .dia-vacio {
-            color: #ccc;
-            font-size: 0.75rem;
-            opacity: 0.4;
+    /* Estilo sutil para los días vacíos - CORREGIDO SIN ERROR ROJO */
+    .dia-vacio {
+        color: #ccc;
+        font-size: 0.75rem;
+        opacity: 0.4;
+    }
+</style>
+
+<div class="gantt-contenedor-scroll">
+    <table id="tablaProyectosPAEC" class="tabla-gantt-interactive">
+        <thead>
+            <tr>
+                <th class="col-sticky-actividad">Bloque / Descripción de Actividad</th>
+                <th>Bloque 1</th><th>Bloque 2</th><th>Bloque 3</th><th>Bloque 4</th><th>Bloque 5</th>
+                <th>Bloque 6</th><th>Bloque 7</th><th>Bloque 8</th><th>Bloque 9</th><th>Bloque 10</th>
+                <th>Bloque 11</th><th>Bloque 12</th><th>Bloque 13</th><th>Bloque 14</th><th>Bloque 15</th>
+                <th>Bloque 16</th><th>Bloque 17</th><th>Bloque 18</th>
+            </tr>
+            <tr style="background-color: #fff5cc; font-size: 0.8rem; color: #665533;">
+                <th class="col-sticky-actividad" style="background-color: #fff5cc !important; color: #665533 !important;">Semanas / Duración Real</th>
+                <th>25/02 a 26/02</th>
+                <th>27/02/2026</th>
+                <th>02/03 a 13/03</th>
+                <th>02/03 a 13/03</th>
+                <th>16/03 a 20/03</th>
+                <th>19/03/2026</th>
+                <th>23/03 a 26/03</th>
+                <th>23/03 a 26/03</th>
+                <th>13/04 a 17/04</th>
+                <th>16/04 a 17/04</th>
+                <th>20/04 a 01/05</th>
+                <th>25/02 a 20/05</th>
+                <th>04/05 a 08/05</th>
+                <th>11/05 a 13/05</th>
+                <th>13/05 a 20/05</th>
+                <th>15/05 a 20/05</th>
+                <th>14/05 a 20/05</th>
+                <th>18/05 a 20/05</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col-sticky-actividad">Se seleccionó una planta considerando el objetivo del proyecto "PAEC POLINIZADOR", investigando sobre sus cuidados, crecimiento, riego, plantación, suelo, tipo de abono, etc.</td>
+                <td class="bloque-azul-claro">Planificación</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se realizaron los surcos, sin embargo, tuvimos confusiones con los espacios designados de diferentes grupos, por lo que se terminó por realizar nuevos surcos en otra zona y trabajar en ellos.</td>
+                <td class="dia-vacio">-</td>
+                <td class="bloque-azul-marino">Suelo</td>
+                <td class="bloque-azul-marino">Ajuste</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">En la semana posterior por equipos se estuvieron plantando nuestra planta asignada: la "Lavanda".</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                <td class="bloque-verde">Siembra</td>
+                <td class="bloque-verde">Siembra</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Después de plantar la lavanda se le va a aplicar la primera aplicación del abono.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                <td class="bloque-morado">Nutrición</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se le da cuidados más seguidos para que pueda agarrar la raíz de la lavanda.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                <td class="bloque-morado">Cuidado</td>
+                <td class="bloque-morado">Cuidado</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se registró el crecimiento de la lavanda para después ver su avance.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+                <td class="bloque-rosa">Monitoreo</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se investigó varias formas de sistema de riego para las lavandas.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se seleccionó un sistema de riego y se aplicó a su lavanda en específico.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Para el regreso de vacaciones se le aplicó la segunda aplicación del abono orgánico.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Se siguió el registro de la medición de la lavanda.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Regar la planta diario y llenar el sistema de riego para cuando falte agua.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+            <tr>
+                <td class="col-sticky-actividad">Tomar evidencia del riego y los cuidados de la lavanda.</td>
+                <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </head>
 <body>
 
@@ -1132,29 +1234,6 @@
     </div>
 
     <script>
-        // 🔍 FUNCIÓN INTERACTIVA NUEVA: FILTRADO EN TIEMPO REAL DEL CRONOGRAMA ORIGINAL
-        function filtrarTablaCronograma() {
-            const input = document.getElementById("inputBuscarCrono");
-            const filtro = input.value.toLowerCase();
-            const tabla = document.getElementById("tablaProyectosPAEC");
-            const filas = tabla.getElementsByTagName("tr");
-
-            // Recorremos todas las filas de la tabla (excepto los encabezados de th)
-            for (let i = 1; i < filas.length; i++) {
-                let celdaActividad = filas[i].getElementsByTagName("td")[0];
-                
-                if (celdaActividad) {
-                    const textoActividad = celdaActividad.textContent || celdaActividad.innerText;
-                    
-                    // Si el filtro coincide con el bloque de la actividad, se muestra
-                    if (textoActividad.toLowerCase().indexOf(filtro) > -1) {
-                        filas[i].style.display = "";
-                    } else {
-                        filas[i].style.display = "none";
-                    }
-                }
-            }
-        }
 
         function alternarSeccionPestañas(objetivo) {
             const vistaProd = document.getElementById('seccion-producto');
