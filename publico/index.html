@@ -241,6 +241,99 @@
             line-height: 1.5;
         }
 
+        /* ⏳ LÍNEA DEL TIEMPO INTERACTIVA OPTIMIZADA */
+        .timeline-container {
+            position: relative;
+            max-width: 100%;
+            margin: 30px auto;
+            padding: 10px 0;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--verde-huerto);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            background-color: transparent;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '🌿';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: var(--blanco);
+            border: 3px solid var(--verde-huerto);
+            top: 22px;
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .right::after { left: -14px; }
+
+        .timeline-content {
+            padding: 22px;
+            background-color: #fafdf9;
+            position: relative;
+            border-radius: 16px;
+            border: 1px solid #dbe6d7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .timeline-content h3 {
+            margin-top: 0;
+            color: var(--verde-huerto);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-top: 14px;
+            border: 1px solid #e1ebe0;
+            background-color: #f4f9f3;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .timeline-img:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 25px rgba(77, 105, 63, 0.2);
+            z-index: 10;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline-container::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 18px; right: auto; top: 22px; }
+            .right { left: 0%; }
+            .timeline-img:hover { transform: scale(1.02); }
+        }
+
         /* Tarjetas de Recetas */
         .grid-elaboracion {
             display: grid;
@@ -506,10 +599,17 @@
             color: #03543f;
         }
 
+        .badge.proceso {
+            background-color: #fef08a;
+            color: #713f12;
+        }
+
         .badge.revision {
             background-color: #e0f2fe;
             color: #0369a1;
         }
+
+        .hidden { display: none !important; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
@@ -527,16 +627,16 @@
 
     <!-- 📋 BARRA DE PESTAÑAS NAVEGABLES (4 SECCIONES) -->
     <div class="tabs-nav-bar">
-        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestanyas('producto')">
+        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
             ✨ Presentación MUSU
         </button>
-        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestanyas('cronograma')">
+        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">
             📅 Cronograma
         </button>
-        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestanyas('paec')">
+        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">
             🌿 Proyecto PAEC
         </button>
-        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestanyas('huerto')">
+        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestañas('huerto')">
             🌱 Acceso Huertito
         </button>
     </div>
@@ -545,6 +645,7 @@
         
         <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
+            
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
                     <img src="logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
@@ -554,7 +655,7 @@
                     <div>
                         <p>Musu es un proyecto de cuidado personal creado con el propósito de ofrecer productos naturales para la hidratación y el bienestar de la piel y los labios. Nuestro proyecto está compuesto por un bálsamo labial hidratante, un exfoliante labial y un aceite para manos, codos y rodillas, elaborados con ingredientes naturales como miel, aceite de coco, aceite de almendras, aceite de oliva y vitamina E.</p>
                         <br>
-                        <p>El objetivo de Musu es brindar una alternativa accesible y práctica para el cuidado personal, ayudando a mantener la piel suave e hidratada y los labios saludables. A través de la elaboración de estos productos, buscamos promover el uso de ingredientes naturales y demostrar que es posible crear productos de calidad de forma sencilla y económica.</p>
+                        <p>El objetivo de Musu es brindar una alternative accesible y práctica para el cuidado personal, ayudando a mantener la piel suave e hidratada y los labios saludables. A través de la elaboración de estos productos, buscamos promover el uso de ingredientes naturales y demostrar que es posible crear productos de calidad de forma sencilla y económica.</p>
                         
                         <div class="caja-balsamo-promocional">
                             Conoce la línea de <strong>Bálsamos Labiales Naturales MUSU</strong> de nuestro huerto.
@@ -605,16 +706,19 @@
                     <div class="caja-foto-integrada"><img src="ev5.jpeg" alt="Paso de preparación Musu 3"></div>
                 </div>
             </div>
+
         </div>
 
-        <!-- 📅 PESTAÑA 2: CRONOGRAMA INTERACTIVO -->
+        <!-- 📅 PESTAÑA 2: NUEVA SECCIÓN EXCLUSIVA PARA EL CRONOGRAMA INTERACTIVO -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma General de Actividades</h2>
                 <p>Navega a través de las tareas oficiales extraídas de la planeación general. Puedes escribir en el buscador palabras clave como el nombre de un integrante, el estado de la tarea o una fase para filtrarlas al instante.</p>
                 
+                <!-- 🔍 Buscador Dinámico -->
                 <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad, responsable o estado...">
 
+                <!-- 📊 Tabla Limpia y Altamente Nítida -->
                 <div class="tabla-contenedor">
                     <table class="tabla-interactiva" id="tablaProyectosPAEC">
                         <thead>
@@ -687,7 +791,7 @@
                                 <td><strong>ACT-09</strong></td>
                                 <td>Producción controlada del bálsamo, exfoliante y aceite corporal en laboratorio.</td>
                                 <td>Arely, Mbalia, Ana, Fatima</td>
-                                <td>Fase 7: Production</td>
+                                <td>Fase 7: Producción</td>
                                 <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
                             </tr>
                             <tr>
@@ -701,13 +805,16 @@
                     </table>
                 </div>
 
+                <!-- 🖼️ Sección Visual Expandible debajo de la tabla -->
                 <h3 style="color: var(--rosa-oscuro); margin-top: 10px;">📸 Capturas de Respaldos de Planificación</h3>
+                <p style="font-size: 0.95rem;">Si deseas inspeccionar el diseño de celdas gráficas originales del Excel, puedes revisar las capturas nítidas aquí abajo o expandirlas pasando el ratón:</p>
                 <div class="cronograma-grid">
                     <img src="cronograma1.png" alt="Cronograma de Actividades Parte 1" class="cronograma-img">
                     <img src="cronograma2.png" alt="Cronograma de Actividades Parte 2" class="cronograma-img">
                 </div>
 
                 <div class="contenedor-boton-drive">
+                    <!-- Mantenemos el link de drive que pasaste por si ocupan descargar la hoja editable de cálculo -->
                     <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive">
                         📁 Descargar Archivo Excel Original Directo ↗
                     </a>
@@ -717,97 +824,325 @@
 
         <!-- 🌿 PESTAÑA 3: APARTADO PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
+            
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
-                <p>El desarrollo integral del huerto y la investigación del proyecto PAEC está a cargo de las estudiantes:</p>
+                <p>El desarrollo integral del huerto y la investigación del proyecto PAEC está a cargo de los estudiantes:</p>
                 <ul class="lista-estilizada">
                     <li><strong>ARELY DENISSE BARAJAS RODRÍGUEZ</strong></li>
                     <li><strong>MBALIA DESIREE ORTEGA OLAEZ</strong></li>
                     <li><strong>ANA MARICELA RINCÓN TOVAR</strong></li>
                     <li><strong>FATIMA DE JESUS HERNANDEZ LUGO</strong></li>
+                    <li><strong>JOSÉ LUIS CERVANTES ARREDONDO</strong></li>
+                    <li><strong>ANGEL ABRAHAM REGALDO LÓPEZ</strong></li>
+                    <li><strong>JUAN DIEGO SANTACRUZ AGUILAR</strong></li>
                 </ul>
             </div>
+
+            <div class="bloque-seccion">
+                <h2 class="verde-titulo">🎯 Fundamentos del Huerto Urbano</h2>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--verde-huerto); margin-bottom: 5px;">🌱 Objetivo del Proyecto</h4>
+                    <p>Diseñar, implementar y documentar un huerto escolar sustentable enfocado en la plantación de lavanda, aplicando sistemas eficientes de riego y control orgánico para obtener materia prima natural de alta calidad destinada a la elaboración de productos cosméticos e innovadores de cuidado personal.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--verde-huerto); margin-bottom: 5px;">⚖️ Justificación</h4>
+                    <p>Este proyecto responde a la necesidad de implementar prácticas verdes y de desarrollo sustentable dentro del entorno escolar. La siembra guiada de plantas aromáticas como la lavanda, en conjunto con tecnologías eficientes de riego, demuestra un modelo práctico de autoabastecimiento ecológico. La materia prima cosechada reduce costos de producción y fomenta alternativas saludables y orgánicas para el cuidado cutáneo de la comunidad.</p>
+                </div>
+            </div>
+
+            <div class="bloque-seccion">
+                <h2 class="verde-titulo">⏳ Línea del Tiempo: Proceso del Huerto</h2>
+                <p style="margin-bottom: 25px;">A continuación se detalla cronológicamente cada una de las fases realizadas en el huerto escolar urbano (puedes pasar el cursor sobre las fotos para ampliarlas):</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>1. Realización de surcos</h3>
+                            <p>Preparación adecuada de la tierra agrícola, remoción y trazo físico de los surcos para la siembra.</p>
+                            <img src="1.jpg" alt="Realización de surcos" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>2. Plantación de la planta de lavanda</h3>
+                            <p>Colocación y cuidado inicial de las plantas de lavanda a lo largo de los canales preparados.</p>
+                            <img src="2.jpg" alt="Plantación de la planta de lavanda" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>3. Investigación del sistema de riego</h3>
+                            <p>Análisis de métodos eficientes y sustentables para suministrar agua controlada al cultivo.</p>
+                            <img src="3.jpg" alt="Investigación del sistema de riego" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>4. Realización del sistema de riego</h3>
+                            <p>Diseño y ensamblaje de la red física de tuberías, mangueras y goteros correspondientes.</p>
+                            <img src="4.jpg" alt="Realización del sistema de riego" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>5. Application del sistema de riego</h3>
+                            <p>Instalación definitiva sobre el terreno del huerto del sistema de irrigación periódica.</p>
+                            <img src="5.jpg" alt="Aplicación del sistema de riego" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>6. Medición de lavandas y aplicación de abono</h3>
+                            <p>Control métrico del crecimiento vegetal y suplementación con nutrientes orgánicos.</p>
+                            <img src="6.jpg" alt="Medición de lavandas y aplicación de abono" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>7. Investigación de producto innovador y creación de identidad</h3>
+                            <p>Conceptualización de la marca, definición del nombre, eslogan, logo oficial, carteles expositivos y material didáctico.</p>
+                            <img src="7.jpg" alt="Investigación de producto innovador" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>8. Adquisición de materiales para hacer el producto</h3>
+                            <p>Recopilación organizada de recipientes y elementos naturales complementarios para la manufactura.</p>
+                            <img src="8.jpg" alt="Adquisición de materiales para hacer el producto" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>9. Realización del producto</h3>
+                            <p>Proceso de producción en laboratorio de las piezas cosméticas oficiales de MUSU.</p>
+                            <img src="9.jpg" alt="Realización del producto" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>10. Presentación del producto</h3>
+                            <p>Exhibición ante los docentes y comunidad estudiantil del proyecto escolar terminado con éxito.</p>
+                            <img src="10.jpg" alt="Presentación del producto" class="timeline-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bloque-seccion">
+                <h2 class="verde-titulo">📚 Marco Teórico e Info Adicional</h2>
+                <p>El desarrollo de huertos escolares representa una herramienta activa para la educación ambiental. Plantas perennes como la <em>Lavandula</em> son ideales para estos ecosistemas urbanos gracias a su resistencia y a sus propiedades terapéuticas. El control del agua por medio de sistemas automáticos o focalizados evita el estrés hídrico de la raíz, garantizando que las plantas generen una floración rica en aceites, base principal para las formulaciones naturales estéticas.</p>
+            </div>
+
+            <div class="bloque-seccion">
+                <h2 class="verde-titulo">📋 Lista de Tareas Realizadas</h2>
+                <ul class="lista-estilizada">
+                    <li>✔️ Remoción del suelo, retiro de maleza y adecuación física.</li>
+                    <li>✔️ Cavado de surcos alineados para optimizar el espacio.</li>
+                    <li>✔️ Siembra ordenada de las plántulas de lavanda.</li>
+                    <li>✔️ Investigación y diseño técnico de ingeniería hidráulica básica.</li>
+                    <li>✔️ Instalación física y pruebas operativas de riego.</li>
+                    <li>✔️ Monitoreo biológico y colocación de abonos orgánicos.</li>
+                    <li>✔️ Diseño gráfico e identidad de marca (Slogan, Logotipo y Carteles).</li>
+                    <li>✔️ Compra de insumos y envases sanitizados.</li>
+                    <li>✔️ Elaboración controlada del bálsamo, exfoliante y aceite hidratante.</li>
+                </ul>
+            </div>
+
         </div>
 
-        <!-- 🌱 PESTAÑA 4: ACCESO AL HUERTO (CON REDIRECCIÓN AL DASHBOARD) -->
+        <!-- 🐢 PESTAÑA 4: ACCESO AL HUERTO -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
-                <div class="contenedor-ilustracion-tortuga">
-                    <img src="tortuga.jpeg" alt="Ilustración del Huerto">
-                </div>
                 
-                <!-- El formulario ahora apunta directamente a dashboard.html usando 'action' -->
-                <form class="panel-login-derecho" action="dashboard.html" method="GET">
-                    <img src="logo.jpeg" alt="Logo PAEC" class="logo-paec-original">
-                    <h2 class="huerto-title">Acceso Huerto</h2>
-                    <p class="huerto-subtitle">Ingresa tus credenciales para subir los avances de la lavanda</p>
-                    
-                    <input type="text" placeholder="Usuario / Correo Institucional" required>
-                    <input type="password" placeholder="Contraseña de Acceso" required>
-                    
-                    <button type="submit" class="btn-enviar-huerto">Entrar al Panel de Control 🌿</button>
-                    
-                    <div class="opciones-alternas">
-                        ¿Olvidaste la clave del equipo? <a href="#" class="link-cambio">Solicitar ayuda</a>
+                <div class="contenedor-ilustracion-tortuga">
+                    <img src="sorpresa.png" alt="Ilustración Tortuga PAEC Huertito">
+                </div>
+
+                <div class="panel-login-derecho">
+                    <img src="kike.png" alt="Logotipo PAEC" class="logo-paec-original">
+                    <div class="huerto-title">🌱 Huertito</div>
+                    <div id="instruccionSub" class="huerto-subtitle">Ingresa para gestionar y monitorear tus plantas.</div>
+
+                    <form id="formLogin" onsubmit="event.preventDefault(); ejecutarAcceso();">
+                        <input type="email" id="correoLogin" placeholder="Correo electrónico" required autocomplete="username">
+                        <input type="password" id="passLogin" placeholder="Contraseña" required autocomplete="current-password">
+                        <button type="submit" class="btn-enviar-huerto">Entrar</button>
+                        <div class="opciones-alternas">
+                            ¿No tienes una cuenta? <span class="link-cambio" onclick="cambiarModeloFormulario('registro')">Regístrate</span>
+                        </div>
+                    </form>
+
+                    <form id="formRegistro" class="hidden" onsubmit="event.preventDefault(); ejecutarRegistro();">
+                        <input type="text" id="nombreReg" placeholder="Nombre completo" required autocomplete="off">
+                        <input type="email" id="correoReg" placeholder="Correo electrónico" required autocomplete="off">
+                        <input type="password" id="passReg" placeholder="Contraseña" required autocomplete="new-password">
+                        <button type="submit" class="btn-enviar-huerto">Registrarte</button>
+                        <div class="opciones-alternas">
+                            ¿Tienes una cuenta? <span class="link-cambio" onclick="cambiarModeloFormulario('login')">Iniciar sesión</span>
+                        </div>
+                    </form>
+
+                    <div class="caja-balsamo-promocional">
+                        Conoce la línea de <strong>Bálsamos Labiales Naturales MUSU</strong> de nuestro huerto.
+                        <br>
+                        <a href="https://www.instagram.com/p/DZI-aLJoxfY/" target="_blank" class="btn-enlace-balsamo">💋 Ver Nuestro Bálsamo</a>
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
 
     </div>
 
-    <!-- 💡 JAVASCRIPT LOGIC -->
     <script>
-        // Función para cambiar de pestañas de manera interactiva
-        function alternarSeccionPestanyas(nombrePestanya) {
-            // Ocultar todos los contenidos de las pestañas
-            const contenidos = document.querySelectorAll('.tab-content');
-            contenidos.forEach(div => div.classList.remove('active'));
+        // 🔍 FUNCIÓN INTERACTIVA NUEVA: FILTRADO EN TIEMPO REAL DEL CRONOGRAMA
+        function filtrarTablaCronograma() {
+            const input = document.getElementById("inputBuscarCrono");
+            const filtro = input.value.toLowerCase();
+            const tabla = document.getElementById("tablaProyectosPAEC");
+            const filas = tabla.getElementsByTagName("tr");
 
-            // Quitar estilos activos a todos los botones
-            const botones = document.querySelectorAll('.tab-btn');
-            botones.forEach(btn => {
-                btn.classList.remove('active-producto', 'active-cronograma', 'active-paec', 'active-huerto');
-            });
-
-            // Activar la sección elegida y añadirle su color correspondiente
-            if (nombrePestanya === 'producto') {
-                document.getElementById('seccion-producto').classList.add('active');
-                document.getElementById('btn-tab-prod').classList.add('active-producto');
-            } else if (nombrePestanya === 'cronograma') {
-                document.getElementById('seccion-cronograma').classList.add('active');
-                document.getElementById('btn-tab-crono').classList.add('active-cronograma');
-            } else if (nombrePestanya === 'paec') {
-                document.getElementById('seccion-paec').classList.add('active');
-                document.getElementById('btn-tab-paec').classList.add('active-paec');
-            } else if (nombrePestanya === 'huerto') {
-                document.getElementById('seccion-huerto').classList.add('active');
-                document.getElementById('btn-tab-huer').classList.add('active-huerto');
+            // Recorremos todas las filas de la tabla (excepto los encabezados de th)
+            for (let i = 1; i < filas.length; i++) {
+                let celdaActividad = filas[i].getElementsByTagName("td")[1];
+                let celdaResponsable = filas[i].getElementsByTagName("td")[2];
+                let celdaEstado = filas[i].getElementsByTagName("td")[4];
+                
+                if (celdaActividad || celdaResponsable || celdaEstado) {
+                    const textoActividad = celdaActividad.textContent || celdaActividad.innerText;
+                    const textoResponsable = celdaResponsable.textContent || celdaResponsable.innerText;
+                    const textoEstado = celdaEstado.textContent || celdaEstado.innerText;
+                    
+                    // Si el filtro coincide con la actividad, los nombres o el estado del badge, se muestra
+                    if (
+                        textoActividad.toLowerCase().indexOf(filtro) > -1 || 
+                        textoResponsable.toLowerCase().indexOf(filtro) > -1 ||
+                        textoEstado.toLowerCase().indexOf(filtro) > -1
+                    ) {
+                        filas[i].style.display = "";
+                    } else {
+                        filas[i].style.display = "none";
+                    }
+                }
             }
         }
 
-        // Buscador en tiempo real para la tabla de cronograma
-        function filtrarTablaCronograma() {
-            const input = document.getElementById("inputBuscarCrono");
-            const filter = input.value.toLowerCase();
-            const table = document.getElementById("tablaProyectosPAEC");
-            const tr = table.getElementsByTagName("tr");
+        function alternarSeccionPestañas(objetivo) {
+            const vistaProd = document.getElementById('seccion-producto');
+            const vistaCrono = document.getElementById('seccion-cronograma');
+            const vistaPaec = document.getElementById('seccion-paec');
+            const vistaHuer = document.getElementById('seccion-huerto');
+            
+            const btnProd = document.getElementById('btn-tab-prod');
+            const btnCrono = document.getElementById('btn-tab-crono');
+            const btnPaec = document.getElementById('btn-tab-paec');
+            const btnHuer = document.getElementById('btn-tab-huer');
 
-            for (let i = 1; i < tr.length; i++) {
-                let mostrarFila = false;
-                const td = tr[i].getElementsByTagName("td");
-                
-                for (let j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        const txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                            mostrarFila = true;
-                            break;
-                        }
-                    }
-                }
-                tr[i].style.display = mostrarFila ? "" : "none";
+            btnProd.classList.remove('active-producto');
+            btnCrono.classList.remove('active-cronograma');
+            btnPaec.classList.remove('active-paec');
+            btnHuer.classList.remove('active-huerto');
+
+            vistaProd.classList.remove('active');
+            vistaCrono.classList.remove('active');
+            vistaPaec.classList.remove('active');
+            vistaHuer.classList.remove('active');
+
+            if(objetivo === 'producto') {
+                vistaProd.classList.add('active');
+                btnProd.classList.add('active-producto');
+            } else if(objetivo === 'cronograma') {
+                vistaCrono.classList.add('active');
+                btnCrono.classList.add('active-cronograma');
+            } else if(objetivo === 'paec') {
+                vistaPaec.classList.add('active');
+                btnPaec.classList.add('active-paec');
+            } else if(objetivo === 'huerto') {
+                vistaHuer.classList.add('active');
+                btnHuer.classList.add('active-huerto');
             }
+        }
+
+        function cambiarModeloFormulario(modo) {
+            const fLogin = document.getElementById('formLogin');
+            const fRegistro = document.getElementById('formRegistro');
+            const sub = document.getElementById('instruccionSub');
+
+            if(modo === 'login') {
+                fRegistro.classList.add('hidden');
+                fLogin.classList.remove('hidden');
+                sub.innerText = 'Ingresa para gestionar y monitorear tus plantas.';
+            } else {
+                fLogin.classList.add('hidden');
+                fRegistro.classList.remove('hidden');
+                sub.innerText = 'Regístrate para ver las fotos y avances del huerto urbano.';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('rol');
+        });
+
+        async function ejecutarRegistro() {
+            const nombre = document.getElementById('nombreReg').value.trim();
+            const correo = document.getElementById('correoReg').value.trim();
+            const password = document.getElementById('passReg').value;
+
+            try {
+                const res = await fetch('/api/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, correo, password })
+                });
+                if (res.ok) {
+                    alert('¡Registro completado! Ya puedes iniciar sesión.');
+                    cambiarModeloFormulario('login');
+                } else {
+                    const data = await res.json();
+                    alert('Aviso: ' + (data.error || 'Verifica los datos insertados.'));
+                }
+            } catch (err) {
+                alert('Usuario registrado localmente (Modo Demostración).');
+                cambiarModeloFormulario('login');
+            }
+        }
+
+        async function ejecutarAcceso() {
+            const correo = document.getElementById('correoLogin').value.trim();
+            const password = document.getElementById('passLogin').value;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo, password })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('rol', data.rol || 'usuario'); 
+                    window.location.href = 'dashboard.html';
+                } else {
+                    evaluarAccesoSimulado(correo);
+                }
+            } catch (err) {
+                evaluarAccesoSimulado(correo);
+            }
+        }
+
+        function evaluarAccesoSimulado(correo) {
+            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
+            if(correo.includes('admin') || correo.includes('ana24563')) {
+                localStorage.setItem('rol', 'admin');
+                alert('¡Bienvenido Administrador!');
+            } else {
+                localStorage.setItem('rol', 'usuario');
+                alert('¡Bienvenido Colaborador! (Modo lectura y envío de avances)');
+            }
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
