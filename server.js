@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
-const cors = require('cors'); // 👈 Modificación: Librería de seguridad añadida
+const cors = require('cors'); // 👈 Librería de seguridad añadida
 require('dotenv').config();
 
 const app = express();
 
-// 👈 Modificación: Permitir que tu laptop se conecte al Codespaces sin bloqueos
+// 👈 Permitir que tu laptop se conecte al Codespaces sin bloqueos
 app.use(cors()); 
 
 app.use(express.json());
@@ -23,10 +23,24 @@ const upload = multer({
 
 const JWT_SECRET = 'SECRETO_SUPER_SEGURO';
 
-// --- 💾 BASES DE DATOS SIMULADAS EN MEMORIA CON DATOS DE PRUEBA ---
+// --- 💾 BASES DE DATOS SIMULADAS EN MEMORIA ---
 console.log('✅ Base de datos Local Temporal (En Memoria) lista y conectada');
 const usuariosBD = [];
 
+// 🚀 TRUCO DEFINITIVO: Registramos tu cuenta como ADMIN real con contraseña 'huertitos'
+(async () => {
+    const passwordEncriptada = await bcrypt.hash('huertitos', 10); // 👈 ¡CONTRASEÑA CAMBIADA AQUÍ!
+    usuariosBD.push({
+        id: "admin_arely",
+        nombre: "Arely Admin 🌿",
+        correo: "arely24526@cbtis75.edu.mx", // 👈 Tu correo exacto
+        password: passwordEncriptada,
+        rol: "admin" // 👈 Súper poderes asegurados
+    });
+    console.log('👑 Cuenta de Administrador pre-cargada: arely24526@cbtis75.edu.mx (Password: huertitos)');
+})();
+
+// Historial pre-cargado para que nunca más aparezca el error de historial vacío
 const bitacoraBD = [
     {
         _id: "registro_prueba_1",
@@ -44,7 +58,7 @@ const bitacoraBD = [
     }
 ];
 
-// --- 🛠️ MIDDLEWARE DE VALIDACIÓN CORREGIDO ---
+// --- 🛠️ MIDDLEWARE DE VALIDACIÓN ---
 function verificarAdmin(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -108,6 +122,7 @@ app.post('/api/login', async (req, res) => {
     const passValido = await bcrypt.compare(password, usuario.password);
     if (!passValido) return res.status(400).json({ error: "Usuario o contraseña incorrectos." });
 
+    // Generamos el token guardando el rol
     const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, JWT_SECRET, { expiresIn: '4h' });
     res.json({ token, rol: usuario.rol, nombre: usuario.nombre });
 });
@@ -117,7 +132,7 @@ app.get('/api/bitacora', (req, res) => {
     res.json(bitacoraBD.sort((a, b) => b.fecha - a.fecha));
 });
 
-// 4. Publicar Nueva Entrada (Soporta imagen en Base64)
+// 4. Publicar Nueva Entrada
 app.post('/api/bitacora', verificarAutenticacion, upload.single('imagen'), (req, res) => {
     const { tipoPlanta, dueno, altura, abono, observaciones } = req.body;
     if (!tipoPlanta || !altura) return res.status(400).json({ error: "Planta y Altura son obligatorios." });
