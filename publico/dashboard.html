@@ -2,80 +2,239 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Control - Bitácora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSU - Panel de Control & Bitácora</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f7f2; margin: 0; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; background: #4d693f; color: white; padding: 15px 30px; border-radius: 12px; }
-        .logout { color: #fcd7de; cursor: pointer; font-weight: bold; }
-        .container { max-width: 600px; margin: 30px auto; }
-        .form-box { background: white; padding: 25px; border-radius: 16px; border: 1px solid #dbe3da; margin-bottom: 25px; }
-        .post { background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #dbe3da; }
-        input, textarea { width: 100%; margin-bottom: 12px; padding: 10px; border: 1px solid #c0cca9; border-radius: 8px; box-sizing: border-box; }
-        button { background: #4d693f; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
-        img { width: 100%; border-radius: 12px; margin-top: 10px; }
+        :root {
+            --rosa-principal: #fcd7de;  
+            --rosa-intenso: #e58fa2;    
+            --rosa-oscuro: #8c4354;     
+            --verde-huerto: #4d693f;    
+            --verde-claro: #f2f7f0;
+            --blanco: #ffffff;
+            --texto: #2c3528;
+        }
+
+        body { font-family: system-ui, sans-serif; background-color: #faf4f5; margin: 0; padding: 0; color: var(--texto); }
+        
+        .navbar { background: linear-gradient(135deg, var(--rosa-oscuro), var(--rosa-intenso)); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .navbar h2 { margin: 0; font-size: 1.6rem; }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .btn-nav { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; text-decoration: none; }
+        .btn-nav:hover { background: white; color: var(--rosa-oscuro); }
+
+        .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+        
+        /* BLOQUES DE INTERFAZ */
+        .card { background: var(--blanco); border-radius: 20px; padding: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #f0e2e5; }
+        .card h3 { margin-top: 0; color: var(--rosa-oscuro); border-bottom: 2px solid var(--rosa-principal); padding-bottom: 8px; }
+        
+        input, textarea, select { width: 100%; margin-bottom: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 0.95rem; }
+        button.btn-primary { background-color: var(--verde-huerto); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; transition: background 0.2s; }
+        button.btn-primary:hover { background-color: #394e2e; }
+
+        /* TABLÓN DE ANUNCIOS */
+        .anuncio-item { background: #fff9fa; border-left: 5px solid var(--rosa-intenso); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .anuncio-item h4 { margin: 0 0 5px 0; color: var(--rosa-oscuro); }
+
+        /* POST DE LA BITÁCORA */
+        .post { background: white; border-radius: 20px; border: 1px solid #e3ede0; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .post-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .post-title { font-size: 1.4rem; color: var(--verde-huerto); margin: 0; }
+        
+        .media-box { background: #fafafa; border-radius: 12px; padding: 15px; text-align: center; margin: 15px 0; border: 1px dashed #ccc; }
+        .media-box img { max-width: 100%; border-radius: 8px; max-height: 400px; }
+        .file-link { display: inline-flex; align-items: center; gap: 10px; background: #eef2f7; padding: 10px 20px; border-radius: 8px; font-weight: bold; color: #333; text-decoration: none; border: 1px solid #dcdfe6; }
+
+        /* RECUADROS INTERACTIVOS: GANTT Y CRONOGRAMA */
+        .interactive-section { background-color: var(--verde-claro); border-radius: 12px; padding: 15px; margin-top: 15px; border: 1px solid #dee7dc; }
+        .interactive-section h5 { margin: 0 0 10px 0; font-size: 1.1rem; color: var(--verde-huerto); }
+
+        /* GANTT ORIGINAL ESTILO CSS GRID */
+        .gantt-grid { display: flex; flex-direction: column; gap: 8px; background: white; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.85rem; }
+        .gantt-row { display: flex; align-items: center; justify-content: space-between; background: #fafafa; padding: 6px 10px; border-radius: 4px; }
+        .gantt-bar-bg { background: #eee; width: 60%; height: 16px; border-radius: 8px; overflow: hidden; position: relative; }
+        .gantt-bar-fill { background: var(--rosa-intenso); height: 100%; text-align: center; color: white; font-size: 10px; line-height: 16px; font-weight: bold; }
+
+        /* DIAGRAMA DE FLUJO INTEGRADO */
+        .flow-container { display: flex; flex-direction: column; gap: 10px; background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; align-items: center; }
+        .flow-node { background: var(--verde-huerto); color: white; padding: 10px 15px; border-radius: 8px; text-align: center; width: 85%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
+        .flow-node p { margin: 4px 0 0 0; font-size: 0.8rem; opacity: 0.9; }
+        .flow-arrow { color: var(--rosa-oscuro); font-weight: bold; font-size: 1.2rem; margin: -2px 0; }
+
+        .editor-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 10px; }
+        .editor-form input { margin-bottom: 0; padding: 6px; font-size: 0.85rem; }
+
+        @media (max-width: 900px) { .dashboard-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h2>🌱 Bitácora Digital del Huerto</h2>
-        <span class="logout" onclick="localStorage.clear(); window.location.href='/'">Cerrar Sesión</span>
+    <div class="navbar">
+        <h2>🌱 Panel General del Huertito</h2>
+        <div class="nav-actions">
+            <span id="txtSaludo" style="font-weight: bold;"></span>
+            <a href="admin.html" id="lnkAdmin" class="btn-nav" style="display:none;">⚙️ Consola Admin</a>
+            <button class="btn-nav" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
     </div>
 
-    <div class="container">
-        <!-- Formulario de carga rápida -->
-        <div class="form-box">
-            <h3>Publicar actualización de Planta</h3>
-            <input type="text" id="planta" placeholder="Nombre de la planta">
-            <input type="text" id="dueno" placeholder="Tu nombre / Equipo">
-            <input type="number" id="altura" placeholder="Altura en cm">
-            <textarea id="observaciones" placeholder="Notas sobre el estado actual..."></textarea>
-            <input type="file" id="foto" accept="image/*">
-            <button onclick="publicarEntrada()">Publicar en Muro</button>
+    <div class="dashboard-container">
+        
+        <div>
+            <div class="card">
+                <h3>📢 Avisos y Anuncios Oficiales</h3>
+                <div id="contenedorAnuncios">Cargando circulares oficiales...</div>
+            </div>
+
+            <div class="card">
+                <h3>🌿 Registrar Nueva Planta</h3>
+                <form id="formNuevaPlanta" onsubmit="event.preventDefault(); publicarPlanta();">
+                    <input type="text" id="tipoPlanta" placeholder="Ej: Menta, Aloe Vera, Albahaca" required>
+                    <input type="text" id="duenoPlanta" placeholder="Responsable o Equipo" required>
+                    <input type="number" id="alturaPlanta" placeholder="Altura aproximada (cm)" required>
+                    <input type="text" id="abonoPlanta" placeholder="Sustrato o abono aplicado" required>
+                    <textarea id="obsPlanta" placeholder="Escribe tus observaciones iniciales del cultivo..." rows="3" required></textarea>
+                    
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9rem;">Adjuntar Archivo o Imagen:</label>
+                    <input type="file" id="archivoHuerto">
+                    
+                    <button type="submit" class="btn-primary">Subir a la Bitácora</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Contenedor dinámico -->
-        <div id="muroPublico">Cargando bitácora...</div>
+        <div>
+            <div class="card">
+                <h3>📖 Bitácora en Tiempo Real</h3>
+                <div id="contenedorBitacora">Cargando publicaciones...</div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         const API_URL = 'http://localhost:3000';
         const token = localStorage.getItem('token');
+        const rol = localStorage.getItem('rol');
+        const nombre = localStorage.getItem('nombre');
 
-        if(!token) window.location.href = '/';
+        if(!token) { window.location.href = 'index.html'; }
 
-        async function cargarMuro() {
-            const res = await fetch(`${API_URL}/api/bitacora`);
+        document.getElementById('txtSaludo').innerText = `Hola, ${nombre || 'Colaborador'} (${rol === 'admin' ? 'Admin' : 'Usuario'})`;
+        if(rol === 'admin') { document.getElementById('lnkAdmin').style.display = 'inline-block'; }
+
+        function cerrarSesion() { localStorage.clear(); window.location.href = 'index.html'; }
+
+        // Cargar Anuncios
+        async function cargarAnuncios() {
+            const res = await fetch(`${API_URL}/api/anuncios`);
             const datos = await res.json();
-            const muro = document.getElementById('muroPublico');
-            
-            if(datos.length === 0) {
-                muro.innerHTML = '<p style="text-align:center; color:#60705a;">Aún no hay publicaciones en el huerto.</p>';
-                return;
-            }
+            const box = document.getElementById('contenedorAnuncios');
+            if(datos.length === 0) { box.innerHTML = '<p>No hay avisos publicados actualmente.</p>'; return; }
 
-            muro.innerHTML = datos.map(p => `
-                <div class="post">
-                    <h4>🌿 Planta: ${p.tipoPlanta}</h4>
-                    <p><strong>Responsable:</strong> ${p.dueno} | <strong>Tamaño:</strong> ${p.altura} cm</p>
-                    <p><strong>Estado:</strong> ${p.observaciones}</p>
-                    ${p.imagenUrl ? `<img src="${p.imagenUrl}">` : ''}
-                    <br><small style="color:#aaa;">📅 ${new Date(p.fecha).toLocaleDateString()}</small>
+            box.innerHTML = datos.map(a => `
+                <div class="anuncio-item">
+                    <h4>📌 ${a.titulo}</h4>
+                    <p style="margin: 5px 0; font-size:0.95rem;">${a.contenido}</p>
+                    ${a.adjunto ? renderizarAdjunto(a.adjunto) : ''}
+                    <div style="font-size:0.75rem; color:#aaa; margin-top:5px;">Por: ${a.autor} | ${a.fecha}</div>
                 </div>
             `).join('');
         }
 
-        async function publicarEntrada() {
-            const formData = new FormData();
-            formData.append('tipoPlanta', document.getElementById('planta').value);
-            formData.append('dueno', document.getElementById('dueno').value);
-            formData.append('altura', document.getElementById('altura').value);
-            formData.append('observaciones', document.getElementById('observaciones').value);
-            
-            const fileInput = document.getElementById('foto');
-            if(fileInput.files[0]) {
-                formData.append('imagen', fileInput.files[0]);
+        // Cargar Publicaciones Completa
+        async function cargarBitacora() {
+            const res = await fetch(`${API_URL}/api/bitacora`);
+            const datos = await res.json();
+            const box = document.getElementById('contenedorBitacora');
+            if(datos.length === 0) { box.innerHTML = '<p>El muro está vacío. ¡Sé el primero en documentar tu avance!</p>'; return; }
+
+            box.innerHTML = datos.map(p => `
+                <div class="post">
+                    <div class="post-header">
+                        <div>
+                            <h4 class="post-title">${p.tipoPlanta}</h4>
+                            <span style="font-size:0.85rem; color:#666;">Por: <strong>${p.dueno}</strong></span>
+                        </div>
+                        <span style="font-size:0.85rem; color:#999;">${p.fecha}</span>
+                    </div>
+
+                    <p style="margin: 12px 0 6px 0;"><strong>Parámetros:</strong> Altura: ${p.altura} cm | Nutrición: ${p.abono}</p>
+                    <p style="background: #fdfdfd; padding: 10px; border-radius: 8px; border: 1px solid #eee; font-style: italic;">"${p.observaciones}"</p>
+
+                    ${p.adjunto ? renderizarAdjunto(p.adjunto) : ''}
+
+                    <div class="interactive-section">
+                        <h5>📅 Cronograma de Seguimiento (Gantt)</h5>
+                        <div class="gantt-grid">
+                            ${p.cronograma.map(c => `
+                                <div class="gantt-row">
+                                    <div style="width:30%"><strong>${c.tarea}</strong> <br><span style="font-size:10px; color:#777;">${c.inicio} al ${c.fin}</span></div>
+                                    <div class="gantt-bar-bg">
+                                        <div class="gantt-bar-fill" style="width: ${c.progreso}%">${c.progreso}%</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="editor-form">
+                            <input type="text" id="t-act-${p._id}" placeholder="Actividad">
+                            <input type="number" id="t-prg-${p._id}" placeholder="Progreso %" min="0" max="100">
+                            <button class="btn-primary" style="padding:4px; font-size:12px;" onclick="agregarTareaGantt('${p._id}', '${p.usuarioId}')">Añadir/Actualizar</button>
+                        </div>
+                    </div>
+
+                    <div class="interactive-section">
+                        <h5>🌿 Diagrama de Flujo del Proceso</h5>
+                        <div class="flow-container">
+                            ${p.diagrama.map((d, index) => `
+                                <div class="flow-node">
+                                    <strong>Paso ${d.paso}: ${d.titulo}</strong>
+                                    <p>${d.desc}</p>
+                                </div>
+                                ${index < p.diagrama.length - 1 ? '<div class="flow-arrow">⬇</div>' : ''}
+                            `).join('')}
+                        </div>
+                        <div class="editor-form">
+                            <input type="text" id="d-tit-${p._id}" placeholder="Nuevo Título">
+                            <input type="text" id="d-dsc-${p._id}" placeholder="Descripción corta">
+                            <button class="btn-primary" style="padding:4px; font-size:12px;" onclick="agregarNodoFlujo('${p._id}', '${p.usuarioId}')">Insertar Paso</button>
+                        </div>
+                    </div>
+
+                    ${(rol === 'admin' || p.usuarioId === localStorage.getItem('usuarioId')) ? `
+                        <div style="text-align:right; margin-top:15px;">
+                            <button style="background:#d9534f; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer;" onclick="eliminarPublicacion('${p._id}')">Eliminar Planta</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderizarAdjunto(adj) {
+            if(adj.mimeType.startsWith('image/')) {
+                return `<div class="media-box"><img src="${adj.datosBase64}" alt="${adj.nombreArchivo}"></div>`;
+            } else {
+                return `
+                    <div style="margin:10px 0;">
+                        <a class="file-link" href="${adj.datosBase64}" download="${adj.nombreArchivo}">
+                            📄 Descargar Documento: ${adj.nombreArchivo}
+                        </a>
+                    </div>
+                `;
             }
+        }
+
+        async function publicarPlanta() {
+            const formData = new FormData();
+            formData.append('tipoPlanta', document.getElementById('tipoPlanta').value);
+            formData.append('dueno', document.getElementById('duenoPlanta').value);
+            formData.append('altura', document.getElementById('alturaPlanta').value);
+            formData.append('abono', document.getElementById('abonoPlanta').value);
+            formData.append('observaciones', document.getElementById('obsPlanta').value);
+
+            const fileInput = document.getElementById('archivoHuerto');
+            if(fileInput.files[0]) formData.append('archivo', fileInput.files[0]);
 
             const res = await fetch(`${API_URL}/api/bitacora`, {
                 method: 'POST',
@@ -83,15 +242,75 @@
                 body: formData
             });
 
-            if(res.ok) {
-                alert('¡Publicado!');
-                location.reload();
-            } else {
-                alert('Error al publicar. Tu sesión podría haber expirado.');
-            }
+            if(res.ok) { document.getElementById('formNuevaPlanta').reset(); cargarBitacora(); }
+            else { alert('Error al subir los datos al servidor.'); }
         }
 
-        cargarMuro();
+        async function agregarTareaGantt(idPost, autorId) {
+            const desc = document.getElementById(`t-act-${idPost}`).value;
+            const prg = document.getElementById(`t-prg-${idPost}`).value;
+            if(!desc || !prg) return alert("Llena la actividad y su porcentaje.");
+
+            // Obtener el estado actual simulado o recargando
+            const resGet = await fetch(`${API_URL}/api/bitacora`);
+            const postes = await resGet.json();
+            const postActual = postes.find(p => p._id === idPost);
+
+            const nuevoCronograma = [...postActual.cronograma, {
+                id: Date.now(),
+                tarea: desc,
+                inicio: "2026-06-11",
+                fin: "2026-06-18",
+                progreso: parseInt(prg)
+            }];
+
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}/cronograma`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ cronograma: nuevoCronograma })
+            });
+
+            if(res.ok) cargarBitacora();
+            else alert("No posees los permisos para alterar este elemento.");
+        }
+
+        async function agregarNodoFlujo(idPost, autorId) {
+            const tit = document.getElementById(`d-tit-${idPost}`).value;
+            const dsc = document.getElementById(`d-dsc-${idPost}`).value;
+            if(!tit || !dsc) return alert("Ingresa el título y descripción del paso.");
+
+            const resGet = await fetch(`${API_URL}/api/bitacora`);
+            const postes = await resGet.json();
+            const postActual = postes.find(p => p._id === idPost);
+
+            const nuevoDiagrama = [...postActual.diagrama, {
+                paso: postActual.diagrama.length + 1,
+                titulo: tit,
+                desc: dsc
+            }];
+
+            const res = await fetch(`${API_URL}/api/bitacora/${idPost}/diagrama`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ diagrama: nuevoDiagrama })
+            });
+
+            if(res.ok) cargarBitacora();
+            else alert("No posees los privilegios requeridos.");
+        }
+
+        async function eliminarPublicacion(id) {
+            if(!confirm("¿Deseas dar de baja este registro?")) return;
+            await fetch(`${API_URL}/api/bitacora/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            cargarBitacora();
+        }
+
+        // Inicialización
+        cargarAnuncios();
+        cargarBitacora();
     </script>
 </body>
 </html>
