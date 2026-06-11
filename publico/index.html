@@ -544,95 +544,62 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+<style>
+    /* 👑 NUEVOS ESTILOS EXCLUSIVOS: DIAGRAMA DE GANTT ESTRUCTURA INTERACTIVA 👑 */
+    .gantt-contenedor-scroll {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid #f2cbd2;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+        background: #ffffff;
+        margin-bottom: 30px;
+        position: relative;
+    }
 
-        /* 📊 👑 NUEVOS ESTILOS EXCLUSIVOS: DIAGRAMA DE GANTT ESTRUCTURA INTERACTIVA 👑 */
-        .gantt-contenedor-scroll {
-            width: 100%;
-            overflow-x: auto;
-            border: 1px solid #f2cbd2;
-            border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.03);
-            background: #ffffff;
-            margin-bottom: 30px;
-            position: relative;
-        }
+    .tabla-gantt-interactive {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.88rem;
+        text-align: left;
+        min-width: 1600px; /* Asegura espacio suficiente para simular los días en horizontal */
+    }
 
-        .tabla-gantt-interactive {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 0.88rem;
-            text-align: left;
-            min-width: 1600px; /* Asegura espacio suficiente para simular los días en horizontal */
-        }
+    /* Congelado de la columna Actividades a la izquierda */
+    .tabla-gantt-interactive th.col-sticky-actividad,
+    .tabla-gantt-interactive td.col-sticky-actividad {
+        position: sticky;
+        left: 0;
+        background-color: #ffffff;
+        z-index: 5;
+        width: 320px;
+        min-width: 320px;
+        max-width: 320px;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.06);
+        border-right: 2px solid #e58fa2;
+        padding: 14px 16px;
+        font-weight: 500;
+        color: #4a354f;
+    }
 
-        /* Congelado de la columna Actividades a la izquierda */
-        .tabla-gantt-interactive th.col-sticky-actividad,
-        .tabla-gantt-interactive td.col-sticky-actividad {
-            position: sticky;
-            left: 0;
-            background-color: #ffffff;
-            z-index: 5;
-            width: 320px;
-            min-width: 320px;
-            max-width: 320px;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.06);
-            border-right: 2px solid #e58fa2;
-            padding: 14px 16px;
-            font-weight: 500;
-            color: #2c3528;
-        }
+    /* Estilos para las celdas marcadas con actividad (Bloques) */
+    .gantt-marcado {
+        background-color: #e58fa2 !important;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
 
-        .tabla-gantt-interactive th.col-sticky-actividad {
-            background-color: var(--rosa-oscuro) !important;
-            color: var(--blanco) !important;
-            z-index: 6;
-            font-weight: bold;
-        }
+    /* Estilo especial para los Fines de Semana */
+    .gantt-fin-semana {
+        background-color: #fcedf0;
+    }
 
-        /* Encabezados generales del Gantt */
-        .tabla-gantt-interactive th {
-            background-color: #a36271;
-            color: var(--blanco);
-            padding: 12px 8px;
-            font-weight: 600;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.8rem;
-        }
-
-        .tabla-gantt-interactive td {
-            padding: 10px 6px;
-            border: 1px solid #fae3e7;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        /* Estructura de fila alternativa */
-        .tabla-gantt-interactive tr:nth-child(even) td:not(.col-sticky-actividad) {
-            background-color: #fff9fa;
-        }
-
-        .tabla-gantt-interactive tr:hover td.col-sticky-actividad {
-            background-color: #ffeef1 !important;
-        }
-
-        /* 🎨 PALETA DE COLORES EXACTA PARA CADA BARRA DE DÍAS DEL EXCEL */
-        .bloque-azul-claro { background-color: #92cddc !important; color: #1f497d !important; font-weight: bold; border-radius: 4px; }
-        .bloque-azul-marino { background-color: #002060 !important; color: #ffffff !important; font-weight: bold; border-radius: 4px; }
-        .bloque-verde { background-color: #c4d79b !important; color: #2b540a !important; font-weight: bold; border-radius: 4px; }
-        .bloque-morado { background-color: #b1a0c7 !important; color: #3b2354 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-rosa { background-color: #f2dcdb !important; color: #7f2624 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-rojo { background-color: #da9694 !important; color: #5c0d0c !important; font-weight: bold; border-radius: 4px; }
-        .bloque-gris { background-color: #d9d9d9 !important; color: #404040 !important; font-weight: bold; border-radius: 4px; }
-        .bloque-amarillo { background-color: #ffffcc !important; color: #5c5c00 !important; font-weight: bold; border-radius: 4px; }
-
-        /* Estilo sutil para los días vacíos */
-        .dia-vacio {
-            color: #ccc;
-            font-size: 0.75rem;
-            opacity: 0.4;
-        }
-    </style>
+    /* Estilo para el periodo de Vacaciones */
+    .gantt-vacaciones {
+        background-color: #fff5cc !important;
+    }
+</style>
 </head>
 <body>
 
