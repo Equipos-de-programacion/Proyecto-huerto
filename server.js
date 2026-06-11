@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json());
 
 // Sirve los archivos estáticos (index.html, dashboard.html, imágenes) desde la carpeta 'publico'
-app.use(express.static(path.join(__dirname, 'publico')));
+app.use(express.static(__dirname));
 
 // Configuración para recibir archivos/imágenes en las peticiones
 const storage = multer.memoryStorage();
