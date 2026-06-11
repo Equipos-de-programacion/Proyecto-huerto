@@ -518,6 +518,97 @@
             background-color: #d47a8e;
         }
 
+        /* 📊 ESTILOS ADICIONALES PARA LA TABLA DEL CRONOGRAMA INTERACTIVO */
+        .buscador-crono {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px 16px 12px 40px;
+            font-size: 1rem;
+            border: 2px solid #f2cbd2;
+            border-radius: 50px;
+            margin: 15px 0 25px 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238c4354' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 15px center;
+            background-size: 16px;
+            box-shadow: 0 4px 10px rgba(140, 67, 84, 0.03);
+        }
+
+        .buscador-crono:focus {
+            border-color: var(--rosa-intenso);
+            box-shadow: 0 4px 12px rgba(229, 143, 162, 0.2);
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #f2cbd2;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.02);
+            background: white;
+            margin-bottom: 30px;
+        }
+
+        .tabla-interactiva {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .tabla-interactiva th {
+            background-color: var(--rosa-oscuro);
+            color: var(--blanco);
+            padding: 16px 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .tabla-interactiva td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #fae3e7;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .tabla-interactiva tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tabla-interactiva tr:nth-child(even) {
+            background-color: var(--rosa-tarjeta);
+        }
+
+        .tabla-interactiva tr:hover {
+            background-color: #ffeef1;
+            transition: background 0.15s ease;
+        }
+
+        /* Estados (Badges) */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .badge.completado {
+            background-color: #def7ec;
+            color: #03543f;
+        }
+
+        .badge.proceso {
+            background-color: #fef08a;
+            color: #713f12;
+        }
+
+        .badge.revision {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
         .hidden { display: none !important; }
 
         @keyframes fadeIn {
@@ -618,20 +709,114 @@
 
         </div>
 
-        <!-- 📅 PESTAÑA 2: NUEVA SECCIÓN EXCLUSIVA PARA EL CRONOGRAMA -->
+        <!-- 📅 PESTAÑA 2: NUEVA SECCIÓN EXCLUSIVA PARA EL CRONOGRAMA INTERACTIVO -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
-                <h2>📅 Cronograma de Actividades</h2>
-                <p>Aquí puedes consultar la organización, fechas asignadas y el avance de los bloques de actividades planificados para el desarrollo integral del proyecto. Pasa el cursor sobre las imágenes para verlas en detalle o usa el botón inferior para abrir el documento completo.</p>
+                <h2>📅 Cronograma General de Actividades</h2>
+                <p>Navega a través de las tareas oficiales extraídas de la planeación general. Puedes escribir en el buscador palabras clave como el nombre de un integrante, el estado de la tarea o una fase para filtrarlas al instante.</p>
                 
+                <!-- 🔍 Buscador Dinámico -->
+                <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad, responsable o estado...">
+
+                <!-- 📊 Tabla Limpia y Altamente Nítida -->
+                <div class="tabla-contenedor">
+                    <table class="tabla-interactiva" id="tablaProyectosPAEC">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Código</th>
+                                <th>Bloque / Descripción de Actividad</th>
+                                <th>Responsable(s) Asignados</th>
+                                <th style="width: 140px;">Fase Asignada</th>
+                                <th style="width: 130px; text-align: center;">Estado actual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ACT-01</strong></td>
+                                <td>Remoción de suelos, eliminación de maleza pesada y nivelación inicial del terreno.</td>
+                                <td>Todo el Equipo PAEC</td>
+                                <td>Fase 1: Suelo</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-02</strong></td>
+                                <td>Cavado y diseño geométrico de surcos alineados para el flujo hídrico.</td>
+                                <td>Todo el Equipo PAEC</td>
+                                <td>Fase 1: Suelo</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-03</strong></td>
+                                <td>Plantación sistemática de plántulas de lavanda en los surcos listos.</td>
+                                <td>Arely, Mbalia, Fatima</td>
+                                <td>Fase 2: Siembra</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-04</strong></td>
+                                <td>Investigación técnica de ingeniería hidráulica y simulación de goteo eficiente.</td>
+                                <td>José Luis, Juan, Angel</td>
+                                <td>Fase 3: Riego</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-05</strong></td>
+                                <td>Ensamblaje, colocación de mangueras y pruebas de presión del sistema de irrigación.</td>
+                                <td>José Luis, Juan, Angel</td>
+                                <td>Fase 3: Riego</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-06</strong></td>
+                                <td>Monitoreo biológico regular de crecimiento y colocación focalizada de abono orgánico.</td>
+                                <td>Equipo Completo</td>
+                                <td>Fase 4: Nutrición</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-07</strong></td>
+                                <td>Desarrollo de identidad gráfica de marca MUSU (Eslogan, Logotipo y Cartel promocional).</td>
+                                <td>Ana Rincón, Arely, Mbalia</td>
+                                <td>Fase 5: Branding</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-08</strong></td>
+                                <td>Adquisición organizada y sanitización de envases y frascos de laboratorio.</td>
+                                <td>Ana Rincón, Fatima</td>
+                                <td>Fase 6: Insumos</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-09</strong></td>
+                                <td>Producción controlada del bálsamo, exfoliante y aceite corporal en laboratorio.</td>
+                                <td>Arely, Mbalia, Ana, Fatima</td>
+                                <td>Fase 7: Producción</td>
+                                <td style="text-align: center;"><span class="badge completado">✔️ Completado</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ACT-10</strong></td>
+                                <td>Montaje del stand expositivo y defensa oficial del proyecto ante el sínodo docente.</td>
+                                <td>Equipo Completo</td>
+                                <td>Fase 8: Evaluación</td>
+                                <td style="text-align: center;"><span class="badge revision">🚀 Entregado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 🖼️ Sección Visual Expandible debajo de la tabla -->
+                <h3 style="color: var(--rosa-oscuro); margin-top: 10px;">📸 Capturas de Respaldos de Planificación</h3>
+                <p style="font-size: 0.95rem;">Si deseas inspeccionar el diseño de celdas gráficas originales del Excel, puedes revisar las capturas nítidas aquí abajo o expandirlas pasando el ratón:</p>
                 <div class="cronograma-grid">
                     <img src="cronograma1.png" alt="Cronograma de Actividades Parte 1" class="cronograma-img">
                     <img src="cronograma2.png" alt="Cronograma de Actividades Parte 2" class="cronograma-img">
                 </div>
 
                 <div class="contenedor-boton-drive">
-                    <a href="https://drive.google.com/file/d/16og28RICdJI-CTKXoBB7wlRdZ_Ws4dab/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive">
-                        📁 Ver Cronograma en Google Drive ↗
+                    <!-- Mantenemos el link de drive que pasaste por si ocupan descargar la hoja editable de cálculo -->
+                    <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive">
+                        📁 Descargar Archivo Excel Original Directo ↗
                     </a>
                 </div>
             </div>
@@ -701,7 +886,7 @@
                     </div>
                     <div class="timeline-item left">
                         <div class="timeline-content">
-                            <h3>5. Aplicación del sistema de riego</h3>
+                            <h3>5. Application del sistema de riego</h3>
                             <p>Instalación definitiva sobre el terreno del huerto del sistema de irrigación periódica.</p>
                             <img src="5.jpg" alt="Aplicación del sistema de riego" class="timeline-img">
                         </div>
@@ -811,6 +996,38 @@
     </div>
 
     <script>
+        // 🔍 FUNCIÓN INTERACTIVA NUEVA: FILTRADO EN TIEMPO REAL DEL CRONOGRAMA
+        function filtrarTablaCronograma() {
+            const input = document.getElementById("inputBuscarCrono");
+            const filtro = input.value.toLowerCase();
+            const tabla = document.getElementById("tablaProyectosPAEC");
+            const filas = tabla.getElementsByTagName("tr");
+
+            // Recorremos todas las filas de la tabla (excepto los encabezados de th)
+            for (let i = 1; i < filas.length; i++) {
+                let celdaActividad = filas[i].getElementsByTagName("td")[1];
+                let celdaResponsable = filas[i].getElementsByTagName("td")[2];
+                let celdaEstado = filas[i].getElementsByTagName("td")[4];
+                
+                if (celdaActividad || celdaResponsable || celdaEstado) {
+                    const textoActividad = celdaActividad.textContent || celdaActividad.innerText;
+                    const textoResponsable = celdaResponsable.textContent || celdaResponsable.innerText;
+                    const textoEstado = celdaEstado.textContent || celdaEstado.innerText;
+                    
+                    // Si el filtro coincide con la actividad, los nombres o el estado del badge, se muestra
+                    if (
+                        textoActividad.toLowerCase().indexOf(filtro) > -1 || 
+                        textoResponsable.toLowerCase().indexOf(filtro) > -1 ||
+                        textoEstado.toLowerCase().indexOf(filtro) > -1
+                    ) {
+                        filas[i].style.display = "";
+                    } else {
+                        filas[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
         function alternarSeccionPestañas(objetivo) {
             const vistaProd = document.getElementById('seccion-producto');
             const vistaCrono = document.getElementById('seccion-cronograma');
