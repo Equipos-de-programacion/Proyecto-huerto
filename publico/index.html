@@ -194,6 +194,29 @@
             background-color: #fff2f4 !important;
         }
 
+        /* Enlace de descarga de Excel */
+        .btn-descarga-excel {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #107c41; /* Verde característico de Excel */
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(16, 124, 65, 0.15);
+        }
+
+        .btn-descarga-excel:hover {
+            background-color: #0b592e;
+            transform: translateY(-1px);
+        }
+
         /* Clases de Fondos Neutrales extraídos de cronogramaa.xlsx */
         .bg-gris-excel {
             background-color: #d9d9d9 !important; /* Días no hábiles / Fines de semana */
@@ -224,8 +247,8 @@
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
-            margin-top: 15px;
-            padding: 10px 15px;
+            margin-top: 20px;
+            padding: 12px 15px;
             background-color: #fff9fa;
             border-radius: 10px;
             font-size: 0.85rem;
@@ -307,7 +330,7 @@
             ✨ Presentación MUSU
         </button>
         <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">
-            📅 Cronograma Original
+            📅 Cronograma
         </button>
         <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">
             🌿 Proyecto PAEC
@@ -377,12 +400,17 @@
             </div>
         </div>
 
-        <!-- 📅 PESTAÑA 2: CRONOGRAMA EXACTO MAPEADO DESDE EL EXCEL ORIGINAL -->
+        <!-- 📅 PESTAÑA 2: CRONOGRAMA -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
-                <h2>📅 Diagrama de Gantt (Desde cronogramaa.xlsx)</h2>
-                <p>Desplaza la tabla hacia la derecha para ver los días programados y los bloques de colores correspondientes a cada tarea realizada:</p>
+                <h2>📅 Cronograma</h2>
+                <p>Desplaza la tabla hacia la derecha para revisar la planeación por días, o haz clic en el siguiente enlace si deseas abrir el archivo de origen:</p>
                 
+                <!-- Enlace dinámico al archivo original -->
+                <a href="cronogramaa.xlsx" class="btn-descarga-excel" target="_blank" download>
+                    📊 Ver/Descargar Cronograma Original (Excel)
+                </a>
+
                 <div class="contenedor-leyenda-excel">
                     <div class="item-leyenda"><div class="cuadro-color" style="background-color: #00b0f0;"></div><span>Fase de Planeación / Ajustes Iniciales</span></div>
                     <div class="item-leyenda"><div class="cuadro-color" style="background-color: #0070c0;"></div><span>Plantación y Riego Primario</span></div>
@@ -420,7 +448,7 @@
                             <tr><td class="col-actividad-fija">empezar a diseñar las secciones que se van a ocupar como inicio de sesion, registro, etc.</td><td class="bg-blanco-excel"></td><td class="bg-blanco-excel"></td><td style="background-color: #7030a0;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td colspan="80" class="bg-blanco-excel"></td></tr>
                             <tr><td class="col-actividad-fija">investigar que ingredientes naturales o caseros son buenos para la piel y los labios</td><td colspan="5" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="72" class="bg-blanco-excel"></td></tr>
                             <tr><td class="col-actividad-fija">seleccionar los productos que se van a realizar considerando el presupuesto, tiempo y facilidad de elaboracion</td><td colspan="12" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="65" class="bg-blanco-excel"></td></tr>
-                            <tr><td class="col-actividad-fija">hacer un listado de los ingredientes y materiales que se van a ocupar para la elaboracion de los productos</td><td colspan="19" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="58" class="bg-blanco-excel"></td></tr>
+                            <tr><td class="col-actividad-fija">hacer un listado de los ingredientes and materiales que se van a ocupar para la elaboracion de los productos</td><td colspan="19" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="58" class="bg-blanco-excel"></td></tr>
                             <tr><td class="col-actividad-fija">investigar la funcion y beneficios de cada ingrediente seleccionado para tener un mayor conocimiento de lo que se esta haciendo</td><td colspan="26" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="51" class="bg-blanco-excel"></td></tr>
                             <tr><td class="col-actividad-fija">elaborar el primer prototipo del producto para ver como queda la consistencia, olor, color, etc. y hacer modificaciones si es necesario</td><td colspan="33" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="44" class="bg-blanco-excel"></td></tr>
                             <tr><td class="col-actividad-fija">hacer la receta final de los productos anotando bien las cantidades que se ocuparon para que todos queden iguales</td><td colspan="40" class="bg-blanco-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td class="bg-gris-excel"></td><td class="bg-gris-excel"></td><td style="background-color: #ff66cc;" class="celda-activa-gantt"></td><td colspan="37" class="bg-blanco-excel"></td></tr>
