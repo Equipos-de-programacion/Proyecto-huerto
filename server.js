@@ -4,191 +4,219 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors'); 
+require('dotenv').config();
 
 const app = express();
 
-// 🔓 Configuración total de CORS para permitir conexiones desde celulares y computadoras externas
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-})); 
-
+app.use(cors()); 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'publico')));
 
-// Sirve los archivos estáticos (index.html, dashboard.html, imágenes) desde la carpeta 'publico'
-app.use(express.static(__dirname));
-
-// Configuración para recibir archivos/imágenes en las peticiones
+// --- 📸 CONFIGURACIÓN DE MULTER ---
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 20 * 1024 * 1024 }
+});
 
-const JWT_SECRET = 'SECRETO_SUPER_SEGURO_PARA_EL_HUERTITO_MUSU';
+const JWT_SECRET = 'SECRETO_SUPER_SEGURO';
 
-// 🗄️ "Base de datos" temporales en memoria
+// --- 💾 BASES DE DATOS SIMULADAS EN MEMORIA ---
+console.log('✅ Base de datos Local Temporal (En Memoria) lista y conectada');
 const usuariosBD = [];
-const bitacoraBD = [];
 
-// 👑 Creación de la cuenta de Administrador por defecto al arrancar el servidor
 (async () => {
     const passwordEncriptada = await bcrypt.hash('huertitos', 10);
     usuariosBD.push({
         id: "admin_arely",
         nombre: "Arely Admin 🌿",
-        correo: "arely24526@cbtis75.edu.mx",
+        correo: "arely24526@cbtis75.edu.mx", 
         password: passwordEncriptada,
-        rol: "admin"
+        rol: "admin" 
     });
-    console.log("👤 Cuenta de Administrador (Arely) cargada exitosamente.");
+    console.log('👑 Cuenta de Administrador pre-cargada: arely24526@cbtis75.edu.mx (Password: huertitos)');
 })();
 
-// Middleware para verificar autenticación y roles
-const verificarToken = (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
-    if (!headerAuth) return res.status(403).json({ error: "Token requerido." });
-    
-    const token = headerAuth.split(' ')[1];
-    try {
-        const verificado = jwt.verify(token, JWT_SECRET);
-        req.usuario = verificado;
+const bitacoraBD = [
+    {
+        _id: "registro_prueba_1",
+        tipoPlanta: "Tomate Cherry 🍅",
+        dueno: "Arely (Admin)",
+        altura: 12,
+        abono: "Compost de café",
+        observaciones: "¡Ya salieron las primeras hojitas verdes del brote principal!",
+        imagenUrl: null,
+        fecha: new Date(),
+        likes: 3,
+        comentarios: [
+            { _id: "c1", usuario: "Colaborador", texto: "¡Qué increíble va tu planta!", fecha: new Date() }
+        ]
+    }
+];
+
+// --- 🛠️ MIDDLEWARE DE VALIDACIÓN ---
+function verificarAdmin(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) return res.status(401).json({ error: "Acceso denegado. No hay token." });
+
+    if (token === 'TOKEN_DEMO_HUERTITO') {
+        req.usuario = { rol: 'admin', id: 'mock_admin_id' };
+        return next();
+    }
+
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        if (err) return res.status(403).json({ error: "Token inválido o expirado." });
+        if (decoded.rol !== 'admin') return res.status(403).json({ error: "Permiso denegado. No eres administrador." });
+        req.usuario = decoded;
         next();
-    } catch (err) {
-        res.status(401).json({ error: "Token inválido o expirado." });
+    });
+}
+
+function verificarAutenticacion(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) return res.status(401).json({ error: "Acceso denegado. Inicia sesión primero." });
+
+    if (token === 'TOKEN_DEMO_HUERTITO') {
+        req.usuario = { id: 'mock_user_id', rol: 'usuario' };
+        return next();
     }
-};
 
-// ==========================================
-// 🛠️ RUTAS DEL SISTEMA DE USUARIOS (API)
-// ==========================================
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        if (err) return res.status(403).json({ error: "Sesión inválida o expirada." });
+        req.usuario = decoded;
+        next();
+    });
+}
 
-// 1. Registro de nuevos colaboradores (Rol de usuario estándar)
+// --- 🛣️ RUTAS DEL SISTEMA ---
+
+// 1. Registro de Usuarios
 app.post('/api/registro', async (req, res) => {
-    try {
-        const { nombre, correo, password } = req.body;
-        
-        const existe = usuariosBD.find(u => u.correo === correo);
-        if (existe) return res.status(400).json({ error: "Este correo ya está registrado." });
+    const { nombre, correo, password, rol } = req.body;
+    if (!nombre || !correo || !password) return res.status(400).json({ error: "Faltan campos obligatorios." });
 
-        const passwordEncriptada = await bcrypt.hash(password, 10);
-        
-        const nuevoUsuario = {
-            id: String(Date.now()),
-            nombre,
-            correo,
-            password: passwordEncriptada,
-            rol: "usuario"
-        };
+    const existe = usuariosBD.find(u => u.correo === correo);
+    if (existe) return res.status(400).json({ error: "El correo ya está registrado." });
 
-        usuariosBD.push(nuevoUsuario);
-        res.status(201).json({ mensaje: "¡Usuario registrado con éxito! Ya puedes iniciar sesión." });
-    } catch (err) {
-        res.status(500).json({ error: "Error interno al registrar usuario." });
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const nuevoUsuario = { id: String(Date.now()), nombre, correo, password: hashedPassword, rol: rol || 'usuario' };
+    usuariosBD.push(nuevoUsuario);
+
+    res.status(201).json({ mensaje: "Usuario registrado con éxito.", usuario: { nombre, correo, rol: nuevoUsuario.rol } });
 });
 
-// 👑 1.5 Ruta especial para que un administrador registre a más administradores
-app.post('/api/admin/registrar', verificarToken, async (req, res) => {
-    try {
-        // Validar si quien hace la petición es un administrador real
-        if (req.usuario.rol !== 'admin') {
-            return res.status(403).json({ error: "Acceso denegado. Se requieren permisos de Administrador." });
-        }
-
-        const { nombre, correo, password } = req.body;
-
-        const existe = usuariosBD.find(u => u.correo === correo);
-        if (existe) return res.status(400).json({ error: "Este correo ya está registrado en el sistema." });
-
-        const passwordEncriptada = await bcrypt.hash(password, 10);
-
-        const nuevoAdmin = {
-            id: String(Date.now()),
-            nombre,
-            correo,
-            password: passwordEncriptada,
-            rol: "admin" // Forzamos el rol como administrador
-        };
-
-        usuariosBD.push(nuevoAdmin);
-        res.status(201).json({ mensaje: "Administrador registrado exitosamente." });
-    } catch (err) {
-        res.status(500).json({ error: "Error interno en el servidor." });
-    }
-});
-
-// 2. Inicio de sesión (Login)
+// 2. Inicio de Sesión (Login)
 app.post('/api/login', async (req, res) => {
-    try {
-        const { correo, password } = req.body;
-        
-        const usuario = usuariosBD.find(u => u.correo === correo);
-        if (!usuario) return res.status(400).json({ error: "El correo electrónico no está registrado." });
+    const { correo, password } = req.body;
+    const usuario = usuariosBD.find(u => u.correo === correo);
+    if (!usuario) return res.status(400).json({ error: "Usuario o contraseña incorrectos." });
 
-        const passwordCorrecta = await bcrypt.compare(password, usuario.password);
-        if (!passwordCorrecta) return res.status(400).json({ error: "La contraseña es incorrecta." });
+    const passValido = await bcrypt.compare(password, usuario.password);
+    if (!passValido) return res.status(400).json({ error: "Usuario o contraseña incorrectos." });
 
-        const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, JWT_SECRET, { expiresIn: '24h' });
-        
-        res.json({ 
-            mensaje: "¡Acceso concedido!",
-            token, 
-            rol: usuario.rol,
-            nombre: usuario.nombre 
-        });
-    } catch (err) {
-        res.status(500).json({ error: "Error interno al iniciar sesión." });
-    }
+    const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, JWT_SECRET, { expiresIn: '4h' });
+    res.json({ token, rol: usuario.rol, nombre: usuario.nombre });
 });
 
-// ==========================================
-// 🪻 RUTAS DE LA BITÁCORA DEL HUERTO
-// ==========================================
-
+// 3. Obtener todo el Historial (Bitácora)
 app.get('/api/bitacora', (req, res) => {
-    res.json(bitacoraBD);
+    res.json(bitacoraBD.sort((a, b) => b.fecha - a.fecha));
 });
 
-app.post('/api/bitacora', upload.single('imagen'), (req, res) => {
-    try {
-        const { dueno, tipoPlanta, altura, abono, observaciones } = req.body;
+// 4. Publicar Nueva Entrada
+app.post('/api/bitacora', verificarAutenticacion, upload.single('imagen'), (req, res) => {
+    const { tipoPlanta, dueno, altura, abono, observaciones } = req.body;
+    if (!tipoPlanta || !altura) return res.status(400).json({ error: "Planta y Altura son obligatorios." });
 
-        const nuevaPublicacion = {
-            _id: String(Date.now()),
-            tipoPlanta: tipoPlanta || "Planta del Huerto 🌿",
-            dueno: dueno || "Colaborador Anónimo",
-            altura: altura || "0",
-            abono: abono || "Ninguno",
-            observaciones: observaciones || "",
-            fecha: new Date().toLocaleDateString('es-MX'),
-            likes: 0,
-            comentarios: []
-        };
-
-        bitacoraBD.push(nuevaPublicacion);
-        res.status(201).json(nuevaPublicacion);
-    } catch (err) {
-        res.status(500).json({ error: "No se pudo guardar la publicación en la bitácora." });
+    let imagenUrl = null;
+    if (req.file) {
+        const base64Data = req.file.buffer.toString('base64');
+        imagenUrl = `data:${req.file.mimetype};base64,${base64Data}`;
     }
+
+    const nuevoRegistro = {
+        _id: String(Date.now()),
+        tipoPlanta,
+        dueno: dueno || "Anónimo",
+        altura: Number(altura),
+        abono: abono || "Ninguno",
+        observaciones: observaciones || "",
+        imagenUrl,
+        fecha: new Date(),
+        likes: 0,
+        comentarios: []
+    };
+
+    bitacoraBD.push(nuevoRegistro);
+    res.status(201).json(nuevoRegistro);
 });
 
+// 5. Editar Entrada (Sólo Admin)
+app.put('/api/bitacora/:id', verificarAdmin, (req, res) => {
+    const registro = bitacoraBD.find(b => b._id === req.params.id);
+    if (!registro) return res.status(404).json({ error: "Publicación no encontrada." });
+
+    const { tipoPlanta, dueno, altura, abono, observaciones } = req.body;
+    if(tipoPlanta) registro.tipoPlanta = tipoPlanta;
+    if(dueno) registro.dueno = dueno;
+    if(altura) registro.altura = Number(altura);
+    if(abono) registro.abono = abono;
+    if(observaciones) registro.observaciones = observaciones;
+
+    res.json({ mensaje: "Publicación actualizada con éxito.", registro });
+});
+
+// 6. Eliminar Entrada (Sólo Admin)
+app.delete('/api/bitacora/:id', verificarAdmin, (req, res) => {
+    const index = bitacoraBD.findIndex(b => b._id === req.params.id);
+    if (index === -1) return res.status(404).json({ error: "No se encontró la publicación." });
+
+    bitacoraBD.splice(index, 1);
+    res.json({ mensaje: "Publicación eliminada correctamente." });
+});
+
+// 7. Incrementar "Me gusta"
 app.post('/api/bitacora/:id/like', (req, res) => {
-    const { id } = req.params;
-    const publicacion = bitacoraBD.find(p => p._id === id);
+    const registro = bitacoraBD.find(b => b._id === req.params.id);
+    if (!registro) return res.status(404).json({ error: "No encontrado" });
     
-    if (!publicacion) return res.status(404).json({ error: "Publicación no encontrada." });
-    
-    publicacion.likes += 1;
-    res.json({ likes: publicacion.likes });
+    registro.likes += 1;
+    res.json({ likes: registro.likes });
 });
 
-// ==========================================
-// 🚀 ARRANQUE DEL SERVIDOR
-// ==========================================
-const PUERTO = 3000;
-app.listen(PUERTO, () => {
-    console.log(`\n==================================================`);
-    console.log(`🚀 SERVIDOR EN EJECUCIÓN`);
-    console.log(`   Puerto local: http://localhost:${PUERTO}`);
-    console.log(`   Recuerda poner el puerto 3000 en PUBLIC en tu Codespaces`);
-    console.log(`==================================================\n`);
+// 8. Publicar Comentario
+app.post('/api/bitacora/:id/comentarios', (req, res) => {
+    const registro = bitacoraBD.find(b => b._id === req.params.id);
+    if (!registro) return res.status(404).json({ error: "No encontrado" });
+
+    const nuevoComentario = {
+        _id: String(Date.now()),
+        usuario: req.body.usuario || "Colaborador",
+        texto: req.body.texto,
+        fecha: new Date()
+    };
+    registro.comentarios.push(nuevoComentario);
+    res.json(registro);
+});
+
+// 9. Eliminar Comentario
+app.post('/api/bitacora/:idPost/comentarios/:idComentario/borrar', (req, res) => {
+    const registro = bitacoraBD.find(b => b._id === req.params.idPost);
+    if (!registro) return res.status(404).json({ error: "No se encontró la publicación." });
+
+    const indexComentario = registro.comentarios.findIndex(c => c._id === req.params.idComentario);
+    if (indexComentario === -1) return res.status(404).json({ error: "No se encontró el comentario." });
+
+    registro.comentarios.splice(indexComentario, 1);
+    res.json({ mensaje: "Comentario eliminado correctamente." });
+});
+
+// --- 🌐 INICIO DEL SERVIDOR LOCAL ---
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`✅ Servidor corriendo globalmente en el puerto: ${PORT}`);
 });

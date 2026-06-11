@@ -649,7 +649,7 @@
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
-                    <img src="logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
+                    <img src="logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentation">
                 </div>
                 <h2>📝 Presentación del Proyecto</h2>
                 <div class="columnas-layout">
@@ -867,7 +867,7 @@
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
                             </tr>
                             <tr>
-                                <td class="col-sticky-actividad">Empezar a conectar la base de datos con el API and el html.</td>
+                                <td class="col-sticky-actividad">Empezar a conectar la base de datos con el API y el html.</td>
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
                                 <td class="bloque-azul-marino">Backend</td>
                                 <td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td><td class="dia-vacio">-</td>
@@ -889,7 +889,7 @@
                 </div>
 
                 <h3 style="color: var(--rosa-oscuro); margin-top: 10px;">📸 Capturas de Respaldos de Planificación</h3>
-                <p style="font-size: 0.95rem;">Si deseas insignar el diseño de celdas gráficas originales del Excel, puedes revisar las capturas nítidas aquí abajo:</p>
+                <p style="font-size: 0.95rem;">Si deseas inspeccionar el diseño de celdas gráficas originales del Excel, puedes revisar las capturas nítidas aquí abajo:</p>
                 <div class="cronograma-grid">
                     <img src="cronograma1.png" alt="Cronograma de Actividades Parte 1" class="cronograma-img">
                     <img src="cronograma2.png" alt="Cronograma de Actividades Parte 2" class="cronograma-img">
@@ -1011,9 +1011,7 @@
     </div>
 
     <script>
-        // Cambia esto por la URL de tu Codespaces actual si cambia el subdominio
-        const API_URL = 'https://special-acorn-wrqr9vrw494v2544x-3000.app.github.dev';
-
+        // 🔍 FUNCIÓN DE FILTRADO EN TIEMPO REAL
         function filtrarTablaCronograma() {
             const input = document.getElementById("inputBuscarCrono");
             const filtro = input.value.toLowerCase();
@@ -1051,7 +1049,7 @@
 
             document.getElementById(`seccion-${objetivo}`).classList.add('active');
 
-            if(objetivo === 'producto') btnProd.classList.add('active-producto');
+            if(objetivo === 'producto') btnProd.add ? null : btnProd.classList.add('active-producto');
             if(objetivo === 'cronograma') btnCrono.classList.add('active-cronograma');
             if(objetivo === 'paec') btnPaec.classList.add('active-paec');
             if(objetivo === 'huerto') btnHuer.classList.add('active-huerto');
@@ -1076,79 +1074,26 @@
         window.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('rol');
-            localStorage.removeItem('nombreAdmin');
         });
 
-        // 🟢 REGISTRO ENVIADO DIRECTAMENTE AL SERVIDOR EXPRESS
         async function ejecutarRegistro() {
-            const nombre = document.getElementById('nombreReg').value.trim();
-            const correo = document.getElementById('correoReg').value.trim().toLowerCase();
-            const password = document.getElementById('passReg').value;
-
-            if (!nombre || !correo || !password) {
-                alert('Por favor, completa todos los campos.');
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/api/registro`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nombre, correo, password })
-                });
-
-                const data = await res.json();
-
-                if (res.ok) {
-                    alert('¡Usuario registrado con éxito! Ya puedes iniciar sesión.');
-                    document.getElementById('nombreReg').value = '';
-                    document.getElementById('correoReg').value = '';
-                    document.getElementById('passReg').value = '';
-                    cambiarModeloFormulario('login');
-                } else {
-                    alert(data.error || 'Error al registrar usuario.');
-                }
-            } catch (err) {
-                alert('Error al conectar con el servidor de Codespaces.');
-            }
+            alert('Usuario registrado localmente (Modo Demostración).');
+            cambiarModeloFormulario('login');
         }
 
-        // 🟢 INICIO DE SESIÓN DIRECTO CON EL SERVIDOR EXPRESS
         async function ejecutarAcceso() {
-            const correo = document.getElementById('correoLogin').value.trim().toLowerCase();
-            const password = document.getElementById('passLogin').value;
+            const correo = document.getElementById('correoLogin').value.trim();
+            evaluarAccesoSimulado(correo);
+        }
 
-            if (!correo || !password) {
-                alert('Por favor, ingresa tu correo y contraseña.');
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/api/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo, password })
-                });
-
-                const data = await res.json();
-
-                if (res.ok) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('rol', data.rol);
-                    localStorage.setItem('nombreAdmin', data.nombre);
-
-                    alert(`¡Bienvenido, ${data.nombre}!`);
-                    
-                    document.getElementById('correoLogin').value = '';
-                    document.getElementById('passLogin').value = '';
-                    
-                    // Redirección directa al panel de bitácoras
-                    window.location.href = 'dashboard.html';
-                } else {
-                    alert(data.error || 'Correo electrónico o contraseña incorrectos.');
-                }
-            } catch (err) {
-                alert('Error al conectar con el servidor de Codespaces. Asegúrate de tener la terminal corriendo.');
+        function evaluarAccesoSimulado(correo) {
+            localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
+            if(correo.includes('admin') || correo.includes('ana24563')) {
+                localStorage.setItem('rol', 'admin');
+                alert('¡Bienvenido Administrador!');
+            } else {
+                localStorage.setItem('rol', 'usuario');
+                alert('¡Bienvenido Colaborador!');
             }
         }
     </script>

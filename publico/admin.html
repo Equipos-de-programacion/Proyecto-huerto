@@ -1,5 +1,4 @@
 <script>
-    // 🚀 TRUCO: Si entras aquí, te asignamos rol admin automáticamente para pruebas
     if(!localStorage.getItem('rol')) {
         localStorage.setItem('rol', 'admin');
     }
@@ -17,7 +16,6 @@
         const formData = new FormData();
         formData.append('imagen', input.files[0]);
 
-        // ⚠️ CORRECCIÓN: Ahora apunta a tu API_URL de Codespaces
         const res = await fetch(`${API_URL}/api/bitacora`, { 
             method: 'POST',
             headers: { 'Authorization': `Bearer ${token || 'TOKEN_DEMO_HUERTITO'}` },
@@ -27,7 +25,7 @@
         if(res.ok) {
             const data = await res.json();
             alert('¡Imagen subida con éxito!');
-            window.location.href = '/dashboard.html'; // Te regresa a ver el historial
+            window.location.href = '/dashboard.html'; 
         } else {
             alert('Error al subir la imagen.');
         }
