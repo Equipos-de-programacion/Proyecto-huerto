@@ -23,10 +23,26 @@ const upload = multer({
 
 const JWT_SECRET = 'SECRETO_SUPER_SEGURO';
 
-// --- 💾 BASES DE DATOS SIMULADAS EN MEMORIA (No requieren MongoDB) ---
+// --- 💾 BASES DE DATOS SIMULADAS EN MEMORIA CON DATOS DE PRUEBA ---
 console.log('✅ Base de datos Local Temporal (En Memoria) lista y conectada');
 const usuariosBD = [];
-const bitacoraBD = [];
+
+const bitacoraBD = [
+    {
+        _id: "registro_prueba_1",
+        tipoPlanta: "Tomate Cherry 🍅",
+        dueno: "Arely (Admin)",
+        altura: 12,
+        abono: "Compost de café",
+        observaciones: "¡Ya salieron las primeras hojitas verdes del brote principal!",
+        imagenUrl: null,
+        fecha: new Date(),
+        likes: 3,
+        comentarios: [
+            { _id: "c1", usuario: "Colaborador", texto: "¡Qué increíble va tu planta!", fecha: new Date() }
+        ]
+    }
+];
 
 // --- 🛠️ MIDDLEWARE DE VALIDACIÓN CORREGIDO ---
 function verificarAdmin(req, res, next) {
