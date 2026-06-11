@@ -54,7 +54,7 @@
             font-weight: 500;
         }
 
-        /* 📋 BARRA DE PESTAÑAS NAVEGABLES */
+        /* 📋 BARRA DE PESTAÑAS NAVEGABLES (4 OPCIONES) */
         .tabs-nav-bar {
             background-color: var(--blanco);
             display: flex;
@@ -120,7 +120,7 @@
             display: block;
         }
 
-        /* 💋 TARJETAS ESTILO EDITORIAL */
+        /* 💋 TARJETAS SEPARADAS ESTILO EDITORIAL */
         .bloque-seccion {
             background-color: var(--blanco);
             border-radius: 24px;
@@ -172,7 +172,7 @@
             align-items: center;
         }
 
-        /* 🖼️ DISEÑO DE LAS VISTAS PREVIAS DEL CRONOGRAMA */
+        /* Diseño de rejilla específico para el cronograma */
         .cronograma-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -181,46 +181,19 @@
             margin-bottom: 25px;
         }
 
-        .wrapper-imagen-preview {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            border: 2px solid #f2cbd2;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            background: #fff;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .wrapper-imagen-preview:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(229, 143, 162, 0.3);
-            border-color: var(--rosa-intenso);
-        }
-
-        .cronograma-img-thumb {
+        .cronograma-img {
             width: 100%;
             height: auto;
-            display: block;
+            border-radius: 16px;
+            border: 1px solid #f7d5dc;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
         }
 
-        .wrapper-imagen-preview::after {
-            content: '🔍 Clic para ampliar nitido';
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            background: rgba(140, 67, 84, 0.85);
-            color: white;
-            padding: 6px 14px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .wrapper-imagen-preview:hover::after {
-            opacity: 1;
+        .cronograma-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(229, 143, 162, 0.25);
         }
 
         .contenedor-boton-drive {
@@ -255,6 +228,7 @@
             }
         }
 
+        /* Lista de Integrantes y Actividades */
         .lista-estilizada {
             margin: 15px 0;
             padding-left: 20px;
@@ -267,90 +241,7 @@
             line-height: 1.5;
         }
 
-        /* ⏳ LÍNEA DEL TIEMPO INTERACTIVA */
-        .timeline-container {
-            position: relative;
-            max-width: 100%;
-            margin: 30px auto;
-            padding: 10px 0;
-        }
-
-        .timeline-container::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--verde-huerto);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-        }
-
-        .timeline-item {
-            padding: 15px 40px;
-            position: relative;
-            background-color: transparent;
-            width: 50%;
-            box-sizing: border-box;
-        }
-
-        .timeline-item::after {
-            content: '🌿';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            right: -17px;
-            background-color: var(--blanco);
-            border: 3px solid var(--verde-huerto);
-            top: 22px;
-            border-radius: 50%;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-
-        .left { left: 0; }
-        .right { left: 50%; }
-        .right::after { left: -14px; }
-
-        .timeline-content {
-            padding: 22px;
-            background-color: #fafdf9;
-            position: relative;
-            border-radius: 16px;
-            border: 1px solid #dbe6d7;
-            box-shadow: 0 4px 15 rgba(0,0,0,0.02);
-        }
-
-        .timeline-content h3 {
-            margin-top: 0;
-            color: var(--verde-huerto);
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .timeline-img {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin-top: 14px;
-            border: 1px solid #e1ebe0;
-            background-color: #f4f9f3;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            cursor: pointer;
-        }
-
-        @media screen and (max-width: 768px) {
-            .timeline-container::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
-            .timeline-item::after { left: 18px; right: auto; top: 22px; }
-            .right { left: 0%; }
-        }
-
+        /* Tarjetas de Recetas */
         .grid-elaboracion {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -375,6 +266,7 @@
             padding-bottom: 5px;
         }
 
+        /* Galería de Fotos Integrada */
         .galeria-fotos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -397,7 +289,7 @@
             object-fit: cover;
         }
 
-        /* 🐢 ACCESO AL HUERTO */
+        /* 🐢 PESTAÑA 4: ACCESO AL HUERTO */
         .grid-huerto-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -533,7 +425,7 @@
             background-color: #d47a8e;
         }
 
-        /* 📊 TABLA INTERACTIVA */
+        /* 📊 ESTILOS ADICIONALES PARA LA TABLA DEL CRONOGRAMA INTERACTIVO */
         .buscador-crono {
             width: 100%;
             max-width: 450px;
@@ -547,6 +439,11 @@
             background-position: 15px center;
             background-size: 16px;
             box-shadow: 0 4px 10px rgba(140, 67, 84, 0.03);
+        }
+
+        .buscador-crono:focus {
+            border-color: var(--rosa-intenso);
+            box-shadow: 0 4px 12px rgba(229, 143, 162, 0.2);
         }
 
         .tabla-contenedor {
@@ -571,132 +468,47 @@
             color: var(--blanco);
             padding: 16px 18px;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .tabla-interactiva td {
             padding: 15px 18px;
             border-bottom: 1px solid #fae3e7;
             color: #333;
+            line-height: 1.5;
+        }
+
+        .tabla-interactiva tr:last-child td {
+            border-bottom: none;
         }
 
         .tabla-interactiva tr:nth-child(even) {
             background-color: var(--rosa-tarjeta);
         }
 
+        .tabla-interactiva tr:hover {
+            background-color: #ffeef1;
+            transition: background 0.15s ease;
+        }
+
+        /* Estados (Badges) */
         .badge {
             display: inline-block;
             padding: 5px 12px;
             border-radius: 20px;
             font-weight: bold;
             font-size: 0.8rem;
+            text-align: center;
         }
 
-        .badge.completado { background-color: #def7ec; color: #03543f; }
-        .badge.revision { background-color: #e0f2fe; color: #0369a1; }
-
-        .hidden { display: none !important; }
-
-        /* Visor Modal */
-        .visor-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(20, 10, 12, 0.95);
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .badge.completado {
+            background-color: #def7ec;
+            color: #03543f;
         }
 
-        .visor-modal.abierto {
-            display: flex;
-            opacity: 1;
-        }
-
-        .visor-contenedor-interno {
-            position: relative;
-            width: 85%;
-            height: 80%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .visor-imagen-grande {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            transform: scale(1);
-            transition: transform 0.15s ease;
-            cursor: grab;
-            position: relative;
-        }
-
-        .visor-imagen-grande:active {
-            cursor: grabbing;
-        }
-
-        .visor-cerrar {
-            position: absolute;
-            top: 25px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s, transform 0.2s;
-            user-select: none;
-            z-index: 10001;
-        }
-
-        .visor-cerrar:hover {
-            color: var(--rosa-intenso);
-            transform: scale(1.1);
-        }
-
-        .visor-controles-zoom {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: flex;
-            gap: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10001;
-        }
-
-        .btn-control-zoom {
-            background: var(--blanco);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--rosa-oscuro);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-        }
-
-        .btn-control-zoom:hover {
-            background: var(--rosa-principal);
-            transform: scale(1.1);
+        .badge.revision {
+            background-color: #e0f2fe;
+            color: #0369a1;
         }
 
         @keyframes fadeIn {
@@ -707,33 +519,35 @@
 </head>
 <body>
 
+    <!-- 🌳 ENCABEZADO -->
     <div class="header-top">
         <h1>PROYECTO PAEC</h1>
         <p>"Dale besos a tu cora 💋"</p>
     </div>
 
+    <!-- 📋 BARRA DE PESTAÑAS NAVEGABLES (4 SECCIONES) -->
     <div class="tabs-nav-bar">
-        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
+        <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestanyas('producto')">
             ✨ Presentación MUSU
         </button>
-        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestañas('cronograma')">
+        <button id="btn-tab-crono" class="tab-btn" onclick="alternarSeccionPestanyas('cronograma')">
             📅 Cronograma
         </button>
-        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestañas('paec')">
+        <button id="btn-tab-paec" class="tab-btn" onclick="alternarSeccionPestanyas('paec')">
             🌿 Proyecto PAEC
         </button>
-        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestañas('huerto')">
+        <button id="btn-tab-huer" class="tab-btn" onclick="alternarSeccionPestanyas('huerto')">
             🌱 Acceso Huertito
         </button>
     </div>
 
     <div class="container">
         
-        <!-- ✨ PRESENTACIÓN MUSU (INFORMACIÓN COMPLETA RECONSTRUIDA) -->
+        <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
-                    <img src="./logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
+                    <img src="logo.jpeg" alt="Logo Oficial MUSU" class="logo-musu-presentacion">
                 </div>
                 <h2>📝 Presentación del Proyecto</h2>
                 <div class="columnas-layout">
@@ -749,7 +563,7 @@
                         </div>
                     </div>
                     <div class="caja-foto-integrada">
-                        <img src="./ev2.jpeg" alt="Presentación de Integrantes" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;">
+                        <img src="ev2.jpeg" alt="Presentación de Integrantes del Equipo Musu">
                     </div>
                 </div>
             </div>
@@ -763,7 +577,7 @@
                         <p>Conforme fuimos explicando el proceso de elaboración y las ventajas de utilizar ingredientes naturales, las personas comenzaron a mostrar más interés en el proyecto. Al final de la presentación, la mayoría comprendió mejor nuestra propuesta y expresó comentarios positivos sobre los productos.</p>
                     </div>
                     <div class="caja-foto-integrada">
-                        <img src="./ev1.jpeg" alt="Evidencia de Presentación" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;">
+                        <img src="ev1.jpeg" alt="Evidencia de Presentación de Cartel Musu">
                     </div>
                 </div>
             </div>
@@ -786,18 +600,18 @@
                 </div>
                 
                 <div class="galeria-fotos-grid">
-                    <div class="caja-foto-integrada"><img src="./ev4.jpeg" alt="Paso 1" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
-                    <div class="caja-foto-integrada"><img src="./ev3.jpeg" alt="Paso 2" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
-                    <div class="caja-foto-integrada"><img src="./ev5.jpeg" alt="Paso 3" onclick="abrirVisorModalGrande(this.src)" style="cursor:pointer;"></div>
+                    <div class="caja-foto-integrada"><img src="ev4.jpeg" alt="Paso de preparación Musu 1"></div>
+                    <div class="caja-foto-integrada"><img src="ev3.jpeg" alt="Paso de preparación Musu 2"></div>
+                    <div class="caja-foto-integrada"><img src="ev5.jpeg" alt="Paso de preparación Musu 3"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 📅 CRONOGRAMA COMPLETO (TABLA + CAPTURAS DE EXCEL ORIGINALES RESTAURADAS) -->
+        <!-- 📅 PESTAÑA 2: CRONOGRAMA INTERACTIVO -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma General de Actividades</h2>
-                <p>Usa la barra de búsqueda rápida para filtrar las tareas por integrantes, estados o nombres de fases al instante.</p>
+                <p>Navega a través de las tareas oficiales extraídas de la planeación general. Puedes escribir en el buscador palabras clave como el nombre de un integrante, el estado de la tarea o una fase para filtrarlas al instante.</p>
                 
                 <input type="text" id="inputBuscarCrono" class="buscador-crono" onkeyup="filtrarTablaCronograma()" placeholder="Buscar actividad, responsable o estado...">
 
@@ -887,283 +701,113 @@
                     </table>
                 </div>
 
-                <h3 style="color: var(--rosa-oscuro); margin-top: 30px;">📸 Respaldos de Planificación Gráfica (Haz clic en una imagen para abrirla en grande)</h3>
-                <p style="font-size: 0.95rem; color: #555;">Haz clic sobre cualquiera de las capturas del Excel para expandirlas a pantalla completa, leer de forma súper nítida y aplicar controles de lupa:</p>
-                
+                <h3 style="color: var(--rosa-oscuro); margin-top: 10px;">📸 Capturas de Respaldos de Planificación</h3>
                 <div class="cronograma-grid">
-                    <div class="wrapper-imagen-preview" onclick="abrirVisorModalGrande('./cronograma1.png')">
-                        <img src="./cronograma1.png" alt="Cronograma Hoja 1" class="cronograma-img-thumb">
-                    </div>
-                    <div class="wrapper-imagen-preview" onclick="abrirVisorModalGrande('./cronograma2.png')">
-                        <img src="./cronograma2.png" alt="Cronograma Hoja 2" class="cronograma-img-thumb">
-                    </div>
+                    <img src="cronograma1.png" alt="Cronograma de Actividades Parte 1" class="cronograma-img">
+                    <img src="cronograma2.png" alt="Cronograma de Actividades Parte 2" class="cronograma-img">
                 </div>
 
                 <div class="contenedor-boton-drive">
                     <a href="https://drive.google.com/file/d/1QmUYMcZqBq63ty2QRW-HUA_4mXhuoreN/view?usp=classroom_web&authuser=0" target="_blank" class="btn-drive">
-                        📁 Abrir archivo original en Google Drive ↗
+                        📁 Descargar Archivo Excel Original Directo ↗
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- 🌿 PROYECTO PAEC -->
+        <!-- 🌿 PESTAÑA 3: APARTADO PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
+                <p>El desarrollo integral del huerto y la investigación del proyecto PAEC está a cargo de las estudiantes:</p>
                 <ul class="lista-estilizada">
                     <li><strong>ARELY DENISSE BARAJAS RODRÍGUEZ</strong></li>
                     <li><strong>MBALIA DESIREE ORTEGA OLAEZ</strong></li>
                     <li><strong>ANA MARICELA RINCÓN TOVAR</strong></li>
                     <li><strong>FATIMA DE JESUS HERNANDEZ LUGO</strong></li>
-                    <li><strong>JOSÉ LUIS CERVANTES ARREDONDO</strong></li>
-                    <li><strong>ANGEL ABRAHAM REGALDO LÓPEZ</strong></li>
-                    <li><strong>JUAN DIEGO SANTACRUZ AGUILAR</strong></li>
                 </ul>
-            </div>
-
-            <div class="bloque-seccion">
-                <h2 class="verde-titulo">🎯 Fundamentos del Huerto Urbano</h2>
-                <div style="margin-bottom: 20px;">
-                    <h4 style="color: var(--verde-huerto); margin-bottom: 5px;">🌱 Objetivo del Proyecto</h4>
-                    <p>Diseñar, implementar y documentar un huerto escolar sustentable enfocado en la plantación de lavanda, aplicando sistemas eficientes de riego y control orgánico para obtener materia prima natural de alta calidad destinada a la elaboración de productos cosméticos de cuidado personal.</p>
-                </div>
-            </div>
-
-            <div class="bloque-seccion">
-                <h2 class="verde-titulo">⏳ Línea del Tiempo: Proceso del Huerto</h2>
-                <p style="font-size: 0.95rem;">También puedes pulsar sobre cualquiera de estas fotos de los avances para verlas completas:</p>
-                <div class="timeline-container">
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>1. Realización de surcos</h3>
-                            <img src="./1.jpg" alt="Surcos" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>2. Plantación de la planta de lavanda</h3>
-                            <img src="./2.jpg" alt="Plantación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>3. Investigación del sistema de riego</h3>
-                            <img src="./3.jpg" alt="Investigación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>4. Realización del sistema de riego</h3>
-                            <img src="./4.jpg" alt="Sistema" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>5. Aplicación del sistema de riego</h3>
-                            <img src="./5.jpg" alt="Aplicación" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>6. Medición de lavandas y aplicación de abono</h3>
-                            <img src="./6.jpg" alt="Medición" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>7. Investigación de producto innovador y creación de identidad</h3>
-                            <img src="./7.jpg" alt="Identidad" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>8. Adquisición de materiales</h3>
-                            <img src="./8.jpg" alt="Materiales" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-content">
-                            <h3>9. Realización del producto</h3>
-                            <img src="./9.jpg" alt="Producción" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-content">
-                            <h3>10. Presentación del producto</h3>
-                            <img src="./10.jpg" alt="Presentación Final" class="timeline-img" onclick="abrirVisorModalGrande(this.src)">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- 🌱 ACCESO AL HUERTO (🔥 REDIRECCIÓN CORREGIDA DIRECTO HACIA DASHBOARD.HTML) -->
+        <!-- 🌱 PESTAÑA 4: ACCESO AL HUERTO (CON REDIRECCIÓN AL DASHBOARD) -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
                 <div class="contenedor-ilustracion-tortuga">
-                    <img src="./sorpresa.png" alt="Tortuga PAEC">
+                    <img src="tortuga.jpeg" alt="Ilustración del Huerto">
                 </div>
-                <div class="panel-login-derecho">
-                    <img src="./kike.png" alt="Logotipo PAEC" class="logo-paec-original">
-                    <div class="huerto-title">🌱 Huertito</div>
-                    <div id="instruccionSub" class="huerto-subtitle">Ingresa para gestionar y monitorear tus plantas.</div>
-
-                    <form id="formLogin" onsubmit="event.preventDefault(); ejecutarAcceso();">
-                        <input type="email" id="correoLogin" placeholder="Correo electrónico" required autocomplete="username">
-                        <input type="password" id="passLogin" placeholder="Contraseña" required autocomplete="current-password">
-                        <button type="submit" class="btn-enviar-huerto">Entrar</button>
-                        <div class="opciones-alternas">
-                            ¿No tienes una cuenta? <span class="link-cambio" onclick="cambiarModeloFormulario('registro')">Regístrate</span>
-                        </div>
-                    </form>
-
-                    <form id="formRegistro" class="hidden" onsubmit="event.preventDefault(); ejecutarRegistro();">
-                        <input type="text" id="nombreReg" placeholder="Nombre completo" required autocomplete="off">
-                        <input type="email" id="correoReg" placeholder="Correo electrónico" required autocomplete="off">
-                        <input type="password" id="passReg" placeholder="Contraseña" required autocomplete="new-password">
-                        <button type="submit" class="btn-enviar-huerto">Registrarte</button>
-                        <div class="opciones-alternas">
-                            ¿Tienes una cuenta? <span class="link-cambio" onclick="cambiarModeloFormulario('login')">Iniciar sesión</span>
-                        </div>
-                    </form>
-                </div>
+                
+                <!-- El formulario ahora apunta directamente a dashboard.html usando 'action' -->
+                <form class="panel-login-derecho" action="dashboard.html" method="GET">
+                    <img src="logo.jpeg" alt="Logo PAEC" class="logo-paec-original">
+                    <h2 class="huerto-title">Acceso Huerto</h2>
+                    <p class="huerto-subtitle">Ingresa tus credenciales para subir los avances de la lavanda</p>
+                    
+                    <input type="text" placeholder="Usuario / Correo Institucional" required>
+                    <input type="password" placeholder="Contraseña de Acceso" required>
+                    
+                    <button type="submit" class="btn-enviar-huerto">Entrar al Panel de Control 🌿</button>
+                    
+                    <div class="opciones-alternas">
+                        ¿Olvidaste la clave del equipo? <a href="#" class="link-cambio">Solicitar ayuda</a>
+                    </div>
+                </form>
             </div>
         </div>
 
     </div>
 
-    <!-- 🔲 VISOR DE IMÁGENES -->
-    <div id="miVisorModal" class="visor-modal" onclick="cerrarVisorModalGrande(event)">
-        <span class="visor-cerrar" onclick="cerrarVisorModalGrande(event)">&times;</span>
-        
-        <div class="visor-contenedor-interno">
-            <img id="imgModalDestino" class="visor-imagen-grande" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
-        </div>
-
-        <div class="visor-controles-zoom" onclick="event.stopPropagation()">
-            <button class="btn-control-zoom" onclick="ajustarZoomModal(0.25)" title="Acercar">+</button>
-            <button class="btn-control-zoom" onclick="ajustarZoomModal(-0.25)" title="Alejar">-</button>
-            <button class="btn-control-zoom" onclick="reestablecerZoomModal()" title="Tamaño original">🔄</button>
-        </div>
-    </div>
-
+    <!-- 💡 JAVASCRIPT LOGIC -->
     <script>
-        let escalaActual = 1;
-        let estaArrastrando = false;
-        let inicioX, inicioY, despliegueX = 0, despliegueY = 0;
-        
-        const modal = document.getElementById("miVisorModal");
-        const imgModal = document.getElementById("imgModalDestino");
+        // Función para cambiar de pestañas de manera interactiva
+        function alternarSeccionPestanyas(nombrePestanya) {
+            // Ocultar todos los contenidos de las pestañas
+            const contenidos = document.querySelectorAll('.tab-content');
+            contenidos.forEach(div => div.classList.remove('active'));
 
-        function abrirVisorModalGrande(rutaSrc) {
-            imgModal.src = rutaSrc;
-            modal.classList.add("abierto");
-            reestablecerZoomModal();
-            document.body.style.overflow = "hidden";
+            // Quitar estilos activos a todos los botones
+            const botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => {
+                btn.classList.remove('active-producto', 'active-cronograma', 'active-paec', 'active-huerto');
+            });
+
+            // Activar la sección elegida y añadirle su color correspondiente
+            if (nombrePestanya === 'producto') {
+                document.getElementById('seccion-producto').classList.add('active');
+                document.getElementById('btn-tab-prod').classList.add('active-producto');
+            } else if (nombrePestanya === 'cronograma') {
+                document.getElementById('seccion-cronograma').classList.add('active');
+                document.getElementById('btn-tab-crono').classList.add('active-cronograma');
+            } else if (nombrePestanya === 'paec') {
+                document.getElementById('seccion-paec').classList.add('active');
+                document.getElementById('btn-tab-paec').classList.add('active-paec');
+            } else if (nombrePestanya === 'huerto') {
+                document.getElementById('seccion-huerto').classList.add('active');
+                document.getElementById('btn-tab-huer').classList.add('active-huerto');
+            }
         }
 
-        function cerrarVisorModalGrande(e) {
-            modal.classList.remove("abierto");
-            document.body.style.overflow = "";
-        }
-
-        function ajustarZoomModal(factor) {
-            escalaActual += factor;
-            if (escalaActual < 0.5) escalaActual = 0.5;
-            if (escalaActual > 4) escalaActual = 4;
-            actualizarTransformacionImagen();
-        }
-
-        function reestablecerZoomModal() {
-            escalaActual = 1;
-            despliegueX = 0;
-            despliegueY = 0;
-            actualizarTransformacionImagen();
-        }
-
-        function actualizarTransformacionImagen() {
-            imgModal.style.transform = `translate(${despliegueX}px, ${despliegueY}px) scale(${escalaActual})`;
-        }
-
-        imgModal.addEventListener('mousedown', (e) => {
-            estaArrastrando = true;
-            inicioX = e.clientX - despliegueX;
-            inicioY = e.clientY - despliegueY;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!estaArrastrando) return;
-            e.preventDefault();
-            despliegueX = e.clientX - inicioX;
-            despliegueY = e.clientY - inicioY;
-            actualizarTransformacionImagen();
-        });
-
-        window.addEventListener('mouseup', () => {
-            estaArrastrando = false;
-        });
-
+        // Buscador en tiempo real para la tabla de cronograma
         function filtrarTablaCronograma() {
             const input = document.getElementById("inputBuscarCrono");
-            const filtro = input.value.toLowerCase();
-            const filas = document.getElementById("tablaProyectosPAEC").getElementsByTagName("tr");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("tablaProyectosPAEC");
+            const tr = table.getElementsByTagName("tr");
 
-            for (let i = 1; i < filas.length; i++) {
-                let txt1 = filas[i].getElementsByTagName("td")[1].textContent || filas[i].getElementsByTagName("td")[1].innerText;
-                let txt2 = filas[i].getElementsByTagName("td")[2].textContent || filas[i].getElementsByTagName("td")[2].innerText;
-                let txt3 = filas[i].getElementsByTagName("td")[4].textContent || filas[i].getElementsByTagName("td")[4].innerText;
+            for (let i = 1; i < tr.length; i++) {
+                let mostrarFila = false;
+                const td = tr[i].getElementsByTagName("td");
                 
-                if (txt1.toLowerCase().indexOf(filtro) > -1 || txt2.toLowerCase().indexOf(filtro) > -1 || txt3.toLowerCase().indexOf(filtro) > -1) {
-                    filas[i].style.display = "";
-                } else {
-                    filas[i].style.display = "none";
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        const txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            mostrarFila = true;
+                            break;
+                        }
+                    }
                 }
+                tr[i].style.display = mostrarFila ? "" : "none";
             }
-        }
-
-        function alternarSeccionPestañas(objetivo) {
-            const secciones = ['producto', 'cronograma', 'paec', 'huerto'];
-            const botones = ['prod', 'crono', 'paec', 'huer'];
-            const clases = ['active-producto', 'active-cronograma', 'active-paec', 'active-huerto'];
-
-            secciones.forEach((s, index) => {
-                const secDom = document.getElementById(`seccion-${s}`);
-                const btnDom = document.getElementById(`btn-tab-${botones[index]}`);
-                
-                if(s === objetivo) {
-                    secDom.classList.add('active');
-                    btnDom.classList.add(clases[index]);
-                } else {
-                    secDom.classList.remove('active');
-                    btnDom.classList.remove(clases[index]);
-                }
-            });
-        }
-
-        function cambiarModeloFormulario(modo) {
-            const fLogin = document.getElementById('formLogin');
-            const fRegistro = document.getElementById('formRegistro');
-            const sub = document.getElementById('instruccionSub');
-
-            if(modo === 'login') {
-                fRegistro.classList.add('hidden');
-                fLogin.classList.remove('hidden');
-                sub.innerText = 'Ingresa para gestionar y monitorear tus plantas.';
-            } else {
-                fLogin.classList.add('hidden');
-                fRegistro.classList.remove('hidden');
-                sub.innerText = 'Regístrate para ver las fotos y avances del huerto urbano.';
-            }
-        }
-
-        // 🚀 ¡REDIRECCIÓN AL DASHBOARD CORREGIDA! Manda al otro archivo HTML donde tienes la subida de avances
-        function ejecutarAcceso() {
-            window.location.href = "dashboard.html";
-        }
-
-        function ejecutarRegistro() {
-            window.location.href = "dashboard.html";
         }
     </script>
 </body>
