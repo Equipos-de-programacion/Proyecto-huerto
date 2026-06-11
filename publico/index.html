@@ -110,10 +110,10 @@
             margin-bottom: 25px;
         }
 
-        /* CORRECCIÓN PUNTO 3: Logo ajustado para que no se vea gigante */
+        /* Tamaño original de tu Logo en Index 7 */
         .logo-musu-presentacion {
             width: 100%;
-            max-width: 180px; /* Reducido de 240px a 180px para una vista delicada */
+            max-width: 240px; 
             height: auto;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(140, 67, 84, 0.1);
@@ -175,6 +175,11 @@
         .btn-verde-acceso:hover { background-color: var(--verde-hover); }
 
         .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -251,7 +256,7 @@
                 fLogin.classList.add('hidden');
                 fRegistro.classList.remove('hidden');
                 titulo.innerText = 'Crear Cuenta';
-                sub.innerText = 'Regístrate para subir fotos y avances del huerto urbano.';
+                sub.innerText = 'Regístrate para ver las fotos y avances del huerto urbano.';
             }
         }
 
@@ -260,24 +265,23 @@
             localStorage.removeItem('rol');
         });
 
-        // CORRECCIÓN PUNTO 1: Al registrarse, guarda sesión en memoria local y te manda directo al dashboard
+        // 🔧 SOLUCIÓN AL REGISTRO: Guarda credenciales de prueba y redirige a la Bitácora sin trabas
         async function ejecutarRegistro() {
             const correo = document.getElementById('correoReg').value.trim();
             if(!correo) {
-                alert('Por favor ingresa un correo.');
+                alert('Por favor ingresa un correo para registrarte.');
                 return;
             }
-            alert('¡Usuario registrado exitosamente! Redireccionando al panel del huerto...');
+            alert('¡Usuario registrado localmente! Redireccionando al panel del huerto...');
             
-            // Asignamos credenciales automáticas de ingreso directo
             localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
             localStorage.setItem('rol', 'usuario');
             
-            // Redirección directa al dashboard de cambios del proyecto
+            // Envía directamente a la página donde se suben los cambios del proyecto
             window.location.href = 'dashboard.html';
         }
 
-        // CORRECCIÓN PUNTO 2 Y 4: Descongelar el inicio de sesión mandándote a dashboard.html
+        // 🔧 SOLUCIÓN AL INICIO DE SESIÓN: Intenta conectar al backend y si no, usa el simulador y redirige
         async function ejecutarAcceso() {
             const correo = document.getElementById('correoLogin').value.trim();
             const password = document.getElementById('passLogin').value;
@@ -298,12 +302,11 @@
                     const data = await res.json();
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('rol', data.rol || 'usuario'); 
-                    window.location.href = 'dashboard.html'; // Mandar al dashboard
+                    window.location.href = 'dashboard.html';
                 } else {
                     evaluarAccesoSimulado(correo);
                 }
             } catch (err) {
-                // Si el servidor local no responde, se activa el modo demostración sin trabarse
                 evaluarAccesoSimulado(correo);
             }
         }
@@ -312,12 +315,12 @@
             localStorage.setItem('token', 'TOKEN_DEMO_HUERTITO');
             if(correo.includes('admin') || correo.includes('ana24563') || correo.includes('arely24526')) {
                 localStorage.setItem('rol', 'admin');
-                alert('¡Bienvenido Administrador! (Modo demostración)');
+                alert('¡Bienvenido Administrador!');
             } else {
                 localStorage.setItem('rol', 'usuario');
-                alert('¡Bienvenido Colaborador! Redireccionando a la Bitácora...');
+                alert('¡Bienvenido Colaborador!');
             }
-            // CORRECCIÓN: Evita el congelamiento forzando la redirección al dashboard
+            // MODIFICACIÓN CRÍTICA: Cambia la ventana actual hacia la sección de cambios
             window.location.href = 'dashboard.html';
         }
     </script>
