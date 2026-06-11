@@ -78,11 +78,13 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s;
+            border: 1px solid transparent;
         }
 
-        .tab-btn.active-producto { background-color: #fff0f2; color: var(--rosa-oscuro); }
+        /* Clases activas para cada pestaña */
+        .tab-btn.active-producto { background-color: #fff0f2; color: var(--rosa-oscuro); border: 1px solid #f2cbd2; }
         .tab-btn.active-cronograma { background-color: #f7e6e9; color: var(--rosa-oscuro); border: 1px solid #f2cbd2; }
-        .tab-btn.active-paec { background-color: #eaf2e6; color: var(--verde-huerto); border: 1px solid #d0dacb; border: 1px solid #d0dacb; }
+        .tab-btn.active-paec { background-color: #eaf2e6; color: var(--verde-huerto); border: 1px solid #d0dacb; }
         .tab-btn.active-huerto { background-color: var(--verde-huerto); color: var(--blanco); }
 
         .container {
@@ -141,7 +143,7 @@
             font-size: 0.88rem;
         }
 
-        /* Congelar la primera columna (Actividades) igual que en Excel */
+        /* Congelar la primera columna (Actividades) */
         .tabla-gantt-real th.col-actividad-fija,
         .tabla-gantt-real td.col-actividad-fija {
             position: sticky;
@@ -199,7 +201,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #107c41; /* Verde de Excel */
+            background-color: #107c41; 
             color: white;
             text-decoration: none;
             padding: 12px 22px;
@@ -217,19 +219,9 @@
             transform: translateY(-1px);
         }
 
-        /* Clases de Fondos Neutrales extraídos del cronograma */
-        .bg-gris-excel {
-            background-color: #d9d9d9 !important; /* Días no hábiles */
-        }
-        .bg-blanco-excel {
-            background-color: #ffffff;
-        }
-
-        /* Estilos base para las celdas pintadas del Gantt */
-        .celda-activa-gantt {
-            border-radius: 2px;
-            position: relative;
-        }
+        .bg-gris-excel { background-color: #d9d9d9 !important; }
+        .bg-blanco-excel { background-color: #ffffff; }
+        .celda-activa-gantt { border-radius: 2px; position: relative; }
         
         .celda-activa-gantt::after {
             content: '';
@@ -242,7 +234,6 @@
             border-radius: 1px;
         }
 
-        /* Leyenda explicativa */
         .contenedor-leyenda-excel {
             display: flex;
             gap: 15px;
@@ -318,11 +309,13 @@
 </head>
 <body>
 
+    <!-- 🌳 ENCABEZADO -->
     <div class="header-top">
         <h1>PROYECTO PAEC</h1>
         <p>"Dale besos a tu cora 💋"</p>
     </div>
 
+    <!-- 📋 BARRA DE PESTAÑAS -->
     <div class="tabs-nav-bar">
         <button id="btn-tab-prod" class="tab-btn active-producto" onclick="alternarSeccionPestañas('producto')">
             ✨ Presentación MUSU
@@ -340,6 +333,7 @@
 
     <div class="container">
         
+        <!-- 💋 PESTAÑA 1: PRESENTACIÓN DEL PROYECTO MUSU -->
         <div id="seccion-producto" class="tab-content active">
             <div class="bloque-seccion">
                 <div class="contenedor-logo-musu">
@@ -397,6 +391,7 @@
             </div>
         </div>
 
+        <!-- 📅 PESTAÑA 2: CRONOGRAMA -->
         <div id="seccion-cronograma" class="tab-content">
             <div class="bloque-seccion">
                 <h2>📅 Cronograma</h2>
@@ -460,6 +455,7 @@
             </div>
         </div>
 
+        <!-- 🌿 PESTAÑA 3: PROYECTO PAEC -->
         <div id="seccion-paec" class="tab-content">
             <div class="bloque-seccion">
                 <h2 class="verde-titulo">👥 Integrantes del Equipo</h2>
@@ -549,6 +545,7 @@
             </div>
         </div>
 
+        <!-- 🐢 PESTAÑA 4: ACCESO AL HUERTO -->
         <div id="seccion-huerto" class="tab-content">
             <div class="grid-huerto-layout">
                 <div class="contenedor-ilustracion-tortuga">
@@ -583,6 +580,7 @@
 
     </div>
 
+    <!-- 🔲 MODAL VISOR PARA FOTOS -->
     <div id="miVisorModal" class="visor-modal" onclick="cerrarVisorModal()">
         <span class="visor-cerrar" onclick="cerrarVisorModal()">&times;</span>
         <img id="imgModalDestino" class="visor-imagen-grande" src="" alt="Ampliación" onclick="event.stopPropagation()">
@@ -601,6 +599,7 @@
             modal.classList.remove("abierto");
         }
 
+        // 🛠️ ¡CORREGIDO AQUÍ! Mapea y limpia perfectamente los estilos de cada botón.
         function alternarSeccionPestañas(objetivo) {
             const secciones = ['producto', 'cronograma', 'paec', 'huerto'];
             const botones = ['prod', 'crono', 'paec', 'huer'];
@@ -637,6 +636,8 @@
         }
 
         async function ejecutarRegistro() { cambiarModeloFormulario('login'); }
+        
+        // 🚀 Nota: Al iniciar sesión te redireccionará de golpe a tu panel de subida de avances (dashboard.html).
         async function ejecutarAcceso() { window.location.href = 'dashboard.html'; }
     </script>
 </body>
